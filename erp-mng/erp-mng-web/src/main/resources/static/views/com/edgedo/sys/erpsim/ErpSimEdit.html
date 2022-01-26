@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpSim-form" id="ErpSim-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id"  placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">sim卡号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simNum" lay-verify="required" placeholder="请输入sim卡号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">供应商ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="supplierId"  placeholder="请输入供应商ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">供应商名</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="supplierNameInput" name="supplierNameInput" class="layui-input">
+                            <select id="supplierName" name="supplierName" lay-search="">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">套餐名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="setMealName"  placeholder="请输入套餐名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">sim卡状态</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simState"  placeholder="请输入sim卡状态(未激活，自动激活，使用中，注销)" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">注销原因</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="outReason" placeholder="请输入注销原因" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item "style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">开卡时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simStartTime" id="simStartTime" lay-verify="required" placeholder="请输入开卡时间" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item "style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">沉默期(月)</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simReticentNum" lay-verify="required" placeholder="请输入沉默期(月)" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">卡的套餐描述</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simTaocanDesc"placeholder="请输入卡的套餐描述" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">付费类型</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="payType" value="0" title="月付">
+                            <input type="radio" name="payType" value="1" title="年付">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">金额</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="payMoney" lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;" layui-hide>
+                <label class="layui-form-label">自动激活时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="activeTime" id="activeTime"placeholder="请输入自动激活时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;" layui-hide>
+                <label class="layui-form-label">初次使用时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="firstUseTime" id="firstUseTime"placeholder="请输入初次使用时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                <label class="layui-form-label">续费时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="xufeiTime" id="xufeiTime"  placeholder="请输入续费时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                <label class="layui-form-label">到期时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="endTime" id="endTime"  placeholder="请输入到期时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum"  placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum"  placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">业户名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yehuName"  placeholder="请输入业户名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">卡占用人ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simUserId"  placeholder="请输入卡占用人ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">占用人TYPE</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="userType"  placeholder="请输入占用人TYPE" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 290px;height: 30px;">
+                        <label class="layui-form-label">卡占占用人</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="userSimrNameInput" name="userSimrNameInput" class="layui-input">
+                            <select id="userSimrName"  name="userName" lay-search="">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpSim-form-edit" id="ErpSim-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpSim-form-edit)', function(data){
+                var userId =  $("#userSimrName").val();
+                data.field.simUserId=userId;//卡占用人id
+
+                var supplierId =  $("#supplierName").val();
+                data.field.supplierId=supplierId;//供应商id
+
+                var val_payType = $('#payTypeId input[name="payType"]:checked ').val();//付费类型
+                data.field.payType=val_payType;
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpSim/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpSim-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#simStartTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#activeTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#firstUseTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#xufeiTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#endTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+
+
+            //查询所有SIM类型的供应商
+            function newSimOperatorList() {
+                var supplierNameInput = $("#supplierNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath +  '/admin/erpSupplier/listSimSupplierName.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var supplierName = data.data;
+                        //将查询到的角色列表展示到下拉框中去;
+                        if(supplierName!="undefined"){
+                            for(var i=0;i<supplierName.length;i++){
+                                var s = supplierName[i].id+","+supplierName[i].supplierName;
+                                $("#supplierName").append("<option value="+s+">"+supplierName[i].supplierName+"</option>");
+                                if(s==supplierNameInput){
+                                    $("#supplierName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            newSimOperatorList();
+
+            //查询所有角色
+            function RoleList() {
+                var userSimrNameInput = $("#userSimrNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpSim/listAllUserType.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var userType = data.data;
+                        //将查询到的角色列表展示到下拉框中去;
+                        if(userType!="undefined"){
+                            for(var i=0;i<userType.length;i++){
+                                var s = userType[i].id+","+userType[i].userName;
+                                $("#userSimrName").append("<option value="+s+">"+userType[i].userName+"</option>");
+                                if(s==userSimrNameInput){
+                                    $("#userSimrName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            RoleList();
+        })
+</script>
+</body>
+</html>

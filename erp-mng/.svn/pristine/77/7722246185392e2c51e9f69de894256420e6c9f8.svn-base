@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCompCodeMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCompCode" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="COMP_NAME" property="compName"/>
+			<result column="COMP_CODE" property="compCode"/>
+			<result column="CHARGE_PERSON" property="chargePerson"/>
+			<result column="PHONE_NUM" property="phoneNum"/>
+			<result column="LICENSE_NUM" property="licenseNum"/>
+			<result column="IMAGE_URL" property="imageUrl"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCompCodeView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, COMP_NAME, COMP_CODE, CHARGE_PERSON, PHONE_NUM, LICENSE_NUM, IMAGE_URL, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+		<if test='queryObj != null and  queryObj.id != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.id)'>
+		AND  ID = #{queryObj.id}
+		</if>
+		<if test='queryObj != null and  queryObj.createTime != null'>
+			AND  CREATE_TIME = #{queryObj.createTime}
+		</if>
+		<if test='queryObj != null and  queryObj.createUserId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.createUserId)'>
+		AND  CREATE_USER_ID = #{queryObj.createUserId}
+		</if>
+		<if test='queryObj != null and  queryObj.createUserName != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.createUserName)'>
+		AND  CREATE_USER_NAME = #{queryObj.createUserName}
+		</if>
+		<if test='queryObj != null and  queryObj.compName != null and queryObj.compName != ""'>
+		AND  COMP_NAME LIKE concat('%',#{queryObj.compName},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.compCode != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.compCode)'>
+		AND  COMP_CODE = #{queryObj.compCode}
+		</if>
+		<if test='queryObj != null and  queryObj.chargePerson != null and queryObj.chargePerson != ""'>
+		AND  CHARGE_PERSON LIKE concat('%',#{queryObj.chargePerson},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.phoneNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.phoneNum)'>
+		AND  PHONE_NUM = #{queryObj.phoneNum}
+		</if>
+		<if test='queryObj != null and  queryObj.licenseNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.licenseNum)'>
+		AND  LICENSE_NUM = #{queryObj.licenseNum}
+		</if>
+		<if test='queryObj != null and  queryObj.imageUrl != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.imageUrl)'>
+		AND  IMAGE_URL = #{queryObj.imageUrl}
+		</if>
+		<if test='queryObj != null and  queryObj.dataState != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.dataState)'>
+		AND  DATA_STATE = #{queryObj.dataState}
+		</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCompCodeQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_comp_code 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCompCodeQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_comp_code 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="selectAllCarInfo" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_comp_code
+		<where>
+			DATA_STATE='1'
+			<if test="compName != ''">
+				AND  COMP_NAME LIKE concat('%',#{compName},'%')
+			</if>
+			<if test="chargePerson != ''">
+				AND  CHARGE_PERSON LIKE concat('%',#{chargePerson},'%')
+			</if>
+		</where>
+	</select>
+
+
+	<!-- 批量删除 -->
+	<update id="updateByIdDelete" parameterType="java.util.List">
+		update erp_comp_code set DATA_STATE = '0' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<select id="selectByCodeAndCompName" parameterType="String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_comp_code
+		where DATA_STATE='1' and  (COMP_CODE=#{code} or COMP_NAME = #{compName})
+	</select>
+
+
+	<update id="updateVoId" parameterType="com.edgedo.sys.entity.ErpCompCode">
+		update erp_comp_code
+		<set>
+			<if test='compName != null and  compName != ""'>
+				COMP_NAME = #{compName},
+			</if>
+			<if test='compCode != null and  compCode != ""'>
+				COMP_CODE = #{compCode},
+			</if>
+			<if test='chargePerson != null and  chargePerson != ""'>
+				CHARGE_PERSON = #{chargePerson},
+			</if>
+			<if test='phoneNum != null and  phoneNum != ""'>
+				PHONE_NUM = #{phoneNum},
+			</if>
+			<if test='licenseNum != null and  licenseNum != ""'>
+				LICENSE_NUM = #{licenseNum},
+			</if>
+		</set>
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<select id="selectVoCompName" parameterType="String" resultType="int">
+		select count(1) from erp_comp_code
+		where DATA_STATE='1' and  COMP_NAME=#{compName}
+	</select>
+
+	<select id="selectVoCode" parameterType="String" resultType="int">
+		select count(1) from erp_comp_code
+		where DATA_STATE='1' and  COMP_CODE=#{compCode}
+	</select>
+
+
+	<select id="selectVoCompNameUpdate" parameterType="String" resultType="int">
+		select count(1) from erp_comp_code
+		where DATA_STATE='1' and  COMP_NAME=#{compName} and ID NOT in (#{id})
+	</select>
+
+	<select id="selectVoCodeUpdate" parameterType="String" resultType="int">
+		select count(1) from erp_comp_code
+		where DATA_STATE='1' and  COMP_CODE=#{compCode} and ID NOT in (#{id})
+	</select>
+
+</mapper>

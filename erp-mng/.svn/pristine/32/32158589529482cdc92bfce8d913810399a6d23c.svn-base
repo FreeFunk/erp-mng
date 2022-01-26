@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpSupplierMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpSupplier" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="SUPPLIER_NAME" property="supplierName"/>
+			<result column="GOODS_PERSON" property="goodsPerson"/>
+			<result column="SUPPLIER_TYPE" property="supplierType"/>
+			<result column="CONTACT_PHONE" property="contactPhone"/>
+			<result column="COMPANY_NAME" property="companyName"/>
+			<result column="COMPANY_TAX_NUM" property="companyTaxNum"/>
+			<result column="OPENING_BANK" property="openingBank"/>
+			<result column="COMPANY_ADDRESS" property="companyAddress"/>
+			<result column="COMPANY_TEL" property="companyTel"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpSupplierView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, SUPPLIER_NAME, GOODS_PERSON, SUPPLIER_TYPE, CONTACT_PHONE, COMPANY_NAME, COMPANY_TAX_NUM, OPENING_BANK, COMPANY_ADDRESS, COMPANY_TEL, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.supplierName != null'>
+					AND  SUPPLIER_NAME like '%${queryObj.supplierName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.supplierType != null'>
+					AND  SUPPLIER_TYPE like '%${queryObj.supplierType}%'
+				</if>
+				<if test='queryObj != null and  queryObj.contactPhone != null'>
+					AND  CONTACT_PHONE like '%${queryObj.contactPhone}%'
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpSupplierQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_supplier
+	  	<include refid="where"/>
+  </select>
+
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpSupplierQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_supplier 
+  		<include refid="where"/>
+  </select>
+  
+  <!-- 逻辑删除 -->
+	<update id="deleteByDataState" parameterType="java.util.List" >
+		UPDATE erp_supplier set  DATA_STATE= '0' where id in
+		<foreach collection="list" item="bean" index="index" open="(" close=")" separator=",">
+                #{bean}
+        </foreach>
+	</update>
+
+	<select id="selectBySupplierId" parameterType="java.lang.String" resultType="java.lang.String">
+		select SUPPLIER_NAME supplierName from erp_supplier where ID=#{supplierId} AND DATA_STATE= '1'
+	</select>
+
+	<select id="selectBySupplierName" parameterType="com.edgedo.sys.entity.ErpGpsTerminal" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_supplier
+		where SUPPLIER_NAME=#{supplierName}
+	</select>
+
+	<select id="selectSupplierName" parameterType="java.lang.String" resultType="String">
+		SELECT SUPPLIER_NAME supplierName from erp_supplier WHERE ID = #{id} AND DATA_STATE='1'
+	</select>
+
+	<select id="selectSupplierNames" resultType="com.edgedo.sys.entity.ErpSupplier">
+		SELECT ID id,SUPPLIER_NAME supplierName FROM erp_supplier
+		WHERE SUPPLIER_TYPE = 'SIM'
+	</select>
+
+	<select id="selectNewSimOperator" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_supplier
+		WHERE DATA_STATE='1'
+	</select>
+
+
+
+</mapper>

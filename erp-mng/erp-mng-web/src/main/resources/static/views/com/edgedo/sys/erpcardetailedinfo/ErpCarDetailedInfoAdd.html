@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpCarDetailedInfo-form" id="ErpCarDetailedInfo-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否定位</label>
+            <div class="layui-input-block">
+                <input type="text" name="isLocation" lay-verify="required" placeholder="请输入是否定位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属地区</label>
+            <div class="layui-input-block">
+                <input type="text" name="placeOfOrigin" lay-verify="required" placeholder="请输入所属地区" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">入网时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="insertNetwork" id="insertNetwork" lay-verify="required" placeholder="请输入入网时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">业户名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="yehuName" lay-verify="required" placeholder="请输入业户名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-block">
+                <input type="text" name="contactPerson" lay-verify="required" placeholder="请输入联系人" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="contactPhoneNum" lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车牌号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车牌颜色</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPlateColor" lay-verify="required" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车架号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carFrameNum" lay-verify="required" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="carType" lay-verify="required" placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆品牌</label>
+            <div class="layui-input-block">
+                <input type="text" name="carBrand" lay-verify="required" placeholder="请输入车辆品牌" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆型号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carModel" lay-verify="required" placeholder="请输入车辆型号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">燃料类型</label>
+            <div class="layui-input-block">
+                <input type="text" name="fuelType" lay-verify="required" placeholder="请输入燃料类型" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">总质量</label>
+            <div class="layui-input-block">
+                <input type="text" name="totalMass" lay-verify="required|number" placeholder="请输入总质量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">核定载质量</label>
+            <div class="layui-input-block">
+                <input type="text" name="hedingzaiMass" lay-verify="required|number" placeholder="请输入核定载质量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">准牵引总质量</label>
+            <div class="layui-input-block">
+                <input type="text" name="tractionMass" lay-verify="required|number" placeholder="请输入准牵引总质量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">外廓尺寸长</label>
+            <div class="layui-input-block">
+                <input type="text" name="techOuterLength" lay-verify="required" placeholder="请输入外廓尺寸长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">外廓尺寸宽</label>
+            <div class="layui-input-block">
+                <input type="text" name="techOuterWidth" lay-verify="required" placeholder="请输入外廓尺寸宽" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">外廓尺寸高</label>
+            <div class="layui-input-block">
+                <input type="text" name="techOuterHeight" lay-verify="required" placeholder="请输入外廓尺寸高" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">轴数</label>
+            <div class="layui-input-block">
+                <input type="text" name="axleNum" lay-verify="required|number" placeholder="请输入轴数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">轮胎数</label>
+            <div class="layui-input-block">
+                <input type="text" name="tyreNum" lay-verify="required|number" placeholder="请输入轮胎数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">轮胎规格</label>
+            <div class="layui-input-block">
+                <input type="text" name="tyreSpecifications" lay-verify="required" placeholder="请输入轮胎规格" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆出厂日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="carProduceDate" id="carProduceDate" lay-verify="required" placeholder="请输入车辆出厂日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">经营范围</label>
+            <div class="layui-input-block">
+                <input type="text" name="businessScope" lay-verify="required" placeholder="请输入经营范围" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车身颜色</label>
+            <div class="layui-input-block">
+                <input type="text" name="carBodyColor" lay-verify="required" placeholder="请输入车身颜色" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆购置方式</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPurchaseType" lay-verify="required" placeholder="请输入车辆购置方式" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆保险</label>
+            <div class="layui-input-block">
+                <input type="text" name="carInsuring" lay-verify="required" placeholder="请输入车辆保险" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆保险到期时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="carInsuringEndTime" id="carInsuringEndTime" lay-verify="required" placeholder="请输入车辆保险到期时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">道路运输证号</label>
+            <div class="layui-input-block">
+                <input type="text" name="roadTransportNum" lay-verify="required" placeholder="请输入道路运输证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">经营许可证号</label>
+            <div class="layui-input-block">
+                <input type="text" name="businessLicenseNumber" lay-verify="required" placeholder="请输入经营许可证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">终端ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalId" lay-verify="required" placeholder="请输入终端ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">终端编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalCode" lay-verify="required" placeholder="请输入终端编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">SIM卡号</label>
+            <div class="layui-input-block">
+                <input type="text" name="simCode" lay-verify="required" placeholder="请输入SIM卡号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">终端厂商</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalName" lay-verify="required" placeholder="请输入终端厂商" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpCarDetailedInfo-form-submit" id="ErpCarDetailedInfo-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(ErpCarDetailedInfo-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpCarDetailedInfo/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpCarDetailedInfo-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#insertNetwork', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#carProduceDate', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#carInsuringEndTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

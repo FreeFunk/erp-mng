@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="selectTime" name="queryObj.countData" placeholder="请输入查询时间" autocomplete="off" class="layui-input" >
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">转网类型</label>
+                    <div class="layui-input-inline">
+                        <!--<input type="text" name="queryObj.changeNetType" placeholder="请输入" autocomplete="off" class="layui-input">-->
+                        <select id="selectChangeNetType" name="queryObj.changeNetType">
+                            <option value="转出">转出</option>
+                            <option value="转入">转入</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpChangeNetSumMonth-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <!--<div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>
+            </div>-->
+            <div style="font-size: 30px;text-align: center;margin-bottom: 30px;margin-top: 20px" id="title"></div>
+            <table id="ErpChangeNetSumMonth-list" lay-filter="ErpChangeNetSumMonth-list"></table>
+            <!--<script type="text/html" id="table-ErpChangeNetSumMonth-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>-->
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common'
+        }).use(['index','table', 'form','common','laydate'], function(exports){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,table = layui.table
+                ,common = layui.common
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            //查询
+            form.on('submit(ErpChangeNetSumMonth-search)', function(data){
+                var field = data.field;
+
+                //执行重载
+                table.reload('ErpChangeNetSumMonth-list', {
+                    where: field,
+                    page:{
+                        curr:1
+                    }
+                });
+                //动态变化标题
+                var changeNetType = $("#selectChangeNetType").val();
+                var countData = $("#selectTime").val();
+                //alert(countData);
+                var countDatas = countData.split("-");
+                <!--2019年8月份(转出\转入)车辆分析表-->
+                $("#title").html("<p>" + countDatas[0] + "年" + countDatas[1] + "月"+" "+changeNetType+" "+"车辆分析表" + "</p>");
+            });
+
+
+            /*
+            * 定义表格
+            * */
+            defineTable = function () {
+                var headers = layui.admin.getTokenHeader();
+                table.render({
+                    elem: '#ErpChangeNetSumMonth-list' //指定原始表格的选择器（id选择器）
+                    ,url:layui.setter.basePath +'/admin/erpChangeNetSumMonth/listCountMonth.jsn' //模拟接口
+                    ,headers:headers
+                    ,method: 'post'
+                    ,parseData: function(res){ //res 即为原始返回的数据
+                        return {
+                            "code": res.success, //解析接口状态
+                            "msg": res.errMsg, //解析提示文本
+                            "count": res.totalCount, //解析数据长度
+                            "data": res.list //解析数据列表
+                        };
+                    }
+                    ,response: {
+                        statusCode: true //规定成功的状态码，默认：0
+                    }
+                    ,cols: [[
+                       /* {type: 'checkbox', fixed: 'left'}*/
+                    ,{field: 'id',align: 'center', width: 200, title: '主键',sort: true,hide:true}
+                    ,{field: 'createTime',align: 'center', width: 200, title: '创建时间',templet: function(d){
+                    return common.DateFormat(d.createTime,"yyyy-MM-dd");},hide:true}
+            ,{field: 'nowPt',align: 'center', width: 305, title: '现平台'}
+            ,{field: 'changeNetType',align: 'center', width: 86, title: '转网类型'}
+            ,{field: 'haiGangQu',align: 'center', width: 86, title: '海港区'}
+            ,{field: 'shanHaiGuanQu',align: 'center', width: 86, title: '山海关区'}
+            ,{field: 'beiDaiHeQu',align: 'center', width: 86, title: '北戴河区'}
+            ,{field: 'fuNingQu',align: 'center', width: 86, title: '抚宁区'}
+            ,{field: 'qingLongXian',align: 'center', width: 86, title: '青龙县'}
+            ,{field: 'changLiXian',align: 'center', width: 86, title: '昌黎县'}
+            ,{field: 'luLongXian',align: 'center', width: 86, title: '卢龙县'}
+            ,{field: 'kaiFaQu',align: 'center', width: 86, title: '开发区'}
+            ,{field: 'countMonth',align: 'center', width: 86, title: '统计月份',hide:true}
+            ,{field: 'countData',align: 'center', width: 86, title: '统计月份',hide:true}
+            ,{field: 'countType',align: 'center', width: 86, title: '统计类型',hide:true}
+            ,{field: 'sumCount',align: 'center', width: 80, title: '合计'}
+            ,{field: 'dataState',align: 'center', width: 86, title: '数据状态',hide:true}
+            ]]
+            ,autoSort: false
+                    /*,page: true
+                    ,limit: 10
+                    ,limits: [10, 20, 30,40]*/
+                    ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+                //为toolbar添加事件响应
+                table.on('tool(ErpChangeNetSumMonth-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    /*var data = obj.data;*///获得当前行数据
+                    //区分事件
+                    switch(obj.event){
+                        case 'del':
+                            deleteVo(obj);
+                            break;
+                        case 'edit':
+                            editVo(obj);
+                            break;
+                    };
+                });
+
+                //监听排序事件
+                table.on('sort(ErpChangeNetSumMonth-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                    var sort = obj.field;
+                    //默认排序
+                    switch(obj.field){
+                        case 'id':
+                            sort ="ID";
+                            break;
+                        case 'createTime':
+                            sort ="CREATE_TIME";
+                            break;
+                        case 'changeNetType':
+                            sort ="CHANGE_NET_TYPE";
+                            break;
+                        case 'nowPt':
+                            sort ="NOW_PT";
+                            break;
+                        case 'haiGangQu':
+                            sort ="HAI_GANG_QU";
+                            break;
+                        case 'shanHaiGuanQu':
+                            sort ="SHAN_HAI_GUAN_QU";
+                            break;
+                        case 'beiDaiHeQu':
+                            sort ="BEI_DAI_HE_QU";
+                            break;
+                        case 'fuNingQu':
+                            sort ="FU_NING_QU";
+                            break;
+                        case 'qingLongXian':
+                            sort ="QING_LONG_XIAN";
+                            break;
+                        case 'changLiXian':
+                            sort ="CHANG_LI_XIAN";
+                            break;
+                        case 'luLongXian':
+                            sort ="LU_LONG_XIAN";
+                            break;
+                        case 'kaiFaQu':
+                            sort ="KAI_FA_QU";
+                            break;
+                        case 'countMonth':
+                            sort ="COUNT_MONTH";
+                            break;
+                        case 'countData':
+                            sort ="COUNT_DATA";
+                            break;
+                        case 'countType':
+                            sort ="COUNT_TYPE";
+                            break;
+                        case 'sumCount':
+                            sort ="SUM_COUNT";
+                            break;
+                        case 'dataState':
+                            sort ="DATA_STATE";
+                            break;
+                    };
+                    if(obj.type==null){
+                        return;
+                    }
+                    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                    table.reload('ErpChangeNetSumMonth-list', {
+                        initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                        ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                            orderBy: sort+" "+obj.type //排序字段
+                        }
+                    });
+                });
+            }
+            defineTable();
+            //标题
+            var titleInit = function() {
+                $("#selectTime").val("2019-10");
+                var changeNetType = $("#selectChangeNetType").val();
+                var countData = $("#selectTime").val();
+                //alert(countData);
+                var countDatas = countData.split("-");
+                <!--2019年8月份(转出\转入)车辆分析表-->
+                $("#title").html("<p>" + countDatas[0] + "年" + countDatas[1] + "月"+changeNetType+"车辆分析表" + "</p>");
+                layui.form.render('div');
+
+            }
+            //初始化标题
+            titleInit();
+
+           /* function Statistics(){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpChangeNetSumMonth/saveOrUpdate.jsn',
+                    method:"post",
+                    data:{},
+                    success:function (data) {
+
+                    },
+                });
+            }
+            Statistics();*/
+            //绑定点击事件
+            $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            laydate.render({
+                elem: '#selectTime'//元素选择
+                ,type: 'month'
+            });
+        });
+
+
+</script>
+</body>
+</html>
+

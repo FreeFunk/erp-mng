@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-form" lay-filter="ErpWorkTaskOrderDetailsVo-form" id="ErpWorkTaskOrderDetailsVo-form" style="padding: 20px 30px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">任务标题</label>
+        <div class="layui-input-block">
+            <input type="text" readonly name="ownerWorkTaskTitle" id="ownerWorkTaskTitle"autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">任务描述</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="ownerWorkTaskDesc" name="ownerWorkTaskDesc" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">内勤人员名</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="innerUserName" name="innerUserName" placeholder="请输入加班描述" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">外勤人员名</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="outputUserName" name="outputUserName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">工单状态</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="taskOrderState" name="taskOrderState" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否加班</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="isOverWork" name="isOverWork" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">加班时长(分)</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="overWorkTime" name="overWorkTime" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">加班描述</label>
+        <div class="layui-input-block">
+            <input type="text"readonly id="overWorkDesc" name="overWorkDesc" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认人</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="confirmUserName" name="confirmUserName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认时间</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="confirmTime" name="confirmTime" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">完成人</label>
+        <div class="layui-input-block">
+            <input type="text"readonly id="finishedUserName" name="finishedUserName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">完成时间</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="finishedTime" name="finishedTime" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">转出人</label>
+        <div class="layui-input-block">
+            <input type="text"readonly id="outUserName" name="outUserName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">转出时间</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="outTime" name="outTime" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">转出原因</label>
+        <div class="layui-input-block">
+            <input type="text" readonly id="outReason" name="outReason" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index:'lib/index',
+        common:'common'
+    }).use(['index','table', 'form','common'], function(exports){
+        var $ = layui.$
+            ,table = layui.table
+            ,common = layui.common
+            ,admin = layui.admin
+            ,form = layui.form;
+
+
+        //获取当前车牌号和车架号
+        getOrder = function() {
+            admin.req({
+                url: layui.setter.basePath + '/admin/erpWorkTaskOrder/orderOneInfo.jsn',
+                data:{},
+                method:"post",
+                success:function (data) {
+                    //任务标题
+                    if(data.data.ownerWorkTaskTitle==null){
+                        $("#ownerWorkTaskTitle")[0].value="";
+                    }else {
+                        $("#ownerWorkTaskTitle")[0].value=data.data.ownerWorkTaskTitle;
+                    }
+                    //任务描述
+                    if(data.data.ownerWorkTaskDesc==null){
+                        $("#ownerWorkTaskDesc")[0].value="";
+                    }else {
+                        $("#ownerWorkTaskDesc")[0].value=data.data.ownerWorkTaskDesc;
+                    }
+                    //内勤人员名
+                    if(data.data.innerUserName==null){
+                        $("#innerUserName")[0].value="";
+                    }else {
+                        $("#innerUserName")[0].value=data.data.innerUserName;
+                    }
+                    //外勤人员名
+                    if(data.data.outputUserName==null){
+                        $("#outputUserName")[0].value="";
+                    }else {
+                        $("#outputUserName")[0].value=data.data.outputUserName;
+                    }
+
+                    //工单状态
+                    var dateOrder = data.data.taskOrderState;
+                    if(dateOrder==0){
+                        dateOrder = "未确认";
+                    }else if(dateOrder==1) {
+                        dateOrder =  "已确认";
+                    }else if(dateOrder==2) {
+                        dateOrder = "已完成";
+                    }else if(dateOrder==3) {
+                        dateOrder = "转出";
+                    }else{
+                        dateOrder =  "";
+                    }
+                    $("#taskOrderState")[0].value=dateOrder;
+                    //是否加班
+                    var jiaBan = data.data.isOverWork;
+                    if (jiaBan == 1) {
+                        jiaBan = '是';
+                    } else if (jiaBan == 0) {
+                        jiaBan = '否';
+                    } else {
+                        jiaBan = "";
+                    }
+                    $("#isOverWork")[0].value=jiaBan;
+                    //加班时长(分钟)
+                    if(data.data.overWorkTime==null){
+                        $("#overWorkTime")[0].value="";
+                    }else {
+                        $("#overWorkTime")[0].value=data.data.overWorkTime;
+                    }
+
+                    //加班描述
+                    if(data.data.overWorkDesc==null){
+                        $("#overWorkDesc")[0].value="";
+                    }else {
+                        $("#overWorkDesc")[0].value=data.data.overWorkDesc;
+                    }
+
+                    //确认人
+                    if(data.data.confirmUserName==null){
+                        $("#confirmUserName")[0].value="";
+                    }else {
+                        $("#confirmUserName")[0].value=data.data.confirmUserName;
+                    }
+
+                    //确认时间
+                    if(data.data.confirmTime==null){
+                        $("#confirmTime")[0].value="";
+                    }else {
+                        $("#confirmTime")[0].value=data.data.confirmTime;
+                    }
+
+                    //完成人
+                    if(data.data.finishedUserName==null){
+                        $("#finishedUserName")[0].value="";
+                    }else {
+                        $("#finishedUserName")[0].value=data.data.finishedUserName;
+                    }
+
+                    //完成时间
+                    if(data.data.finishedTime==null){
+                        $("#finishedTime")[0].value="";
+                    }else {
+                        $("#finishedTime")[0].value=data.data.finishedTime;
+                    }
+
+                    //转出人
+                    if(data.data.outUserName==null){
+                        $("#outUserName")[0].value="";
+                    }else {
+                        $("#outUserName")[0].value=data.data.outUserName;
+                    }
+
+                    //转出时间
+                    if(data.data.outTime==null){
+                        $("#outTime")[0].value="";
+                    }else {
+                        $("#outTime")[0].value=data.data.outTime;
+                    }
+
+                    //转出原因
+                    if(data.data.outReason==null){
+                        $("#outReason")[0].value="";
+                    }else {
+                        $("#outReason")[0].value=data.data.outReason;
+                    }
+                },
+            });
+        }
+        getOrder();
+    });
+
+</script>
+</body>
+</html>

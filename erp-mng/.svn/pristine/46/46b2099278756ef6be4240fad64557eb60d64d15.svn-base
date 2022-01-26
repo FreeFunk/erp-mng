@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.edgedo.plant</groupId>
+		<artifactId>edgedo_plant</artifactId>
+		<version>1.0-RELEASE</version>
+	</parent>
+	<groupId>com.edgedo.erp</groupId>
+	<artifactId>erp-mng-web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>erp后台管理</name>
+	<description>erp后台管理</description>
+
+	<properties>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.edgedo.plant</groupId>
+			<artifactId>sys-mng-web</artifactId>
+			<version>1.0-RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>com.edgedo.plant</groupId>
+			<artifactId>sys-phone-msg-client-starter</artifactId>
+			<version>1.0-RELEASE</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<addResources>true</addResources>
+					<classifier>exec</classifier>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+</project>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/app.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpCarInfo-form" id="ErpCarInfo-form" style="padding: 20px 30px 0 0;">
+    <div class="layui-row">
+    <div class="layui-form-item layui-hide">
+        <label class="layui-form-label">主键</label>
+        <div class="layui-input-block">
+            <input type="text" name="id" id="id" autocomplete="off" class="layui-input" readonly>
+        </div>
+    </div>
+    <div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">车牌号</label>
+        <div class="layui-input-block">
+            <input type="text" name="carPlateNum" autocomplete="off" class="layui-input"readonly>
+        </div>
+    </div>
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">车牌颜色</label>-->
+        <!--<div id="carPaiColor" class="layui-input-block">-->
+            <!--<input type="text" name="carPlateColor" autocomplete="off" class="layui-input"readonly>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">车架号</label>
+        <div class="layui-input-block">
+            <input type="text" name="carFrameNum" autocomplete="off" class="layui-input"readonly>
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">SIM卡号</label>
+        <div class="layui-input-block">
+            <input type="text" name="simCode" readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">SIM状态</label>
+        <div class="layui-input-block">
+            <input type="text" id="simState" name="simState" readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+        <div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">
+            <label class="layui-form-label">供应商名</label>
+            <div class="layui-input-block">
+                <input type="text" id="supplierNameInput" readonly name="supplierName" class="layui-input">
+            </div>
+        </div>
+
+    <div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">县区名</label>
+        <div class="layui-input-block">
+            <input type="text" id="xianquNameInput" readonly name="xianquNameInput" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">服务费到期时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="endTime" id="serviceMoneyEndTime" readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+        <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+            <label class="layui-form-label">所属终端ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalId" readonly autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">终端厂商</label>
+        <div class="layui-input-block">
+            <input type="text" name="terminalChangshang"readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">收款金额</label>
+        <div class="layui-input-block">
+            <input type="text" name="getMoneyNum"readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">入网时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="firstOnlineTime" readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item " style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">北斗平台</label>
+        <div class="layui-input-block">
+            <input type="text" id="beidouOperatorInput" readonly name="beidouOperatorInput" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">
+        <label class="layui-form-label">上次续费时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="lastXufeiTime" id="lastXufeiTime"  readonly autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+    <!--<label class="layui-form-label">备注</label>-->
+    <!--<div class="layui-input-block">-->
+    <!--<input type="text" name="remark" readonly autocomplete="off" class="layui-input">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">道路运输证号</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="roadTransportNum" autocomplete="off" class="layui-input"readonly>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">经营许可证号</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="businessLicenseNumber" autocomplete="off" class="layui-input"readonly>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">业户名称</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="yehuName" placeholder="请输入业户名称" autocomplete="off" class="layui-input"readonly>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">所属车队ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="ownerTeamId" autocomplete="off" class="layui-input"readonly>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">车队名</label>-->
+        <!--<div class="layui-input-block" lay-filter="ownerTeam">-->
+            <!--<input  type="text" id="ownerTeamNameInput" readonly name="ownerTeamNameInput" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">联系人</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="contactPerson" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item"  style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">联系电话</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="contactPhoneNum" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide " >-->
+        <!--<label class="layui-form-label layui-hide" >省ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="provinceId" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label">省名</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="provinceName" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">城市ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="cityId"readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label">城市名</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="cityName"readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">县区ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="xianquId" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+
+
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">终端编号</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="terminalCode"readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">终端安装类型</label>-->
+        <!--<div id="InstallType" class="layui-input-block">-->
+            <!--<input type="text" name="terminalInstallType" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">渠道代理ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="channelAgentId"readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">渠道代理</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input  type="text" id="channelAgentNameInput" readonly name="channelAgentNameInput" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">业务人员ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="yewuUserId" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">业务人员名</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input  type="text" id="yewuUserNameInput" readonly name="yewuUserNameInput" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">安装人员ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="installUserId" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">安装人员名</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" id="installUserNameInput" readonly name="installUserNameInput" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item layui-hide">-->
+        <!--<label class="layui-form-label layui-hide">录入人员ID</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="inputUserId"  readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">录入人员名</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" id="inputUserNameInput" name="inputUserNameInput" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">是否收款</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input  type="text" id="payStateInput" readonly name="payStateInput" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">收款人</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="getMoneyUser" readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">收款方式</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" id="getMoneyTypeInput" readonly name="getMoneyTypeInput" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">业务负责人</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="yehuPerson"  readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="layui-form-item" style="display: inline-block;width: 299px;height: 30px;">-->
+        <!--<label class="layui-form-label">安装时间</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="text" name="installationTime" id="installationTime"readonly autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+
+</div>
+
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+        $tool:'tool'
+    }).use(['index', 'form','$tool','laydate'], function(){
+
+        var $ = layui.$
+            ,$tool = layui.$tool
+            ,laydate = layui.laydate
+            ,admin = layui.admin
+            ,form = layui.form;
+
+        var simCode = getQueryVariable("simCode");
+        initSimCode();
+        function initSimCode() {
+            admin.req({
+                url:layui.setter.basePath + '/admin/erpSim/loadBySimNum.jsn',
+                method:"post",
+                data:{'simNum':simCode} ,
+                success:function(data){
+                    var simStateStr = getSimState(data.data.simState);
+                    $("#simState").val(simStateStr);
+                }
+            });
+        }
+        // 初始化sim卡状态
+        function getSimState(simState) {
+            switch(simState){
+                case '0':
+                return "未激活";
+                case '1':
+                    return "自动激活";
+                case '2':
+                    return "使用中";
+                case '3':
+                    return "注销";
+                case '4':
+                    return "在线";
+            }
+            return""
+        }
+        laydate.render({
+            elem: '#createTime', //指定元素
+            type:'datetime'
+        });
+        laydate.render({
+            elem: '#changeSimTime', //指定元素
+            type:'datetime'
+        });
+    })
+</script>
+</body>
+</html>

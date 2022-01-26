@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpCarInfo-form" id="ErpCarInfo-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id"  placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label" >车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div id="carPaiColor" class="layui-input-block">
+                            <input type="radio" name="carPlateColor" lay-verify="required" value="1" title="黄色" checked="">
+                            <input type="radio" name="carPlateColor" lay-verify="required" value="0" title="蓝色">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum" lay-verify="required" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车辆类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carType"  placeholder="请输入车辆类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车辆品牌</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carBrand" placeholder="请输入车辆品牌" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车辆型号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carModel" placeholder="请输入车辆型号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">燃料类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="fuelType"  placeholder="请输入燃料类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">总质量</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="totalMass" placeholder="请输入总质量" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">核定载质量</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="hedingzaiMass"  placeholder="请输入核定载质量" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">准牵引总质量</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="tractionMass" placeholder="请输入准牵引总质量" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">外廓尺寸长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="techOuterLength" placeholder="请输入外廓尺寸长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">外廓尺寸宽</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="techOuterWidth"  placeholder="请输入外廓尺寸宽" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">外廓尺寸高</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="techOuterHeight"  placeholder="请输入外廓尺寸高" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">货箱内部尺寸-长</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="boxInnerLength"placeholder="请输入货箱内部尺寸-长" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">货厢内部尺寸-宽</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="boxInnerWidth"  placeholder="请输入货厢内部尺寸-宽" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">货厢内部尺寸-高</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="boxInnerHeight"  placeholder="请输入货厢内部尺寸-高" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">轴数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="axleNum"  placeholder="请输入轴数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">轮胎数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="tyreNum"  placeholder="请输入轮胎数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">轮胎规格</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="tyreSpecifications" placeholder="请输入轮胎规格" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">车辆出厂日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="carProduceDate" id="carProduceDate"  placeholder="请输入车辆出厂日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">经营范围</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="businessScope"placeholder="请输入经营范围" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车身颜色</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carBodyColor"  placeholder="请输入车身颜色" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车辆购置方式</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPurchaseType"  placeholder="请输入车辆购置方式" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">车辆保险到期时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="carInsuringEndTime" id="carInsuringEndTime"  placeholder="请输入车辆保险到期时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">检验有效期至</label>
+                <div class="layui-input-block">
+                    <input type="text" name="carCheckEndTime" id="carCheckEndTime"  placeholder="请输入检验有效期至" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">执照上传数</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="licenseUploadNum"  placeholder="请输入执照上传数" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">服务合同到期时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="serviceContractEndTime" id="serviceContractEndTime"  placeholder="请输入服务合同到期时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">行驶证发证时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="drivingPermitStartTime" id="drivingPermitStartTime"  placeholder="请输入行驶证发证时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">发动机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="engineNumber"  placeholder="请输入发动机号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">发动机型号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="engineModel"  placeholder="请输入发动机型号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpCarInfo-form-submit" id="ErpCarInfo-form-submit" value="确认">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpCarInfo-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                var carPlateColor = $('#carPaiColor input[name="carPlateColor"]:checked ').val();//车辆颜色
+                data.field.carPlateColor = carPlateColor;
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpCarTechnicalDossier/saveOrUpdateNew.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpCarInfo-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('技术档案修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#carProduceDate', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#carInsuringEndTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#carCheckEndTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#serviceContractEndTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+            laydate.render({
+                elem: '#drivingPermitStartTime', //指定元素
+                type:'datetime'
+                ,trigger: 'click'
+            });
+        })
+</script>
+</body>
+</html>

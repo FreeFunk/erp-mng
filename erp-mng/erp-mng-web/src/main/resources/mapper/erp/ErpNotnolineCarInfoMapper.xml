@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpNotnolineCarInfoMapper" >
+
+
+	<resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpNotnolineCarInfo" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="YEHU_NAME" property="yehuName"/>
+		<result column="CONTACT_PERSON" property="contactPerson"/>
+		<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+		<result column="TERMINAL_CHANGSHANG" property="terminalChangshang"/>
+		<result column="TERMINAL_MODEL" property="terminalModel"/>
+		<result column="UNLOCATION_DAY" property="unlocatonDay"/>
+		<result column="SEND_MSG_NUM" property="sendMsgNum"/>
+		<result column="LAST_LOCALTION_TIME" property="lastLocaltionTime"/>
+		<result column="DATA_STATE" property="dataState"/>
+		<result column="sysutc" property="sysutc"/>
+	</resultMap>
+
+	<resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpNotnolineCarInfoView" extends="BaseResultMap">
+
+	</resultMap>
+
+
+	<!-- ******* 新增字段请修改这里  ******  -->
+	<sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,UNLOCATION_DAY,SEND_MSG_NUM , LAST_LOCALTION_TIME, DATA_STATE,sysutc
+  </sql>
+
+	<!-- ******* 利用好这里的动态查询条件  ******  -->
+	<sql id="where">
+		<where>
+			DATA_STATE='1'
+			AND
+			CAR_PLATE_NUM like '冀C%'
+			<if test='queryObj != null and  queryObj.createTime != null'>
+				AND  CREATE_TIME = #{queryObj.createTime}
+			</if>
+			<if test='queryObj != null and  queryObj.lastLocaltionTime != null'>
+				AND  LAST_LOCALTION_TIME = #{queryObj.lastLocaltionTime}
+			</if>
+			<if test='queryObj != null and  queryObj.unlocatonDay != null'>
+				AND  UNLOCATION_DAY like '%${queryObj.unlocatonDay}%'
+			</if>
+			<if test='queryObj != null and  queryObj.carPlateNum != null'>
+				AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+			</if>
+			<if test="queryObj != null and  queryObj.contactPhoneNum != null and  queryObj.contactPhoneNum != ''">
+				AND  CONTACT_PHONE_NUM like concat('%',#{queryObj.contactPhoneNum},'%')
+			</if>
+		</where>
+
+	</sql>
+
+	<!-- ******* 排序判断  ******
+    <sql id="orderBy">
+        <if test="orderBy != null and orderBy!= '' ">
+            order by  ${orderBy}
+        </if>
+    </sql>-->
+
+
+	<!-- 分页条件查询  -->
+	<select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpNotnolineCarInfoQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_notnoline_car_info
+		<include refid="where"/>
+	</select>
+
+	<select id="selectByAll" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_notnoline_car_info <include refid="where"/>
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deteleByAll">
+		delete from erp_notnoline_car_info where UNLOCATION_DAY=#{todayNum} and CAR_PLATE_NUM in
+		<foreach collection="list" item="item" index="no" open="(" separator="," close=")">
+			#{item.carPlateNum}
+		</foreach>
+	</delete>
+
+	<!-- 不分页条件查询  -->
+	<select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpNotnolineCarInfoQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_notnoline_car_info
+		<include refid="where"/>
+	</select>
+
+	<select id="selectByCarNumAndLastTime" resultType="java.lang.Integer">
+		select count(1) from erp_notnoline_car_info where CAR_PLATE_NUM=#{arg1} AND UNLOCATION_DAY=#{arg0} AND DATA_STATE='1'
+	</select>
+
+	<insert id="insertByList" parameterType="java.util.List">
+		insert into erp_notnoline_car_info
+		(ID, CREATE_TIME, CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,UNLOCATION_DAY , LAST_LOCALTION_TIME, DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id},
+			#{item.createTime},
+			#{item.carPlateNum},
+			#{item.yehuName},
+			#{item.contactPerson},
+			#{item.contactPhoneNum},
+			#{item.terminalChangshang},
+			#{item.terminalModel},
+			#{item.unlocatonDay},
+			#{item.lastLocaltionTime},
+			#{item.dataState}
+			)
+		</foreach>
+	</insert>
+
+
+	<update id="updateByList" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			UPDATE erp_notnoline_car_info
+			<set>
+				CREATE_TIME=#{item.createTime},
+				CAR_PLATE_NUM=#{item.carPlateNum},
+				YEHU_NAME=#{item.yehuName},
+				CONTACT_PERSON=#{item.contactPerson},
+				CONTACT_PHONE_NUM=#{item.contactPhoneNum},
+				TERMINAL_CHANGSHANG=#{item.terminalChangshang},
+				TERMINAL_MODEL=#{item.terminalModel},
+				UNLOCATION_DAY=#{item.unlocatonDay},
+				LAST_LOCALTION_TIME=#{item.lastLocaltionTime},
+				DATA_STATE=#{item.dataState}
+			</set>
+			<where>
+				CAR_PLATE_NUM=#{item.carPlateNum} AND UNLOCATION_DAY=#{item.unlocatonDay} AND DATA_STATE='1'
+			</where>
+		</foreach>
+	</update>
+
+
+	<!-- 根据剧典id list查询剧典 -->
+	<select id="selectByListId" parameterType="java.util.List" resultMap="BaseResultMap">
+		select ID, CREATE_TIME, group_concat(CAR_PLATE_NUM) CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,UNLOCATION_DAY,SEND_MSG_NUM , LAST_LOCALTION_TIME, DATA_STATE from erp_notnoline_car_info where ID in
+		<foreach collection="list" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach> AND DATA_STATE='1' AND CAR_PLATE_NUM LIKE '%冀C%' group by CONTACT_PHONE_NUM
+	</select>
+
+	<select id="selectByAllInfo" resultMap="BaseResultMap">
+		select  ID, CREATE_TIME, group_concat(CAR_PLATE_NUM) CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,UNLOCATION_DAY,SEND_MSG_NUM , LAST_LOCALTION_TIME, DATA_STATE from erp_notnoline_car_info
+		where UNLOCATION_DAY=#{unlocatonDay} and DATA_STATE='1' AND CAR_PLATE_NUM LIKE '%冀C%' group by CONTACT_PHONE_NUM
+	</select>
+
+	<select id="selectByMsgId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_notnoline_car_info where ID=#{ownerUnlocationRemindId} AND DATA_STATE='1'
+	</select>
+
+	<update id="updateByAllSendMsgNum" parameterType="java.lang.String">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			UPDATE erp_notnoline_car_info
+			<set>
+				SEND_MSG_NUM=#{item.sendMsgNum}
+			</set>
+			<where>
+				ID=#{item.id} AND DATA_STATE='1'
+			</where>
+		</foreach>
+	</update>
+
+	<delete id="deleteByTime" parameterType="java.lang.String">
+		DELETE FROM erp_notnoline_car_info WHERE id IN
+			  (SELECT * FROM
+				(SELECT id FROM erp_notnoline_car_info WHERE NOT CREATE_TIME BETWEEN #{arg1} and #{arg0} and DATA_STATE='1') t1)
+	</delete>
+
+<select id="countByTypeId" parameterType="string" resultType="int">
+	select count(1) from erp_notnoline_car_info where UNLOCATION_DAY = #{type};
+</select>
+
+	<insert id="insertType1" parameterType="java.util.List">
+		insert IGNORE  erp_notnoline_car_info
+		( ID, CREATE_TIME, CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,
+		UNLOCATION_DAY, SEND_MSG_NUM, sysutc, DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			replace(uuid(),'-','') ,
+			NOW(),
+			#{item.vehicleNo},
+			#{item.companyname},
+			#{item.vehicleOwnerName},
+			#{item.vehicleOwnerPhone},
+			#{item.oemName},
+			#{item.tmodelName},
+			'1',
+			null,
+			#{item.sysutc},
+			'1'
+			)
+		</foreach>
+	</insert>
+
+	<insert id="insertType2" parameterType="java.util.List">
+		insert IGNORE  erp_notnoline_car_info
+		( ID, CREATE_TIME, CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,
+		UNLOCATION_DAY, SEND_MSG_NUM, sysutc, DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			replace(uuid(),'-','') ,
+			NOW(),
+			#{item.vehicleNo},
+			#{item.companyname},
+			#{item.vehicleOwnerName},
+			#{item.vehicleOwnerPhone},
+			#{item.oemName},
+			#{item.tmodelName},
+			'2',
+			null,
+			#{item.sysutc},
+			'1'
+			)
+		</foreach>
+	</insert>
+	<insert id="insertType3" parameterType="java.util.List">
+		insert IGNORE  erp_notnoline_car_info
+		( ID, CREATE_TIME, CAR_PLATE_NUM, YEHU_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TERMINAL_CHANGSHANG, TERMINAL_MODEL,
+		UNLOCATION_DAY, SEND_MSG_NUM, sysutc, DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			replace(uuid(),'-','') ,
+			NOW(),
+			#{item.vehicleNo},
+			#{item.companyname},
+			#{item.vehicleOwnerName},
+			#{item.vehicleOwnerPhone},
+			#{item.oemName},
+			#{item.tmodelName},
+			'3',
+			null,
+			#{item.sysutc},
+			'1'
+			)
+		</foreach>
+	</insert>
+
+</mapper>

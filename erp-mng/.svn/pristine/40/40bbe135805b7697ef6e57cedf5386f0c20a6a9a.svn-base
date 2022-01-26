@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpSimMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpSim" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="SIM_NUM" property="simNum"/>
+			<result column="SUPPLIER_ID" property="supplierId"/>
+			<result column="SUPPLIER_NAME" property="supplierName"/>
+			<result column="SET_MEAL_NAME" property="setMealName"/>
+			<result column="SIM_STATE" property="simState"/>
+			<result column="OUT_REASON" property="outReason"/>
+			<result column="SIM_START_TIME" property="simStartTime"/>
+			<result column="SIM_RETICENT_NUM" property="simReticentNum"/>
+			<result column="SIM_TAOCAN_DESC" property="simTaocanDesc"/>
+			<result column="PAY_TYPE" property="payType"/>
+			<result column="PAY_MONEY" property="payMoney"/>
+			<result column="ACTIVE_TIME" property="activeTime"/>
+			<result column="FIRST_USE_TIME" property="firstUseTime"/>
+			<result column="XUFEI_TIME" property="xufeiTime"/>
+			<result column="END_TIME" property="endTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="YEHU_NAME" property="yehuName"/>
+			<result column="SIM_USER_ID" property="simUserId"/>
+			<result column="USER_TYPE" property="userType"/>
+			<result column="SIM_USER_NAME" property="simUserName"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+	<!--用户表-->
+	<resultMap id="BaseResultSysUserMap" type="com.edgedo.sys.entity.SysUser" >
+		<id column="ID" property="id"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="COMP_ID" property="compId"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER" property="createUser"/>
+		<result column="DEPT_ID" property="deptId"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_SEX" property="userSex"/>
+		<result column="AGE" property="age"/>
+		<result column="PHONE" property="phone"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="ID_CARD_NUM" property="idCardNum"/>
+		<result column="ID_CARD_PHOTO1" property="idCardPhoto1"/>
+		<result column="ID_CARD_PHOTO" property="idCardPhoto"/>
+		<result column="HEAD_PHOTO" property="headPhoto"/>
+		<result column="USER_STATE" property="userState"/>
+		<result column="DATA_STATE" property="dataState"/>
+		<result column="LOGIN_STATE" property="loginState"/>
+		<result column="LOGIN_TIME" property="loginTime"/>
+		<result column="DEFAULT_ROLE_ID" property="defaultRoleId"/>
+		<result column="DEFAULT_ROLE_NAME" property="defaultRoleName"/>
+		<result column="IS_UP_PWD" property="isUpPwd"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+	</resultMap>
+
+
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpSimView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, SIM_NUM, SUPPLIER_ID, SUPPLIER_NAME, SET_MEAL_NAME, SIM_STATE, OUT_REASON, SIM_START_TIME, SIM_RETICENT_NUM, SIM_TAOCAN_DESC, PAY_TYPE, PAY_MONEY, ACTIVE_TIME, FIRST_USE_TIME, XUFEI_TIME, END_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, YEHU_NAME, SIM_USER_ID, USER_TYPE, SIM_USER_NAME, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.simStartTime != null'>
+					AND  SIM_START_TIME = #{queryObj.simStartTime}
+				</if>
+				<if test='queryObj != null and  queryObj.simReticentNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.simReticentNum)'>
+					AND  SIM_RETICENT_NUM = #{queryObj.simReticentNum}
+				</if>
+				<if test='queryObj != null and  queryObj.activeTime != null'>
+					AND  ACTIVE_TIME = #{queryObj.activeTime}
+				</if>
+				<if test='queryObj != null and  queryObj.firstUseTime != null'>
+					AND  FIRST_USE_TIME = #{queryObj.firstUseTime}
+				</if>
+				<if test='queryObj != null and  queryObj.xufeiTime != null'>
+					AND  XUFEI_TIME = #{queryObj.xufeiTime}
+				</if>
+				<if test="queryObj != null and  queryObj.simNum != null and  queryObj.simNum != ''">
+					AND  SIM_NUM like '%${queryObj.simNum}%'
+				</if>
+				<if test="queryObj != null and  queryObj.simState != null and  queryObj.simState != ''">
+					AND  SIM_STATE like '%${queryObj.simState}%'
+				</if>
+				<if test='queryObj != null and  queryObj.selectTime != null and queryObj != null and  queryObj.newEndTime != null'>
+					AND END_TIME between #{queryObj.selectTime} and #{queryObj.newEndTime}
+				</if>
+				<if test="queryObj != null and queryObj.supplierName !=null and queryObj.supplierName != '' ">
+					AND SUPPLIER_NAME = #{queryObj.supplierName}
+				</if>
+				<if test="queryObj != null and  queryObj.carPlateNum != null and queryObj.carPlateNum !='' ">
+					AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+				</if>
+
+
+	</where>
+
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpSimQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_sim 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpSimQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_sim 
+  		<include refid="where"/>
+  </select>
+
+	<update id="updateBySimState" parameterType="com.edgedo.sys.entity.ErpSim">
+		update erp_sim
+		set SIM_STATE=#{simState},DATA_STATE='0'
+		where ID=#{id};
+	</update>
+
+
+	<!-- 逻辑删除 -->
+	<update id="deleteByIdsOne" parameterType="java.lang.String">
+		update erp_sim set DATA_STATE='0', SIM_STATE='3' where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdsAll" parameterType="java.util.List">
+		update erp_sim set DATA_STATE = '0',SIM_STATE='3' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<select id="listBySysUser" parameterType="com.edgedo.sys.entity.SysUser" resultMap="BaseResultSysUserMap">
+		select * from sys_user where DEFAULT_ROLE_ID='AGENT' or DEFAULT_ROLE_ID='STAFF'
+	</select>
+
+	<select id="selectByIdSysUser" parameterType="java.lang.String" resultMap="BaseResultSysUserMap">
+		select * from sys_user where ID=#{userId};
+	</select>
+
+	<update id="updateBySimStateChange" parameterType="java.lang.String">
+		update erp_sim set SIM_STATE=#{param1} where SIM_NUM=#{param2} and DATA_STATE='1'
+	</update>
+
+	<select id="selectBySimCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_sim where SIM_NUM=#{simCode} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_sim where SIM_NUM=#{newSimNum} and DATA_STATE='1'
+	</select>
+
+	<select id="selectSim" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_sim where SIM_STATE='0' or SIM_STATE='1' and DATA_STATE='1'
+	</select>
+
+	<select id="selectNewSimOperator" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_sim where SIM_STATE='0' or SIM_STATE='1' and DATA_STATE='1'
+	</select>
+
+	<update id="updateZhuXiao" parameterType="com.edgedo.sys.entity.ErpSim">
+		update erp_sim
+		set
+		    SIM_STATE='3',
+			OUT_REASON=#{outReason}
+		where ID=#{id} and DATA_STATE='1';
+	</update>
+	
+	<select id="selectByErpNum" parameterType="String" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> from erp_sim where SIM_NUM=#{newSimNum} DATA_STATE='1'
+	</select>
+
+	<select id="selectAllSim" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_sim where DATA_STATE='1'
+	</select>
+
+	<select id="selectSelectAllSim" parameterType="List" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_sim
+		WHERE ID IN
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</select>
+
+	<update id="updateBySimCode" parameterType="com.edgedo.sys.entity.ErpSim">
+		update erp_sim
+		<set>
+		  SUPPLIER_NAME=#{supplierName},
+		  SUPPLIER_ID=#{supplierId},
+		  FIRST_USE_TIME =#{firstUseTime},
+		  CAR_PLATE_NUM =#{carPlateNum},
+		  CAR_FRAME_NUM=#{carFrameNum},
+		  YEHU_NAME =#{yehuName},
+		  END_TIME =#{endTime},
+		  DATA_STATE =#{dataState},
+		  XUFEI_TIME=#{xufeiTime}
+		</set>
+		where ID=#{id} and DATA_STATE='1';
+	</update>
+
+
+	<update id="updateExcel" parameterType="com.edgedo.sys.entity.ErpSim">
+		update erp_sim
+		<set>
+			<if test='supplierId != null and  supplierId != ""'>
+				SUPPLIER_ID = #{supplierId},
+			</if>
+			<if test='supplierName != null and  supplierName != ""'>
+				SUPPLIER_NAME = #{supplierName},
+			</if>
+			<if test='setMealName != null and  setMealName != ""'>
+				SET_MEAL_NAME = #{setMealName},
+			</if>
+			<if test='simState != null and  simState != ""'>
+				SIM_STATE = #{simState},
+			</if>
+			<if test='outReason != null and  outReason != ""'>
+				OUT_REASON = #{outReason},
+			</if>
+			<if test='simStartTime != null'>
+				SIM_START_TIME = #{simStartTime},
+			</if>
+			<if test='payType != null and  payType != ""'>
+				PAY_TYPE = #{payType},
+			</if>
+			<if test='payMoney != null and  payMoney != ""'>
+				PAY_MONEY = #{payMoney},
+			</if>
+			<if test='activeTime != null'>
+				ACTIVE_TIME = #{activeTime},
+			</if>
+			<if test='firstUseTime != null'>
+				FIRST_USE_TIME = #{firstUseTime},
+			</if>
+			<if test='xufeiTime != null'>
+				XUFEI_TIME = #{xufeiTime},
+			</if>
+			<if test='endTime != null'>
+				END_TIME = #{endTime},
+			</if>
+			<if test='carPlateNum != null and  carPlateNum != ""'>
+				CAR_PLATE_NUM = #{carPlateNum},
+			</if>
+			<if test='carFrameNum != null and  carFrameNum != ""'>
+				CAR_FRAME_NUM = #{carFrameNum},
+			</if>
+			<if test='yehuName != null and  yehuName != ""'>
+				YEHU_NAME = #{yehuName},
+			</if>
+			<if test='simUserId != null and  simUserId != ""'>
+				SIM_USER_ID = #{simUserId},
+			</if>
+			<if test='userType != null and  userType != ""'>
+				USER_TYPE = #{userType},
+			</if>
+			<if test='simUserName != null and  simUserName != ""'>
+				SIM_USER_NAME = #{simUserName},
+			</if>
+		</set>
+		where SIM_NUM=#{simNum} and DATA_STATE='1' and ID=#{id}
+	</update>
+
+
+	<select id="countByCarPlateNum" parameterType="java.lang.String" resultType="int">
+		SELECT count(1) from erp_sim where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</select>
+
+	<update id="updateByCarPlateNum" parameterType="java.lang.String">
+		update erp_sim SET DATA_STATE = '0'  WHERE CAR_PLATE_NUM=#{carPlateNum}
+	</update>
+
+
+</mapper>

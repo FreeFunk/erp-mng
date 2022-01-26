@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="padding: 9px 15px;width: 60px;">SIM卡号</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="queryObj.simNum" placeholder="请输入SIM卡号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="padding: 9px 15px;width: 80px;">SIM卡状态</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <select name="queryObj.simState">
+                            <option value=""></option>
+                            <option value="0">未激活</option>
+                            <option value="1">自动激活</option>
+                            <option value="2">使用中</option>
+                            <option value="3">注销</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline" style="margin-bottom: 5px;">
+                    <label class="layui-form-label" style="text-align: center;width: 110px;">SIM卡到期时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.selectTime" class="layui-input" id="test6" placeholder="确认SIM卡到期区间">
+                    </div>
+                </div>
+
+                <div class="layui-inline" style="margin-bottom: 5px;">
+                    <label class="layui-form-label" style="padding: 9px 15px;width: 50px;">供应商</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <select id="selectSupplierName" name="queryObj.supplierName">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="padding: 9px 15px;width: 60px;">车牌号</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="queryObj.carPlateNum" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline" style="margin-bottom: 5px;">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpSim-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>
+                <button class="layui-btn layuiadmin-btn-comm" id="importSimka"><i class="layui-icon">&#xe67c;</i>导入Sim卡信息</button>
+                <button type="button" class="layui-btn layui-btn-warm" id="exportSimka"><i class="layui-icon">&#xe67c;</i>导出Sim卡信息</button>
+                <button type="button" class="layui-btn layui-btn-normal" id="exportSelectSimka"><i class="layui-icon">&#xe67c;</i>导出选中Sim卡信息</button>
+            </div>
+            <table id="ErpSim-list" lay-filter="ErpSim-list"></table>
+            <script type="text/html" id="table-ErpSim-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="simXuFei">SIM卡续费</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="simZhuXiao">SIM注销</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index:'lib/index',
+        common:'common'
+    }).use(['index','table', 'form','common','laydate','upload','element','excel'], function(exports){
+        var $ = layui.$
+            ,laydate = layui.laydate
+            ,table = layui.table
+            ,common = layui.common
+            ,admin = layui.admin
+            ,form = layui.form
+            ,upload = layui.upload
+            ,excel = layui.excel;
+
+
+        //执行实例
+
+        var headers = layui.admin.getTokenHeader();
+        upload.render({
+            elem:'#importSimka'
+            ,url: layui.setter.basePath +'/admin/erpSim/importSimka.jsn'
+            ,accept:'file'
+            ,exts:'xls'
+            ,headers:headers//避免未登录
+            ,method: 'post'
+            ,choose : function (obj) {
+                $("#importSimka").html("导入中");
+                $("#importSimka").attr("class","layui-btn layui-btn-disabled");
+                layer.load(2,{
+                    shade: [0.3, '#393D49'],
+                    time: 10000000*1000
+                })
+            }
+            ,done:function (res) {
+                if(!res.success){
+                    layer.open({
+                        type: 1
+                        ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                        ,content: '<div style="padding: 10px 20px;">'+ res.errMsg +'</div>'
+                        ,btn: '关闭'
+                        ,shade: 0 //不显示遮罩
+                        ,yes: function(){
+                            layer.closeAll();
+                        }
+                    });
+                    $("#importSimka").html("导入Sim卡信息");
+                    $("#importSimka").attr("class","layui-btn layuiadmin-btn-comm");
+                    return false;
+                }
+                //上传完毕回调
+                if(res.success && res.data=="导入成功"){
+                    layer.closeAll();
+                    table.reload('ErpSim-list',{
+                    });
+                    layer.msg('导入成功',{
+                        time:2000,
+                        icon:1
+                    })
+                }else if(res.data==="请上传.xls格式的文件"){
+                    layer.closeAll();
+                    table.reload('ErpSim-list',{
+                    });
+                    layer.msg('请上传.xls格式的文件',{
+                        time:2000,
+                        icon:1
+
+                    })
+                }else if(res.data==="导入文件中没有任何内容"){
+                    layer.closeAll();
+                    table.reload('ErpSim-list',{
+                    });
+                    layer.msg('导入文件中没有任何内容',{
+                        time:2000,
+                        icon:1
+
+                    })
+                }else if(res.data==="表中无数据"){
+                    layer.closeAll();
+                    table.reload('ErpSim-list',{
+                    });
+                    layer.msg('表中无数据',{
+                        time:2000,
+                        icon:1
+
+                    })
+                }else if(res.data==="表中数据格式不对"){
+                    layer.closeAll();
+                    table.reload('ErpSim-list',{
+                    });
+                    layer.msg('表中数据格式不对',{
+                        time:2000,
+                        icon:1
+                    })
+                }
+                $("#importSimka").html("导入Sim卡信息");
+                $("#importSimka").attr("class","layui-btn layuiadmin-btn-comm");
+            }
+        });
+
+        //查询
+        form.on('submit(ErpSim-search)', function(data){
+            var field = data.field;
+
+            //执行重载
+            table.reload('ErpSim-list', {
+                where: field,
+                page:{
+                    curr:1
+                }
+            });
+        });
+
+        /*
+        * 定义表格
+        * */
+        defineTable = function () {
+            var headers = layui.admin.getTokenHeader();
+            table.render({
+                elem: '#ErpSim-list' //指定原始表格的选择器（id选择器）
+                ,url:layui.setter.basePath +'/admin/erpSim/listpage.jsn' //模拟接口
+                ,headers:headers
+                ,method: 'post'
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.success, //解析接口状态
+                        "msg": res.errMsg, //解析提示文本
+                        "count": res.totalCount, //解析数据长度
+                        "data": res.list //解析数据列表
+                    };
+                }
+                ,response: {
+                    statusCode: true //规定成功的状态码，默认：0
+                }
+                ,cols: [[
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id',align: 'center', width: 200, title: '主键',sort: true,hide:true}
+                    ,{field: 'createTime',align: 'center', width: 200, title: '创建时间',templet: function(d){
+                        return common.DateFormat(d.createTime,"yyyy-MM-dd");},sort: true,hide:true}
+                    ,{field: 'createUserId',align: 'center', width: 200, title: '创建人ID',sort: true,hide:true}
+                    ,{field: 'createUserName',align: 'center', width: 200, title: '创建人名',sort: true,hide:true}
+                    ,{field: 'simNum',align: 'center', width: 200, title: 'sim卡号',sort: true}
+                    ,{field: 'supplierName',align: 'center', width: 200, title: '供应商名',sort: true}
+                    ,{field: 'supplierId',align: 'center', width: 200, title: '供应商ID',sort: true,hide:true}
+                    ,{field: 'carPlateNum',align: 'center', width: 200, title: '车牌号',sort: true}
+                    ,{field: 'endTime',align: 'center', width: 200, title: '到期时间',templet: function(d){
+                            return common.DateFormat(d.endTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'xufeiTime',align: 'center', width: 200, title: '续费时间',templet: function(d){
+                            return common.DateFormat(d.xufeiTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'setMealName',align: 'center', width: 200, title: '套餐名',sort: true}
+                    ,{field: 'simState',align: 'center', width: 200, title: 'sim卡状态',sort: true,
+                        templet: function(d){
+                            if(d.simState==0){
+                                return "未激活";
+                            }else if(d.simState==1){
+                                return "自动激活";
+                            }else if(d.simState==2){
+                                return "使用中";
+                            }else if(d.simState==3){
+                                return "注销";
+                            }else if(d.simState==4){
+                                return "在线";
+                            }else{
+                                return "";
+                            }
+                        }
+                    }
+                    ,{field: 'outReason',align: 'center', width: 200, title: '注销原因',sort: true}
+                    ,{field: 'simStartTime',align: 'center', width: 200, title: '开卡时间',templet: function(d){
+                        return common.DateFormat(d.simStartTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'simReticentNum',align: 'center', width: 200, title: '沉默期(月)',sort: true}
+                    ,{field: 'simTaocanDesc',align: 'center', width: 200, title: '卡的套餐描述',sort: true}
+                    ,{field: 'payType',align: 'center', width: 200, title: '付费类型',sort: true,
+                        templet: function(d){
+                            if(d.payType==1){
+                                return '年付';
+                            }else if(d.payType==0){
+                                return '月付';
+                            }else{
+                                return "";
+                            }
+                        }
+                    }
+                    ,{field: 'payMoney',align: 'center', width: 200, title: '金额',sort: true}
+                    ,{field: 'activeTime',align: 'center', width: 200, title: '自动激活时间',templet: function(d){
+                        return common.DateFormat(d.activeTime,"yyyy-MM-dd");},sort: true,hide:true}
+                    ,{field: 'firstUseTime',align: 'center', width: 200, title: '初次使用时间',templet: function(d){
+                        return common.DateFormat(d.firstUseTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'carFrameNum',align: 'center', width: 200, title: '车架号',sort: true,hide:true}
+                    ,{field: 'yehuName',align: 'center', width: 200, title: '业户名称',sort: true}
+                    ,{field: 'simUserId',align: 'center', width: 200, title: '卡占用人ID',sort: true,hide:true}
+                    ,{field: 'userType',align: 'center', width: 200, title: '占用人TYPE',sort: true,hide:true}
+                    ,{field: 'simUserName',align: 'center', width: 200, title: '卡占用人',sort: true}
+                    ,{field: 'dataState',align: 'center', width: 200, title: '数据状态',sort: true,hide:true}
+                    ,{title: '操作', minWidth: 300, align: 'center', fixed: 'right', toolbar: '#table-ErpSim-list'}
+                ]]
+                ,autoSort: false
+                ,page: true
+                ,limit: 10
+                ,limits: [10,100,300,500]
+                ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+            //为toolbar添加事件响应
+            table.on('tool(ErpSim-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                /*var data = obj.data;*///获得当前行数据
+                //区分事件
+                switch(obj.event){
+                    case 'del':
+                        deleteVo(obj);
+                        break;
+                    case 'edit':
+                        editVo(obj);
+                        break;
+                    case 'simXuFei':
+                        simXuFeiVo(obj);
+                        break;
+                    case 'simZhuXiao':
+                        simZhuXiaoVo(obj);
+                        break;
+                };
+            });
+
+            //监听排序事件
+            table.on('sort(ErpSim-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                var sort = obj.field;
+                //默认排序
+                switch(obj.field){
+                    case 'id':
+                        sort ="ID";
+                        break;
+                    case 'createTime':
+                        sort ="CREATE_TIME";
+                        break;
+                    case 'createUserId':
+                        sort ="CREATE_USER_ID";
+                        break;
+                    case 'createUserName':
+                        sort ="CREATE_USER_NAME";
+                        break;
+                    case 'simNum':
+                        sort ="SIM_NUM";
+                        break;
+                    case 'supplierId':
+                        sort ="SUPPLIER_ID";
+                        break;
+                    case 'supplierName':
+                        sort ="SUPPLIER_NAME";
+                        break;
+                    case 'setMealName':
+                        sort ="SET_MEAL_NAME";
+                        break;
+                    case 'simState':
+                        sort ="SIM_STATE";
+                        break;
+                    case 'outReason':
+                        sort ="OUT_REASON";
+                        break;
+                    case 'simStartTime':
+                        sort ="SIM_START_TIME";
+                        break;
+                    case 'simReticentNum':
+                        sort ="SIM_RETICENT_NUM";
+                        break;
+                    case 'simTaocanDesc':
+                        sort ="SIM_TAOCAN_DESC";
+                        break;
+                    case 'payType':
+                        sort ="PAY_TYPE";
+                        break;
+                    case 'payMoney':
+                        sort ="PAY_MONEY";
+                        break;
+                    case 'activeTime':
+                        sort ="ACTIVE_TIME";
+                        break;
+                    case 'firstUseTime':
+                        sort ="FIRST_USE_TIME";
+                        break;
+                    case 'xufeiTime':
+                        sort ="XUFEI_TIME";
+                        break;
+                    case 'endTime':
+                        sort ="END_TIME";
+                        break;
+                    case 'carPlateNum':
+                        sort ="CAR_PLATE_NUM";
+                        break;
+                    case 'carFrameNum':
+                        sort ="CAR_FRAME_NUM";
+                        break;
+                    case 'yehuName':
+                        sort ="YEHU_NAME";
+                        break;
+                    case 'simUserId':
+                        sort ="SIM_USER_ID";
+                        break;
+                    case 'userType':
+                        sort ="USER_TYPE";
+                        break;
+                    case 'simUserName':
+                        sort ="SIM_USER_NAME";
+                        break;
+                    case 'dataState':
+                        sort ="DATA_STATE";
+                        break;
+                };
+                if(obj.type==null){
+                    return;
+                }
+                //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                table.reload('ErpSim-list', {
+                    initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                    ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                        orderBy: sort+" "+obj.type //排序字段
+                    }
+                });
+            });
+        }
+        defineTable();
+
+
+        function dateFtt(fmt,date)
+        { //author: meizz
+            var o = {
+                "M+" : date.getMonth()+1,     //月份
+                "d+" : date.getDate(),     //日
+                "h+" : date.getHours(),     //小时
+                "m+" : date.getMinutes(),     //分
+                "s+" : date.getSeconds(),     //秒
+                "q+" : Math.floor((date.getMonth()+3)/3), //季度
+                "S" : date.getMilliseconds()    //毫秒
+            };
+            if(/(y+)/.test(fmt))
+                fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+            for(var k in o)
+                if(new RegExp("("+ k +")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            return fmt;
+        }
+        $("#exportSimka").on('click',function(){
+            $("#exportSimka").html("导出中");
+            $("#exportSimka").attr("class","layui-btn layui-btn-disabled");
+            var loading = layer.load(2,{
+                shade: [0.3, '#393D49'],
+                time: 100*1000
+            });
+            // 模拟从后端接口读取需要导出的数据
+            admin.req({
+                url: layui.setter.basePath +'/admin/erpSim/exportSimka.jsn'
+                ,dataType: 'json'
+                ,method:"post"
+                ,success:function(res) {
+                    debugger;
+                    var data = res.data.list;
+                    for(var i = 0 ;i<data.length;i++){
+                        // dateListStartSim = data[i].simStartTime.split("");
+                        // dateListEndSim = data[i].endTime.split("");
+                        // data[i].simStartTime =
+                        //     dateListStartSim[0]+dateListStartSim[1]+dateListStartSim[2]+dateListStartSim[3]+"/"
+                        //     +dateListStartSim[5]+dateListStartSim[6]+"/"+dateListStartSim[8]+dateListStartSim[9];
+                        if(typeof(data[i].simStartTime) == "undefined"){
+                            data[i].simStartTime="";
+                        }else {
+                            data[i].simStartTime=dateFtt("yyyy/MM/dd",new Date(data[i].simStartTime));
+                        }
+                        if(typeof(data[i].endTime) == "undefined"){
+                            data[i].endTime="";
+                        }else {
+                            data[i].endTime =dateFtt("yyyy/MM/dd",new Date(data[i].endTime));
+                        }
+                        // data[i].endTime =
+                        //     dateListEndSim[0]+dateListEndSim[1]+dateListEndSim[2]+dateListEndSim[3]+"/"
+                        //     +dateListEndSim[5]+dateListEndSim[6]+"/"+dateListEndSim[8]+dateListEndSim[9];
+                    }
+                    console.log(res);
+                    // 后端给的数据顺序和映射关系不对，请执行梳理函数后导出
+                    data = excel.filterExportData(data, [
+                        'simNum'
+                        ,'supplierName'
+                        ,'simStartTime'
+                        ,'payMoney'
+                        ,'xufeiTime'
+                        ,'endTime'
+                        ,'carPlateNum'
+                        ,'setMealName'
+                        ,'simState'
+                        ,'outReason'
+                        ,'simReticentNum'
+                        ,'simTaocanDesc'
+                        ,'payType'
+                        ,'firstUseTime'
+                        ,'yehuName'
+                        ,'simUserName'
+                    ]);
+                    //加一个表头，表头的键名顺序需要与最终导出的数据一致
+                    data.unshift({ simNum: "sim卡号", supplierName: "供应商名",simStartTime: '开卡时间'
+                        , payMoney: "金额",xufeiTime:"续费时间", endTime:"到期时间",carPlateNum:"车牌号"
+                        ,setMealName: '套餐名',simState: "sim卡状态",outReason: "注销原因", simReticentNum: "沉默期(月)",
+                        simTaocanDesc: "卡的套餐描述",payType:"付费类型",firstUseTime: "初次使用时间",yehuName:"业户名称",simUserName:"卡占用人"});
+
+                    excel.exportExcel(data, '所有卡.xls', 'xls');
+                    $("#exportSimka").html("导出Sim卡信息");
+                    $("#exportSimka").attr("class","layui-btn layui-btn-warm");
+                    layer.close(loading);
+                },
+                error:function() {
+                    layer.alert('获取数据失败，请检查是否部署在本地服务器环境下');
+                }
+            });
+        });
+
+        $("#exportSelectSimka").on('click',function(){
+            $("#exportSelectSimka").html("导出中");
+            $("#exportSelectSimka").attr("class","layui-btn layui-btn-disabled");
+            var loading = layer.load(2,{
+                shade: [0.3, '#393D49'],
+                time: 100*1000
+            });
+            var checkStatus = table.checkStatus('ErpSim-list')
+                ,checkData = checkStatus.data; //得到选中的数据
+
+            if(checkData.length === 0){
+                return layer.msg('请选择数据');
+            }
+            var ids = "" ;
+            for(var i = 0;i<checkData.length;i++){
+                if(ids==""){
+                    ids= checkData[i].id;
+                }else {
+                    ids = ids+","+checkData[i].id;
+                }
+            }
+            // 模拟从后端接口读取需要导出的数据
+            admin.req({
+                url: layui.setter.basePath +'/admin/erpSim/exportSelectSimka.jsn'
+                ,data:{'ids':ids}
+                ,dataType: 'json'
+                ,method:"post"
+                ,success:function(res) {
+                    var data = res.data.list;
+                    for(var i = 0 ;i<data.length;i++){
+                        // dateListStartSim = data[i].simStartTime.split("");
+                        // dateListEndSim = data[i].endTime.split("");
+                        // data[i].simStartTime =
+                        //     dateListStartSim[0]+dateListStartSim[1]+dateListStartSim[2]+dateListStartSim[3]+"/"
+                        //     +dateListStartSim[5]+dateListStartSim[6]+"/"+dateListStartSim[8]+dateListStartSim[9];
+                        if(typeof(data[i].simStartTime) == "undefined"){
+                            data[i].simStartTime="";
+                        }else {
+                            data[i].simStartTime=dateFtt("yyyy/MM/dd",new Date(data[i].simStartTime));
+                        }
+                        if(typeof(data[i].endTime) == "undefined"){
+                            data[i].endTime="";
+                        }else {
+                            data[i].endTime =dateFtt("yyyy/MM/dd",new Date(data[i].endTime));
+                        }
+                        if(typeof(data[i].xufeiTime) == "undefined"){
+                            data[i].xufeiTime="";
+                        }else {
+                            data[i].xufeiTime =dateFtt("yyyy/MM/dd",new Date(data[i].xufeiTime));
+                        }
+                        // data[i].endTime =
+                        //     dateListEndSim[0]+dateListEndSim[1]+dateListEndSim[2]+dateListEndSim[3]+"/"
+                        //     +dateListEndSim[5]+dateListEndSim[6]+"/"+dateListEndSim[8]+dateListEndSim[9];
+                    }
+                    console.log(res);
+                    // 后端给的数据顺序和映射关系不对，请执行梳理函数后导出
+                    data = excel.filterExportData(data, [
+                        'simNum'
+                        ,'supplierName'
+                        ,'setMealName'
+                        ,'simState'
+                        ,'outReason'
+                        ,'simStartTime'
+                        ,'simReticentNum'
+                        ,'simTaocanDesc'
+                        ,'payType'
+                        ,'payMoney'
+                        ,'firstUseTime'
+                        ,'xufeiTime'
+                        ,'endTime'
+                        ,'carPlateNum'
+                        ,'yehuName'
+                        ,'simUserName'
+                    ]);
+                    //加一个表头，表头的键名顺序需要与最终导出的数据一致
+                    data.unshift({ simNum: "sim卡号", supplierName: "供应商名",setMealName: '套餐名',
+                        simState: "sim卡状态",outReason: "注销原因",simStartTime: '开卡时间', simReticentNum: "沉默期(月)",
+                        simTaocanDesc: "卡的套餐描述",payType: '付费类型', payMoney: "金额",firstUseTime: "初次使用时间",
+                        xufeiTime:"续费时间",endTime:"到期时间",carPlateNum:"车牌号",yehuName:"业户名称",simUserName:"卡占用人"});
+
+                    excel.exportExcel(data, '所有卡.xls', 'xls');
+                    $("#exportSelectSimka").html("导出选中Sim卡信息");
+                    $("#exportSelectSimka").attr("class","layui-btn layui-btn-normal");
+                    layer.close(loading);
+                },
+                error:function() {
+                    layer.alert('获取数据失败，请检查是否部署在本地服务器环境下');
+                }
+            });
+        });
+
+
+        function newTab(url,tit){
+            if(top.layui.index){
+                top.layui.index.openTabsPage(url,tit)
+            }else{
+                window.open(url)
+            }
+        }
+
+        simZhuXiaoVo = function(obj){
+            if(obj.data.simState=='3'){
+                layer.alert('该sim卡已注销', {
+                    offset: 'auto',
+                });
+            } else if(obj.data.simState=='0'){
+                layer.alert('该sim卡未激活', {
+                    offset: 'auto',
+                });
+            } else if(obj.data.simState=='1'){
+                layer.alert('该sim卡未激活', {
+                    offset: 'auto',
+                });
+            }else {
+                //填写注销原因
+                layer.open({
+                    type: 2
+                    ,title: '注销'
+                    ,content: 'ErpSimZhuXiaoRec.html'
+                    ,maxmin: true
+                    ,area: ['550px', '300px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpSim-form").click();
+
+                        othis.find('input[name="id"]').val(obj.data.id);
+                        form.render();
+                    }
+                    ,yes: function(index, layero){
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#ErpSim-form-submit");
+                        submit.click();
+                    }
+                });
+            }
+
+        }
+
+
+
+        //sim卡续费
+        simXuFeiVo = function (obj) {
+            debugger
+            if(obj.data.simState=='0'){
+                layer.alert('该sim卡未激活', {
+                    offset: 'auto',
+                });
+            } else if(obj.data.simState=='3'){
+                layer.alert('该sim卡已注销', {
+                    offset: 'auto',
+                });
+            } else if(obj.data.simState=='1'){
+                layer.alert('该sim卡已注销', {
+                    offset: 'auto',
+                });
+            }else if(obj.data.simState=='2'){
+                layer.open({
+                    type: 2
+                    ,title: '续费'
+                    ,content: 'ErpSimXufeiRecAdd.html'
+                    ,maxmin: true
+                    ,area: ['550px', '450px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpSim-form").click();
+
+                        othis.find('input[name="ownerSimId"]').val(obj.data.id);
+                        othis.find('input[name="simNum"]').val(obj.data.simNum);
+                        othis.find('input[name="endTime"]').val(obj.data.endTime);
+                        form.render();
+                    }
+                    ,yes: function(index, layero){
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#ErpSim-form-submit");
+                        submit.click();
+                    }
+                });
+            }
+            // newTab("views/com/edgedo/sys/erpsimxufeirec/ErpSimXufeiRecList.html","SIM卡续费记录");
+        }
+
+
+        //删除
+        deleteVo = function (obj) {
+            layer.confirm('确定删除此记录吗？', function(index){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpSim/deleteByIds.jsn',
+                    data:{'ids':obj.data.id},
+                    method:"post",
+                    success:function (data) {
+                        table.reload('ErpSim-list',
+                            {page:
+                                { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                }
+                            }
+                        );
+                        layer.close(index);
+                        layer.msg('删除成功', {
+                            icon: 1
+                        });
+                    },
+                });
+            });
+        }
+        //编辑
+        editVo = function (obj) {
+            layer.open({
+                type: 2
+                ,title: '编辑'
+                ,content: 'ErpSimEdit.html'
+                ,maxmin: true
+                ,area: ['650px', '550px']
+                ,btn: ['确定', '取消']
+                ,success: function(layero, index){
+                    var s = layero.find('iframe');
+                    $("id",s[0].contentWindow.document).val(obj.data.id);
+                    //给iframe元素赋值
+                    var othis = layero.find('iframe').contents().find("#ErpSim-form").click();
+                    othis.find('input[name="id"]').val(obj.data.id);
+                    othis.find('input[name="createTime"]').val(obj.data.createTime);
+                    othis.find('input[name="createUserId"]').val(obj.data.createUserId);
+                    othis.find('input[name="createUserName"]').val(obj.data.createUserName);
+                    othis.find('input[name="simNum"]').val(obj.data.simNum);
+                    othis.find('input[name="supplierId"]').val(obj.data.supplierId);
+                    othis.find('input[name="supplierNameInput"]').val(obj.data.supplierId+","+obj.data.supplierName);
+                    othis.find('input[name="setMealName"]').val(obj.data.setMealName);
+                    othis.find('input[name="simState"]').val(obj.data.simState);
+                    othis.find('input[name="outReason"]').val(obj.data.outReason);
+                    othis.find('input[name="simStartTime"]').val(obj.data.simStartTime);
+                    othis.find('input[name="simReticentNum"]').val(obj.data.simReticentNum);
+                    othis.find('input[name="simTaocanDesc"]').val(obj.data.simTaocanDesc);
+                    othis.find('input[name="payType"][value=\'0\']').attr("checked", obj.data.payType == 0 ? true : false);
+                    othis.find('input[name="payType"][value=\'1\']').attr("checked", obj.data.payType == 1 ? true : false);
+                    othis.find('input[name="payMoney"]').val(obj.data.payMoney);
+                    othis.find('input[name="activeTime"]').val(obj.data.activeTime);
+                    othis.find('input[name="firstUseTime"]').val(obj.data.firstUseTime);
+                    othis.find('input[name="xufeiTime"]').val(obj.data.xufeiTime);
+                    othis.find('input[name="endTime"]').val(obj.data.endTime);
+                    othis.find('input[name="carPlateNum"]').val(obj.data.carPlateNum);
+                    othis.find('input[name="carFrameNum"]').val(obj.data.carFrameNum);
+                    othis.find('input[name="yehuName"]').val(obj.data.yehuName);
+                    othis.find('input[name="simUserId"]').val(obj.data.simUserId);
+                    othis.find('input[name="userType"]').val(obj.data.userType);
+                    othis.find('input[name="userSimrNameInput"]').val(obj.data.simUserId+","+obj.data.simUserName);
+                    othis.find('input[name="dataState"]').val(obj.data.dataState);
+                    form.render();
+                }
+                ,yes: function(index, layero){
+                    var submit = layero.find('iframe').contents().find("#ErpSim-form-edit");
+                    submit.trigger('click');
+                }
+            });
+        }
+
+        //点击事件
+        var active = {
+            //批量删除
+            batchdel: function(){
+                var checkStatus = table.checkStatus('ErpSim-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+
+                if(checkData.length === 0){
+                    return layer.msg('请选择数据');
+                }
+
+                layer.confirm('确定删除吗？', function(index) {
+                    var ids = "" ;
+                    for(var i = 0;i<checkData.length;i++){
+                        if(ids==""){
+                            ids= checkData[i].id;
+                        }else {
+                            ids = ids+","+checkData[i].id;
+                        }
+                    }
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/erpSim/deleteByIds.jsn',
+                        data:{'ids':ids},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('ErpSim-list',
+                                {page:
+                                    { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                    }
+                                }
+                            );
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //添加
+            ,add: function(){
+                layer.open({
+                    type: 2
+                    ,title: '添加'
+                    ,content: 'ErpSimAdd.html'
+                    ,maxmin: true
+                    ,area: ['650px', '450px']
+                    ,btn: ['确定', '取消']
+                    ,yes: function(index, layero){
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#ErpSim-form-submit");
+                        submit.click();
+                    }
+                });
+            }
+        };
+        //供应商名下拉框的方法
+        function initSupplierName(){
+            admin.req({
+                url:layui.setter.basePath +'/admin/erpGpsTerminal/selectBySupplierName.jsn',
+                method:"post",
+                success:function (data) {
+                    debugger;
+                    var provinceList = data.data;
+                    if(provinceList!="undefined"){
+                        for(var i=0;i<provinceList.length;i++){
+                            $("#selectSupplierName").append("<option value="+provinceList[i].supplierName+">"+provinceList[i].supplierName+"</option>");
+                            layui.form.render('select');
+                        }
+                    }
+                },
+            });
+        }
+        //初始化供应商名下拉框;
+        initSupplierName();
+
+
+        //绑定点击事件
+        $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //var headers = layui.admin.getTokenHeader();
+        /* insertSimKa();*/
+
+        //日期范围
+        laydate.render({
+            elem: '#test6'
+            ,range: true
+        });
+
+
+
+
+    });
+
+</script>
+</body>
+</html>
+

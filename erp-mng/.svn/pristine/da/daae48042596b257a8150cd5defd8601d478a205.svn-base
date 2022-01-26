@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+
+<body layadmin-themealias="default">
+<div class="layui-card" style="margin-bottom: -5px">
+    <div class="layui-form layui-card-header">
+        <div class="layui-form-item">
+            <div class="layui-row layui-col-md12">
+                <a href="ErpAddCarStatisticsList.html">
+                    <div id="monthCount"  class="layui-col-xs6 layui-col-sm6 layui-col-md6" style="border-right: 1px solid #f0f0f0;text-align: center">
+                        <font class="font-title" >新增统计大表</font>
+                    </div>
+                </a>
+                <a href="../erpbeidouaddstatistics/ErpBeidouAddStatisticsList.html">
+                    <div id="yearCount" class="layui-col-xs6 layui-col-sm6 layui-col-md6" style="text-align: center" >
+                        <font class="font-title"  style="font-weight:normal;color: #949494;">新增统计小表</font>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">统计日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="statisticsCarToday" id="test1" placeholder="请选择周五的日期" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpAddCarStatistics-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="text-align: center;">
+                <div class="layui-inline">
+                    <label class="layui-form-label"style="font-size:30px;width:100%;color: #666;" id="title_car_id"></label>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <!--<div style="padding-bottom: 10px;">-->
+                <!--<button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>-->
+                <!--<button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>-->
+            <!--</div>-->
+            <!--<table class="layui-table" id="ErpAddCarStatistics-list" lay-filter="ErpAddCarStatistics-list">-->
+            <table class="layui-table" id="ErpAddCarStatistics-list" lay-filter="ErpAddCarStatistics-list">
+                <tr>
+                    <td rowspan="5" style="width:70px;">海港区</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="hgq_sz">
+                    <td>上周</td>
+                    <td id="hgq_xh_sz"></td>
+                    <td id="hgq_zjxl_sz"></td>
+                    <td id="hgq_zdk_sz"></td>
+                    <td id="hgq_fht_sz"></td>
+                    <td id="hgq_tdt_sz"></td>
+                    <td id="hgq_st_sz"></td>
+                    <td id="hgq_zd_sz"></td>
+                    <td id="hgq_lqt_sz"></td>
+                    <td id="hgq_xd_sz"></td>
+                    <td id="hgq_td_sz"></td>
+                    <td id="hgq_tzj_sz"></td>
+                    <td id="hgq_fst_sz"></td>
+                    <td id="hgq_sl_sz"></td>
+                    <td id="hgq_ga_sz"></td>
+                    <td id="hgq_sh_sz"></td>
+                    <td id="hgq_wh_sz"></td>
+                    <td id="hgq_rx_sz"></td>
+                    <td id="hgq_qh_sz"></td>
+                    <td id="hgq_tx_sz"></td>
+                    <td></td>
+                    <td id="hgq_sz_zj"></td>
+                </tr>
+                <tr id="hgq_zz">
+                    <td>本周</td>
+                    <td id="hgq_xh_zz"></td>
+                    <td id="hgq_zjxl_zz"></td>
+                    <td id="hgq_zdk_zz"></td>
+                    <td id="hgq_fht_zz"></td>
+                    <td id="hgq_tdt_zz"></td>
+                    <td id="hgq_st_zz"></td>
+                    <td id="hgq_zd_zz"></td>
+                    <td id="hgq_lqt_zz"></td>
+                    <td id="hgq_xd_zz"></td>
+                    <td id="hgq_td_zz"></td>
+                    <td id="hgq_tzj_zz"></td>
+                    <td id="hgq_fst_zz"></td>
+                    <td id="hgq_sl_zz"></td>
+                    <td id="hgq_ga_zz"></td>
+                    <td id="hgq_sh_zz"></td>
+                    <td id="hgq_wh_zz"></td>
+                    <td id="hgq_rx_zz"></td>
+                    <td id="hgq_qh_zz"></td>
+                    <td id="hgq_tx_zz"></td>
+                    <td></td>
+                    <td id="hgq_zz_zj"></td>
+                </tr>
+                <tr id="hgq_ce">
+                    <td>差额</td>
+                    <td id="hgq_xh_ce"></td>
+                    <td id="hgq_zjxl_ce"></td>
+                    <td id="hgq_zdk_ce"></td>
+                    <td id="hgq_fht_ce"></td>
+                    <td id="hgq_tdt_ce"></td>
+                    <td id="hgq_st_ce"></td>
+                    <td id="hgq_zd_ce"></td>
+                    <td id="hgq_lqt_ce"></td>
+                    <td id="hgq_xd_ce"></td>
+                    <td id="hgq_td_ce"></td>
+                    <td id="hgq_tzj_ce"></td>
+                    <td id="hgq_fst_ce"></td>
+                    <td id="hgq_sl_ce"></td>
+                    <td id="hgq_ga_ce"></td>
+                    <td id="hgq_sh_ce"></td>
+                    <td id="hgq_wh_ce"></td>
+                    <td id="hgq_rx_ce"></td>
+                    <td id="hgq_qh_ce"></td>
+                    <td id="hgq_tx_ce"></td>
+                    <td></td>
+                    <td id="hgq_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">抚宁区</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="fnq_sz">
+                    <td>上周</td>
+                    <td id="fnq_xh_sz"></td>
+                    <td id="fnq_zjxl_sz"></td>
+                    <td id="fnq_zdk_sz"></td>
+                    <td id="fnq_fht_sz"></td>
+                    <td id="fnq_tdt_sz"></td>
+                    <td id="fnq_st_sz"></td>
+                    <td id="fnq_zd_sz"></td>
+                    <td id="fnq_lqt_sz"></td>
+                    <td id="fnq_xd_sz"></td>
+                    <td id="fnq_td_sz"></td>
+                    <td id="fnq_tzj_sz"></td>
+                    <td id="fnq_fst_sz"></td>
+                    <td id="fnq_sl_sz"></td>
+                    <td id="fnq_ga_sz"></td>
+                    <td id="fnq_sh_sz"></td>
+                    <td id="fnq_wh_sz"></td>
+                    <td id="fnq_rx_sz"></td>
+                    <td id="fnq_qh_sz"></td>
+                    <td id="fnq_tx_sz"></td>
+                    <td></td>
+                    <td id="fnq_sz_zj"></td>
+                </tr>
+                <tr id="fnq_zz">
+                    <td>本周</td>
+                    <td id="fnq_xh_zz"></td>
+                    <td id="fnq_zjxl_zz"></td>
+                    <td id="fnq_zdk_zz"></td>
+                    <td id="fnq_fht_zz"></td>
+                    <td id="fnq_tdt_zz"></td>
+                    <td id="fnq_st_zz"></td>
+                    <td id="fnq_zd_zz"></td>
+                    <td id="fnq_lqt_zz"></td>
+                    <td id="fnq_xd_zz"></td>
+                    <td id="fnq_td_zz"></td>
+                    <td id="fnq_tzj_zz"></td>
+                    <td id="fnq_fst_zz"></td>
+                    <td id="fnq_sl_zz"></td>
+                    <td id="fnq_ga_zz"></td>
+                    <td id="fnq_sh_zz"></td>
+                    <td id="fnq_wh_zz"></td>
+                    <td id="fnq_rx_zz"></td>
+                    <td id="fnq_qh_zz"></td>
+                    <td id="fnq_tx_zz"></td>
+                    <td></td>
+                    <td id="fnq_zz_zj"></td>
+                </tr>
+                <tr id="fnq_ce">
+                    <td>差额</td>
+                    <td id="fnq_xh_ce"></td>
+                    <td id="fnq_zjxl_ce"></td>
+                    <td id="fnq_zdk_ce"></td>
+                    <td id="fnq_fht_ce"></td>
+                    <td id="fnq_tdt_ce"></td>
+                    <td id="fnq_st_ce"></td>
+                    <td id="fnq_zd_ce"></td>
+                    <td id="fnq_lqt_ce"></td>
+                    <td id="fnq_xd_ce"></td>
+                    <td id="fnq_td_ce"></td>
+                    <td id="fnq_tzj_ce"></td>
+                    <td id="fnq_fst_ce"></td>
+                    <td id="fnq_sl_ce"></td>
+                    <td id="fnq_ga_ce"></td>
+                    <td id="fnq_sh_ce"></td>
+                    <td id="fnq_wh_ce"></td>
+                    <td id="fnq_rx_ce"></td>
+                    <td id="fnq_qh_ce"></td>
+                    <td id="fnq_tx_ce"></td>
+                    <td></td>
+                    <td id="fnq_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">昌黎县</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="clx_sz">
+                    <td>上周</td>
+                    <td id="clx_xh_sz"></td>
+                    <td id="clx_zjxl_sz"></td>
+                    <td id="clx_zdk_sz"></td>
+                    <td id="clx_fht_sz"></td>
+                    <td id="clx_tdt_sz"></td>
+                    <td id="clx_st_sz"></td>
+                    <td id="clx_zd_sz"></td>
+                    <td id="clx_lqt_sz"></td>
+                    <td id="clx_xd_sz"></td>
+                    <td id="clx_td_sz"></td>
+                    <td id="clx_tzj_sz"></td>
+                    <td id="clx_fst_sz"></td>
+                    <td id="clx_sl_sz"></td>
+                    <td id="clx_ga_sz"></td>
+                    <td id="clx_sh_sz"></td>
+                    <td id="clx_wh_sz"></td>
+                    <td id="clx_rx_sz"></td>
+                    <td id="clx_qh_sz"></td>
+                    <td id="clx_tx_sz"></td>
+                    <td></td>
+                    <td id="clx_sz_zj"></td>
+                </tr>
+                <tr id="clx_zz">
+                    <td>本周</td>
+                    <td id="clx_xh_zz"></td>
+                    <td id="clx_zjxl_zz"></td>
+                    <td id="clx_zdk_zz"></td>
+                    <td id="clx_fht_zz"></td>
+                    <td id="clx_tdt_zz"></td>
+                    <td id="clx_st_zz"></td>
+                    <td id="clx_zd_zz"></td>
+                    <td id="clx_lqt_zz"></td>
+                    <td id="clx_xd_zz"></td>
+                    <td id="clx_td_zz"></td>
+                    <td id="clx_tzj_zz"></td>
+                    <td id="clx_fst_zz"></td>
+                    <td id="clx_sl_zz"></td>
+                    <td id="clx_ga_zz"></td>
+                    <td id="clx_sh_zz"></td>
+                    <td id="clx_wh_zz"></td>
+                    <td id="clx_rx_zz"></td>
+                    <td id="clx_qh_zz"></td>
+                    <td id="clx_tx_zz"></td>
+                    <td></td>
+                    <th id="clx_zz_zj"></th>
+                </tr>
+                <tr id="clx_ce">
+                    <td>差额</td>
+                    <td id="clx_xh_ce"></td>
+                    <td id="clx_zjxl_ce"></td>
+                    <td id="clx_zdk_ce"></td>
+                    <td id="clx_fht_ce"></td>
+                    <td id="clx_tdt_ce"></td>
+                    <td id="clx_st_ce"></td>
+                    <td id="clx_zd_ce"></td>
+                    <td id="clx_lqt_ce"></td>
+                    <td id="clx_xd_ce"></td>
+                    <td id="clx_td_ce"></td>
+                    <td id="clx_tzj_ce"></td>
+                    <td id="clx_fst_ce"></td>
+                    <td id="clx_sl_ce"></td>
+                    <td id="clx_ga_ce"></td>
+                    <td id="clx_sh_ce"></td>
+                    <td id="clx_wh_ce"></td>
+                    <td id="clx_rx_ce"></td>
+                    <td id="clx_qh_ce"></td>
+                    <td id="clx_tx_ce"></td>
+                    <td></td>
+                    <td id="clx_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">卢龙县</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="llx_sz">
+                    <td>上周</td>
+                    <td id="llx_xh_sz"></td>
+                    <td id="llx_zjxl_sz"></td>
+                    <td id="llx_zdk_sz"></td>
+                    <td id="llx_fht_sz"></td>
+                    <td id="llx_tdt_sz"></td>
+                    <td id="llx_st_sz"></td>
+                    <td id="llx_zd_sz"></td>
+                    <td id="llx_lqt_sz"></td>
+                    <td id="llx_xd_sz"></td>
+                    <td id="llx_td_sz"></td>
+                    <td id="llx_tzj_sz"></td>
+                    <td id="llx_fst_sz"></td>
+                    <td id="llx_sl_sz"></td>
+                    <td id="llx_ga_sz"></td>
+                    <td id="llx_sh_sz"></td>
+                    <td id="llx_wh_sz"></td>
+                    <td id="llx_rx_sz"></td>
+                    <td id="llx_qh_sz"></td>
+                    <td id="llx_tx_sz"></td>
+                    <td></td>
+                    <td id="llx_sz_zj"></td>
+                </tr>
+                <tr id="llx_zz">
+                    <td>本周</td>
+                    <td id="llx_xh_zz"></td>
+                    <td id="llx_zjxl_zz"></td>
+                    <td id="llx_zdk_zz"></td>
+                    <td id="llx_fht_zz"></td>
+                    <td id="llx_tdt_zz"></td>
+                    <td id="llx_st_zz"></td>
+                    <td id="llx_zd_zz"></td>
+                    <td id="llx_lqt_zz"></td>
+                    <td id="llx_xd_zz"></td>
+                    <td id="llx_td_zz"></td>
+                    <td id="llx_tzj_zz"></td>
+                    <td id="llx_fst_zz"></td>
+                    <td id="llx_sl_zz"></td>
+                    <td id="llx_ga_zz"></td>
+                    <td id="llx_sh_zz"></td>
+                    <td id="llx_wh_zz"></td>
+                    <td id="llx_rx_zz"></td>
+                    <td id="llx_qh_zz"></td>
+                    <td id="llx_tx_zz"></td>
+                    <td></td>
+                    <td id="llx_zz_zj"></td>
+                </tr>
+                <tr id="llx_ce">
+                    <td>差额</td>
+                    <td id="llx_xh_ce"></td>
+                    <td id="llx_zjxl_ce"></td>
+                    <td id="llx_zdk_ce"></td>
+                    <td id="llx_fht_ce"></td>
+                    <td id="llx_tdt_ce"></td>
+                    <td id="llx_st_ce"></td>
+                    <td id="llx_zd_ce"></td>
+                    <td id="llx_lqt_ce"></td>
+                    <td id="llx_xd_ce"></td>
+                    <td id="llx_td_ce"></td>
+                    <td id="llx_tzj_ce"></td>
+                    <td id="llx_fst_ce"></td>
+                    <td id="llx_sl_ce"></td>
+                    <td id="llx_ga_ce"></td>
+                    <td id="llx_sh_ce"></td>
+                    <td id="llx_wh_ce"></td>
+                    <td id="llx_rx_ce"></td>
+                    <td id="llx_qh_ce"></td>
+                    <td id="llx_tx_ce"></td>
+                    <td></td>
+                    <td id="llx_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">开发区</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="kfq_sz">
+                    <td>上周</td>
+                    <td id="kfq_xh_sz"></td>
+                    <td id="kfq_zjxl_sz"></td>
+                    <td id="kfq_zdk_sz"></td>
+                    <td id="kfq_fht_sz"></td>
+                    <td id="kfq_tdt_sz"></td>
+                    <td id="kfq_st_sz"></td>
+                    <td id="kfq_zd_sz"></td>
+                    <td id="kfq_lqt_sz"></td>
+                    <td id="kfq_xd_sz"></td>
+                    <td id="kfq_td_sz"></td>
+                    <td id="kfq_tzj_sz"></td>
+                    <td id="kfq_fst_sz"></td>
+                    <td id="kfq_sl_sz"></td>
+                    <td id="kfq_ga_sz"></td>
+                    <td id="kfq_sh_sz"></td>
+                    <td id="kfq_wh_sz"></td>
+                    <td id="kfq_rx_sz"></td>
+                    <td id="kfq_qh_sz"></td>
+                    <td id="kfq_tx_sz"></td>
+                    <td></td>
+                    <td id="kfq_sz_zj"></td>
+                </tr>
+                <tr id="kfq_zz">
+                    <td>本周</td>
+                    <td id="kfq_xh_zz"></td>
+                    <td id="kfq_zjxl_zz"></td>
+                    <td id="kfq_zdk_zz"></td>
+                    <td id="kfq_fht_zz"></td>
+                    <td id="kfq_tdt_zz"></td>
+                    <td id="kfq_st_zz"></td>
+                    <td id="kfq_zd_zz"></td>
+                    <td id="kfq_lqt_zz"></td>
+                    <td id="kfq_xd_zz"></td>
+                    <td id="kfq_td_zz"></td>
+                    <td id="kfq_tzj_zz"></td>
+                    <td id="kfq_fst_zz"></td>
+                    <td id="kfq_sl_zz"></td>
+                    <td id="kfq_ga_zz"></td>
+                    <td id="kfq_sh_zz"></td>
+                    <td id="kfq_wh_zz"></td>
+                    <td id="kfq_rx_zz"></td>
+                    <td id="kfq_qh_zz"></td>
+                    <td id="kfq_tx_zz"></td>
+                    <td></td>
+                    <td id="kfq_zz_zj"></td>
+                </tr>
+                <tr id="kfq_ce">
+                    <td>差额</td>
+                    <td id="kfq_xh_ce"></td>
+                    <td id="kfq_zjxl_ce"></td>
+                    <td id="kfq_zdk_ce"></td>
+                    <td id="kfq_fht_ce"></td>
+                    <td id="kfq_tdt_ce"></td>
+                    <td id="kfq_st_ce"></td>
+                    <td id="kfq_zd_ce"></td>
+                    <td id="kfq_lqt_ce"></td>
+                    <td id="kfq_xd_ce"></td>
+                    <td id="kfq_td_ce"></td>
+                    <td id="kfq_tzj_ce"></td>
+                    <td id="kfq_fst_ce"></td>
+                    <td id="kfq_sl_ce"></td>
+                    <td id="kfq_ga_ce"></td>
+                    <td id="kfq_sh_ce"></td>
+                    <td id="kfq_wh_ce"></td>
+                    <td id="kfq_rx_ce"></td>
+                    <td id="kfq_qh_ce"></td>
+                    <td id="kfq_tx_ce"></td>
+                    <td></td>
+                    <td id="kfq_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">山海关</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="shg_sz">
+                    <td>上周</td>
+                    <td id="shg_xh_sz"></td>
+                    <td id="shg_zjxl_sz"></td>
+                    <td id="shg_zdk_sz"></td>
+                    <td id="shg_fht_sz"></td>
+                    <td id="shg_tdt_sz"></td>
+                    <td id="shg_st_sz"></td>
+                    <td id="shg_zd_sz"></td>
+                    <td id="shg_lqt_sz"></td>
+                    <td id="shg_xd_sz"></td>
+                    <td id="shg_td_sz"></td>
+                    <td id="shg_tzj_sz"></td>
+                    <td id="shg_fst_sz"></td>
+                    <td id="shg_sl_sz"></td>
+                    <td id="shg_ga_sz"></td>
+                    <td id="shg_sh_sz"></td>
+                    <td id="shg_wh_sz"></td>
+                    <td id="shg_rx_sz"></td>
+                    <td id="shg_qh_sz"></td>
+                    <td id="shg_tx_sz"></td>
+                    <td></td>
+                    <td id="shg_sz_zj"></td>
+                </tr>
+                <tr id="shg_zz">
+                    <td>本周</td>
+                    <td id="shg_xh_zz"></td>
+                    <td id="shg_zjxl_zz"></td>
+                    <td id="shg_zdk_zz"></td>
+                    <td id="shg_fht_zz"></td>
+                    <td id="shg_tdt_zz"></td>
+                    <td id="shg_st_zz"></td>
+                    <td id="shg_zd_zz"></td>
+                    <td id="shg_lqt_zz"></td>
+                    <td id="shg_xd_zz"></td>
+                    <td id="shg_td_zz"></td>
+                    <td id="shg_tzj_zz"></td>
+                    <td id="shg_fst_zz"></td>
+                    <td id="shg_sl_zz"></td>
+                    <td id="shg_ga_zz"></td>
+                    <td id="shg_sh_zz"></td>
+                    <td id="shg_wh_zz"></td>
+                    <td id="shg_rx_zz"></td>
+                    <td id="shg_qh_zz"></td>
+                    <td id="shg_tx_zz"></td>
+                    <td></td>
+                    <td id="shg_zz_zj"></td>
+                </tr>
+                <tr id="shg_ce">
+                    <td>差额</td>
+                    <td id="shg_xh_ce"></td>
+                    <td id="shg_zjxl_ce"></td>
+                    <td id="shg_zdk_ce"></td>
+                    <td id="shg_fht_ce"></td>
+                    <td id="shg_tdt_ce"></td>
+                    <td id="shg_st_ce"></td>
+                    <td id="shg_zd_ce"></td>
+                    <td id="shg_lqt_ce"></td>
+                    <td id="shg_xd_ce"></td>
+                    <td id="shg_td_ce"></td>
+                    <td id="shg_tzj_ce"></td>
+                    <td id="shg_fst_ce"></td>
+                    <td id="shg_sl_ce"></td>
+                    <td id="shg_ga_ce"></td>
+                    <td id="shg_sh_ce"></td>
+                    <td id="shg_wh_ce"></td>
+                    <td id="shg_rx_ce"></td>
+                    <td id="shg_qh_ce"></td>
+                    <td id="shg_tx_ce"></td>
+                    <td></td>
+                    <td id="shg_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">青龙县</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="qlx_sz">
+                    <td>上周</td>
+                    <td id="qlx_xh_sz"></td>
+                    <td id="qlx_zjxl_sz"></td>
+                    <td id="qlx_zdk_sz"></td>
+                    <td id="qlx_fht_sz"></td>
+                    <td id="qlx_tdt_sz"></td>
+                    <td id="qlx_st_sz"></td>
+                    <td id="qlx_zd_sz"></td>
+                    <td id="qlx_lqt_sz"></td>
+                    <td id="qlx_xd_sz"></td>
+                    <td id="qlx_td_sz"></td>
+                    <td id="qlx_tzj_sz"></td>
+                    <td id="qlx_fst_sz"></td>
+                    <td id="qlx_sl_sz"></td>
+                    <td id="qlx_ga_sz"></td>
+                    <td id="qlx_sh_sz"></td>
+                    <td id="qlx_wh_sz"></td>
+                    <td id="qlx_rx_sz"></td>
+                    <td id="qlx_qh_sz"></td>
+                    <td id="qlx_tx_sz"></td>
+                    <td></td>
+                    <td id="qlx_sz_zj"></td>
+                </tr>
+                <tr id="qlx_zz">
+                    <td>本周</td>
+                    <td id="qlx_xh_zz"></td>
+                    <td id="qlx_zjxl_zz"></td>
+                    <td id="qlx_zdk_zz"></td>
+                    <td id="qlx_fht_zz"></td>
+                    <td id="qlx_tdt_zz"></td>
+                    <td id="qlx_st_zz"></td>
+                    <td id="qlx_zd_zz"></td>
+                    <td id="qlx_lqt_zz"></td>
+                    <td id="qlx_xd_zz"></td>
+                    <td id="qlx_td_zz"></td>
+                    <td id="qlx_tzj_zz"></td>
+                    <td id="qlx_fst_zz"></td>
+                    <td id="qlx_sl_zz"></td>
+                    <td id="qlx_ga_zz"></td>
+                    <td id="qlx_sh_zz"></td>
+                    <td id="qlx_wh_zz"></td>
+                    <td id="qlx_rx_zz"></td>
+                    <td id="qlx_qh_zz"></td>
+                    <td id="qlx_tx_zz"></td>
+                    <td></td>
+                    <td id="qlx_zz_zj"></td>
+                </tr>
+                <tr id="qlx_ce">
+                    <td>差额</td>
+                    <td id="qlx_xh_ce"></td>
+                    <td id="qlx_zjxl_ce"></td>
+                    <td id="qlx_zdk_ce"></td>
+                    <td id="qlx_fht_ce"></td>
+                    <td id="qlx_tdt_ce"></td>
+                    <td id="qlx_st_ce"></td>
+                    <td id="qlx_zd_ce"></td>
+                    <td id="qlx_lqt_ce"></td>
+                    <td id="qlx_xd_ce"></td>
+                    <td id="qlx_td_ce"></td>
+                    <td id="qlx_tzj_ce"></td>
+                    <td id="qlx_fst_ce"></td>
+                    <td id="qlx_sl_ce"></td>
+                    <td id="qlx_ga_ce"></td>
+                    <td id="qlx_sh_ce"></td>
+                    <td id="qlx_wh_ce"></td>
+                    <td id="qlx_rx_ce"></td>
+                    <td id="qlx_qh_ce"></td>
+                    <td id="qlx_tx_ce"></td>
+                    <td></td>
+                    <td id="qlx_zz_ce"></td>
+                </tr>
+                <tr>
+                    <td rowspan='5' style="width:70px;">北戴河</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>轩慧</td>
+                    <td>中交兴路</td>
+                    <td>中电科</td>
+                    <td>烽火台</td>
+                    <td>天地通</td>
+                    <td>盛通</td>
+                    <td>中斗</td>
+                    <td>乐麒通</td>
+                    <td>信达</td>
+                    <td>通斗</td>
+                    <td>唐中交</td>
+                    <td>弗斯特</td>
+                    <td>神龙</td>
+                    <td>广安</td>
+                    <td>首航</td>
+                    <td>万合</td>
+                    <td>融星</td>
+                    <td>奇华</td>
+                    <td>天枢</td>
+                    <td></td>
+                    <td>总计</td>
+                </tr>
+                <tr id="bdh_sz">
+                    <td>上周</td>
+                    <td id="bdh_xh_sz"></td>
+                    <td id="bdh_zjxl_sz"></td>
+                    <td id="bdh_zdk_sz"></td>
+                    <td id="bdh_fht_sz"></td>
+                    <td id="bdh_tdt_sz"></td>
+                    <td id="bdh_st_sz"></td>
+                    <td id="bdh_zd_sz"></td>
+                    <td id="bdh_lqt_sz"></td>
+                    <td id="bdh_xd_sz"></td>
+                    <td id="bdh_td_sz"></td>
+                    <td id="bdh_tzj_sz"></td>
+                    <td id="bdh_fst_sz"></td>
+                    <td id="bdh_sl_sz"></td>
+                    <td id="bdh_ga_sz"></td>
+                    <td id="bdh_sh_sz"></td>
+                    <td id="bdh_wh_sz"></td>
+                    <td id="bdh_rx_sz"></td>
+                    <td id="bdh_qh_sz"></td>
+                    <td id="bdh_tx_sz"></td>
+                    <td></td>
+                    <td id="bdh_sz_zj"></td>
+                </tr>
+                <tr id="bdh_zz">
+                    <td>本周</td>
+                    <td id="bdh_xh_zz"></td>
+                    <td id="bdh_zjxl_zz"></td>
+                    <td id="bdh_zdk_zz"></td>
+                    <td id="bdh_fht_zz"></td>
+                    <td id="bdh_tdt_zz"></td>
+                    <td id="bdh_st_zz"></td>
+                    <td id="bdh_zd_zz"></td>
+                    <td id="bdh_lqt_zz"></td>
+                    <td id="bdh_xd_zz"></td>
+                    <td id="bdh_td_zz"></td>
+                    <td id="bdh_tzj_zz"></td>
+                    <td id="bdh_fst_zz"></td>
+                    <td id="bdh_sl_zz"></td>
+                    <td id="bdh_ga_zz"></td>
+                    <td id="bdh_sh_zz"></td>
+                    <td id="bdh_wh_zz"></td>
+                    <td id="bdh_rx_zz"></td>
+                    <td id="bdh_qh_zz"></td>
+                    <td id="bdh_tx_zz"></td>
+                    <td></td>
+                    <td id="bdh_zz_zj"></td>
+                </tr>
+                <tr id="bdh_ce">
+                    <td>差额</td>
+                    <td id="bdh_xh_ce"></td>
+                    <td id="bdh_zjxl_ce"></td>
+                    <td id="bdh_zdk_ce"></td>
+                    <td id="bdh_fht_ce"></td>
+                    <td id="bdh_tdt_ce"></td>
+                    <td id="bdh_st_ce"></td>
+                    <td id="bdh_zd_ce"></td>
+                    <td id="bdh_lqt_ce"></td>
+                    <td id="bdh_xd_ce"></td>
+                    <td id="bdh_td_ce"></td>
+                    <td id="bdh_tzj_ce"></td>
+                    <td id="bdh_fst_ce"></td>
+                    <td id="bdh_sl_ce"></td>
+                    <td id="bdh_ga_ce"></td>
+                    <td id="bdh_sh_ce"></td>
+                    <td id="bdh_wh_ce"></td>
+                    <td id="bdh_rx_ce"></td>
+                    <td id="bdh_qh_ce"></td>
+                    <td id="bdh_tx_ce"></td>
+                    <td></td>
+                    <td id="bdh_zz_ce"></td>
+                </tr>
+                <tr id="hj_tr">
+                    <td>合计</td>
+                    <td></td>
+                    <td id="hj_xh"></td>
+                    <td id="hj_zjxl"></td>
+                    <td id="hj_zdk"></td>
+                    <td id="hj_fht"></td>
+                    <td id="hj_tdt"></td>
+                    <td id="hj_st"></td>
+                    <td id="hj_zd"></td>
+                    <td id="hj_lqt"></td>
+                    <td id="hj_xd"></td>
+                    <td id="hj_td"></td>
+                    <td id="hj_tzj"></td>
+                    <td id="hj_fst"></td>
+                    <td id="hj_sl"></td>
+                    <td id="hj_ga"></td>
+                    <td id="hj_sh"></td>
+                    <td id="hj_wh"></td>
+                    <td id="hj_rx"></td>
+                    <td id="hj_qh"></td>
+                    <td id="hj_tx"></td>
+                    <td></td>
+                    <td id="hj_zj"></td>
+                </tr>
+
+        </table>
+            <!--<script type="text/html" id="table-ErpAddCarStatistics-list">-->
+                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>-->
+                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>-->
+            <!--</script>-->
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common'
+        }).use(['index','table', 'form','common','laydate'], function(exports){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,table = layui.table
+                ,common = layui.common
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            function sakujyo(){
+                //table 的id
+                debugger
+                var tab = document.getElementById("ErpAddCarStatistics-list") ;
+                for (var i=0; i < tab.rows.length; i++){
+                    for (var j=0;j< tab.rows.item(i).cells.length;j++) {
+                        if(!(isNaN(parseInt(tab.rows.item(i).cells[j].innerHTML)))){
+                            tab.rows.item(i).cells[j].innerHTML = "";
+                        }else {
+                            continue;
+                        }
+
+                    }
+                }
+            }
+
+            //查询
+            form.on('submit(ErpAddCarStatistics-search)', function(data){
+                var field = data.field;//queryObj.statisticsCarToday
+                //执行重载
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpAddCarStatistics/listpage.jsn',
+                    data:{'statisticsCarToday':field.statisticsCarToday},
+                    method:"post",
+                    success:function (data) {
+                        sakujyo();
+                        //1.拿到map对象
+                        var listHGCurr = data.data.listHGCurr;//海港区
+                        var listFNCurr = data.data.listFNCurr;//抚宁县
+                        var listCLCurr = data.data.listCLCurr;//昌黎县
+                        var listLLCurr = data.data.listLLCurr;//卢龙县
+                        var listKFCurr = data.data.listKFCurr;//开发区
+                        var listQLCurr = data.data.listQLCurr;//青龙县
+                        var listSHCurr = data.data.listSHCurr;//山海关
+                        var listBDCurr = data.data.listBDCurr;//北戴河
+                        //大平台新增车辆统计
+                        var str = listHGCurr[0].statisticsCarToday;
+                        var str1 = str.split("-");
+                        var title = "统计日期："+str1[0]+"年"+str1[1]+"月"+str1[2]+"日";
+                        document.getElementById("title_car_id").innerHTML=title;
+                        for(var i = 0;i<listHGCurr.length;i++){//海港区遍历插入
+                            setForEachValueZZ("hgq",listHGCurr[i]);
+                        }
+                        for(var i = 0;i<listFNCurr.length;i++){//抚宁县遍历插入
+                            setForEachValueZZ("fnq",listFNCurr[i]);
+                        }
+                        for(var i = 0;i<listCLCurr.length;i++){//昌黎县遍历插入
+                            setForEachValueZZ("clx",listCLCurr[i]);
+                        }
+                        for(var i = 0;i<listLLCurr.length;i++){//卢龙县遍历插入
+                            setForEachValueZZ("llx",listLLCurr[i]);
+                        }
+                        for(var i = 0;i<listKFCurr.length;i++){//开发区遍历插入
+                            setForEachValueZZ("kfq",listKFCurr[i]);
+                        }
+                        for(var i = 0;i<listQLCurr.length;i++){//青龙县遍历插入
+                            setForEachValueZZ("qlx",listQLCurr[i]);
+                        }
+                        for(var i = 0;i<listSHCurr.length;i++){//山海关遍历插入
+                            setForEachValueZZ("shg",listSHCurr[i]);
+                        }
+                        for(var i = 0;i<listBDCurr.length;i++){//北戴河遍历插入
+                            setForEachValueZZ("bdh",listBDCurr[i]);
+                        }
+                        //上周
+                        var listHGBetween = data.data.listHGBetween;//海港区
+                        var listFNBetween = data.data.listFNBetween;//抚宁县
+                        var listCLBetween = data.data.listCLBetween;//昌黎县
+                        var listLLBetween = data.data.listLLBetween;//卢龙县
+                        var listKFBetween = data.data.listKFBetween;//开发区
+                        var listQLBetween = data.data.listQLBetween;//青龙县
+                        var listSHBetween = data.data.listSHBetween;//山海关
+                        var listBDBetween = data.data.listBDBetween;//北戴河
+                        for(var i = 0;i<listHGBetween.length;i++){//海港区遍历插入
+                            setForEachValueSZ("hgq",listHGBetween[i]);
+                        }
+                        for(var i = 0;i<listFNBetween.length;i++){//抚宁县遍历插入
+                            setForEachValueSZ("fnq",listFNBetween[i]);
+                        }
+                        for(var i = 0;i<listCLBetween.length;i++){//昌黎县遍历插入
+                            setForEachValueSZ("clx",listCLBetween[i]);
+                        }
+                        for(var i = 0;i<listLLBetween.length;i++){//卢龙县遍历插入
+                            setForEachValueSZ("llx",listLLBetween[i]);
+                        }
+                        for(var i = 0;i<listKFBetween.length;i++){//开发区遍历插入
+                            setForEachValueSZ("kfq",listKFBetween[i]);
+                        }
+                        for(var i = 0;i<listQLBetween.length;i++){//青龙县遍历插入
+                            setForEachValueSZ("qlx",listQLBetween[i]);
+                        }
+                        for(var i = 0;i<listSHBetween.length;i++){//山海关遍历插入
+                            setForEachValueSZ("shg",listSHBetween[i]);
+                        }
+                        for(var i = 0;i<listBDBetween.length;i++){//北戴河遍历插入
+                            setForEachValueSZ("bdh",listBDBetween[i]);
+                        }
+                        //2.计算差额
+                        //3.计算总计 上周
+                        setValueNumSZ("hgq",data.data.listHGTotalBetween);
+                        setValueNumSZ("fnq",data.data.listFNTotalBetween);
+                        setValueNumSZ("clx",data.data.listCLTotalBetween);
+                        setValueNumSZ("llx",data.data.listLLTotalBetween);
+                        setValueNumSZ("kfq",data.data.listKFTotalBetween);
+                        setValueNumSZ("qlx",data.data.listQLTotalBetween);
+                        setValueNumSZ("shg",data.data.listSHTotalBetween);
+                        setValueNumSZ("bdh",data.data.listBDTotalBetween);
+
+                        //3.计算总计 本周
+                        setValueNumZZ("hgq",data.data.listHGTotal);
+                        setValueNumZZ("fnq",data.data.listFNTotal);
+                        setValueNumZZ("clx",data.data.listCLTotal);
+                        setValueNumZZ("llx",data.data.listLLTotal);
+                        setValueNumZZ("kfq",data.data.listKFTotal);
+                        setValueNumZZ("qlx",data.data.listQLTotal);
+                        setValueNumZZ("shg",data.data.listSHTotal);
+                        setValueNumZZ("bdh",data.data.listBDTotal);
+
+                        //4.差额总计
+                        setValueNumCE("hgq");
+                        setValueNumCE("fnq");
+                        setValueNumCE("clx");
+                        setValueNumCE("llx");
+                        setValueNumCE("kfq");
+                        setValueNumCE("qlx");
+                        setValueNumCE("shg");
+                        setValueNumCE("bdh");
+
+                        //5.计算本周合计
+                        setValueZjNum("xh");
+                        setValueZjNum("zjxl");
+                        setValueZjNum("zdk");
+                        setValueZjNum("fht");
+                        setValueZjNum("st");
+                        setValueZjNum("tdt");
+                        setValueZjNum("zd");
+                        setValueZjNum("lqt");
+                        setValueZjNum("xd");
+                        setValueZjNum("td");
+                        setValueZjNum("tzj");
+                        setValueZjNum("fst");
+                        setValueZjNum("sl");
+                        setValueZjNum("ga");
+                        setValueZjNum("sh");
+                        setValueZjNum("wh");
+                        setValueZjNum("rx");
+                        setValueZjNum("qh");
+                        setValueZjNum("tx");
+
+                        //插入总计
+                        toTalAllCarZZ();
+
+                    },
+                });
+            });
+
+
+            setValueTable = function(){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpAddCarStatistics/setValueTable.jsn',
+                    data:{},
+                    method:"post",
+                    success:function (data) {
+                        //1.拿到map对象
+                        var listHGCurr = data.data.listHGCurr;//海港区
+                        var listFNCurr = data.data.listFNCurr;//抚宁县
+                        var listCLCurr = data.data.listCLCurr;//昌黎县
+                        var listLLCurr = data.data.listLLCurr;//卢龙县
+                        var listKFCurr = data.data.listKFCurr;//开发区
+                        var listQLCurr = data.data.listQLCurr;//青龙县
+                        var listSHCurr = data.data.listSHCurr;//山海关
+                        var listBDCurr = data.data.listBDCurr;//北戴河
+                        //大平台新增车辆统计
+                        var str = listHGCurr[0].statisticsCarToday;
+                        var str1 = str.split("-");
+                        var title = "统计日期："+str1[0]+"年"+str1[1]+"月"+str1[2]+"日";
+                        document.getElementById("title_car_id").innerHTML=title;
+                        for(var i = 0;i<listHGCurr.length;i++){//海港区遍历插入
+                            setForEachValueZZ("hgq",listHGCurr[i]);
+                        }
+                        for(var i = 0;i<listFNCurr.length;i++){//抚宁县遍历插入
+                            setForEachValueZZ("fnq",listFNCurr[i]);
+                        }
+                        for(var i = 0;i<listCLCurr.length;i++){//昌黎县遍历插入
+                            setForEachValueZZ("clx",listCLCurr[i]);
+                        }
+                        for(var i = 0;i<listLLCurr.length;i++){//卢龙县遍历插入
+                            setForEachValueZZ("llx",listLLCurr[i]);
+                        }
+                        for(var i = 0;i<listKFCurr.length;i++){//开发区遍历插入
+                            setForEachValueZZ("kfq",listKFCurr[i]);
+                        }
+                        for(var i = 0;i<listQLCurr.length;i++){//青龙县遍历插入
+                            setForEachValueZZ("qlx",listQLCurr[i]);
+                        }
+                        for(var i = 0;i<listSHCurr.length;i++){//山海关遍历插入
+                            setForEachValueZZ("shg",listSHCurr[i]);
+                        }
+                        for(var i = 0;i<listBDCurr.length;i++){//北戴河遍历插入
+                            setForEachValueZZ("bdh",listBDCurr[i]);
+                        }
+                        debugger
+                        //上周
+                        var listHGBetween = data.data.listHGBetween;//海港区
+                        var listFNBetween = data.data.listFNBetween;//抚宁县
+                        var listCLBetween = data.data.listCLBetween;//昌黎县
+                        var listLLBetween = data.data.listLLBetween;//卢龙县
+                        var listKFBetween = data.data.listKFBetween;//开发区
+                        var listQLBetween = data.data.listQLBetween;//青龙县
+                        var listSHBetween = data.data.listSHBetween;//山海关
+                        var listBDBetween = data.data.listBDBetween;//北戴河
+                        for(var i = 0;i<listHGBetween.length;i++){//海港区遍历插入
+                            setForEachValueSZ("hgq",listHGBetween[i]);
+                        }
+                        for(var i = 0;i<listFNBetween.length;i++){//抚宁县遍历插入
+                            setForEachValueSZ("fnq",listFNBetween[i]);
+                        }
+                        for(var i = 0;i<listCLBetween.length;i++){//昌黎县遍历插入
+                            setForEachValueSZ("clx",listCLBetween[i]);
+                        }
+                        for(var i = 0;i<listLLBetween.length;i++){//卢龙县遍历插入
+                            setForEachValueSZ("llx",listLLBetween[i]);
+                        }
+                        for(var i = 0;i<listKFBetween.length;i++){//开发区遍历插入
+                            setForEachValueSZ("kfq",listKFBetween[i]);
+                        }
+                        for(var i = 0;i<listQLBetween.length;i++){//青龙县遍历插入
+                            setForEachValueSZ("qlx",listQLBetween[i]);
+                        }
+                        for(var i = 0;i<listSHBetween.length;i++){//山海关遍历插入
+                            setForEachValueSZ("shg",listSHBetween[i]);
+                        }
+                        for(var i = 0;i<listBDBetween.length;i++){//北戴河遍历插入
+                            setForEachValueSZ("bdh",listBDBetween[i]);
+                        }
+                        //2.计算差额
+                        //3.计算总计 上周
+                        setValueNumSZ("hgq",data.data.listHGTotalBetween);
+                        setValueNumSZ("fnq",data.data.listFNTotalBetween);
+                        setValueNumSZ("clx",data.data.listCLTotalBetween);
+                        setValueNumSZ("llx",data.data.listLLTotalBetween);
+                        setValueNumSZ("kfq",data.data.listKFTotalBetween);
+                        setValueNumSZ("qlx",data.data.listQLTotalBetween);
+                        setValueNumSZ("shg",data.data.listSHTotalBetween);
+                        setValueNumSZ("bdh",data.data.listBDTotalBetween);
+
+                        //3.计算总计 本周
+                        setValueNumZZ("hgq",data.data.listHGTotal);
+                        setValueNumZZ("fnq",data.data.listFNTotal);
+                        setValueNumZZ("clx",data.data.listCLTotal);
+                        setValueNumZZ("llx",data.data.listLLTotal);
+                        setValueNumZZ("kfq",data.data.listKFTotal);
+                        setValueNumZZ("qlx",data.data.listQLTotal);
+                        setValueNumZZ("shg",data.data.listSHTotal);
+                        setValueNumZZ("bdh",data.data.listBDTotal);
+
+                        //4.差额总计
+                        setValueNumCE("hgq");
+                        setValueNumCE("fnq");
+                        setValueNumCE("clx");
+                        setValueNumCE("llx");
+                        setValueNumCE("kfq");
+                        setValueNumCE("qlx");
+                        setValueNumCE("shg");
+                        setValueNumCE("bdh");
+
+                        //5.计算本周合计
+                        setValueZjNum("xh");
+                        setValueZjNum("zjxl");
+                        setValueZjNum("zdk");
+                        setValueZjNum("fht");
+                        setValueZjNum("st");
+                        setValueZjNum("tdt");
+                        setValueZjNum("zd");
+                        setValueZjNum("lqt");
+                        setValueZjNum("xd");
+                        setValueZjNum("td");
+                        setValueZjNum("tzj");
+                        setValueZjNum("fst");
+                        setValueZjNum("sl");
+                        setValueZjNum("ga");
+                        setValueZjNum("sh");
+                        setValueZjNum("wh");
+                        setValueZjNum("rx");
+                        setValueZjNum("qh");
+                        setValueZjNum("tx");
+
+                        //插入总计
+                        toTalAllCarZZ();
+
+
+                    },
+                });
+            }
+            setValueTable();
+
+            toTalAllCarZZ = function(){
+                var arrNumHG = document.getElementById("hgq_zz_zj").innerHTML;
+                var arrNumFN = document.getElementById("fnq_zz_zj").innerHTML;
+                var arrNumCL = document.getElementById("clx_zz_zj").innerHTML;
+                var arrNumLL = document.getElementById("llx_zz_zj").innerHTML;
+                var arrNumKF = document.getElementById("kfq_zz_zj").innerHTML;
+                var arrNumQL = document.getElementById("qlx_zz_zj").innerHTML;
+                var arrNumSHG = document.getElementById("shg_zz_zj").innerHTML;
+                var arrNumBDH = document.getElementById("bdh_zz_zj").innerHTML;
+                var sum = 0;
+                var arr = [arrNumHG,arrNumFN,arrNumCL,arrNumLL,arrNumKF,arrNumQL,arrNumSHG,arrNumBDH];
+                for(var i = 0 ;i<arr.length;i++){
+                    if(!(isNaN(parseInt(arr[i])))){
+                        sum += parseInt(arr[i]);
+                    }
+                }
+                //插入总计
+                document.getElementById("hj_zj").innerHTML=sum;
+
+            }
+
+
+            toTalNum = function(){
+                //3.计算总计
+                var sum = 0;
+                var arrNum = document.getElementById("hj_tr").childNodes;
+                for(var j = 0;j<arrNum.length;j++){
+                    if(arrNum[j].innerHTML=="" && arrNum[j].innerHTML=="合计" && arrNum[j].innerHTML==null){
+                        continue;
+                    }else if(!(isNaN(parseInt(arrNum[j].innerHTML)))){
+                        sum += parseInt(arrNum[j].innerHTML);
+                    }
+                }
+                //插入总计
+                document.getElementById("hj_zj").innerHTML=sum;
+            }
+
+            setValueZjNum = function(str){
+                //3.计算总计   bdh_zdk_zz hj_zdk
+                var arrNumHG = document.getElementById("hgq_"+str+"_zz").innerHTML;
+                var arrNumFN = document.getElementById("fnq_"+str+"_zz").innerHTML;
+                var arrNumCL = document.getElementById("clx_"+str+"_zz").innerHTML;
+                var arrNumLL = document.getElementById("llx_"+str+"_zz").innerHTML;
+                var arrNumKF = document.getElementById("kfq_"+str+"_zz").innerHTML;
+                var arrNumQL = document.getElementById("qlx_"+str+"_zz").innerHTML;
+                var arrNumSHG = document.getElementById("shg_"+str+"_zz").innerHTML;
+                var arrNumBDH = document.getElementById("bdh_"+str+"_zz").innerHTML;
+                var sum = 0;
+                var arr = [arrNumHG,arrNumFN,arrNumCL,arrNumLL,arrNumKF,arrNumQL,arrNumSHG,arrNumBDH];
+                for(var i = 0 ;i<arr.length;i++){
+                    if(!(isNaN(parseInt(arr[i])))){
+                        sum += parseInt(arr[i]);
+                    }
+                }
+                //插入总计
+                document.getElementById("hj_"+str).innerHTML=sum;
+            }
+
+
+            setValueNumSZ = function(str,obj){
+                //3.计算总计
+
+                //插入总计
+                document.getElementById(str+"_sz_zj").innerHTML=obj[0];
+            }
+
+            setValueNumZZ = function(str,obj){
+                //3.计算总计
+                //插入总计
+                document.getElementById(str+"_zz_zj").innerHTML=obj[0];
+            }
+
+            setValueNumCE = function(str){//str_sz_zj  str_zz_zj  str_zz_ce
+                //3.计算总计
+                var szChaE = document.getElementById(str+"_sz_zj").innerHTML;
+                var zzChaE = document.getElementById(str+"_zz_zj").innerHTML;
+                var cha = 0;
+                if(!(isNaN(parseInt(szChaE))&&isNaN(parseInt(zzChaE)))){
+                    cha = zzChaE-szChaE;
+                }
+                //插入总计
+                document.getElementById(str+"_zz_ce").innerHTML=cha;
+            }
+
+
+
+            //本周
+            setForEachValueZZ = function(str,object){
+                debugger
+                if(object.supplierName.indexOf("中电科")!=-1){
+                    document.getElementById(str+"_zdk_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("轩慧")!=-1){
+                    document.getElementById(str+"_xh_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("河北中交兴路")!=-1){
+                    document.getElementById(str+"_zjxl_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("烽火台")!=-1){
+                    document.getElementById(str+"_fht_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("天地通")!=-1){
+                    document.getElementById(str+"_tdt_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("盛通")!=-1){
+                    document.getElementById(str+"_st_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("中斗")!=-1){
+                    document.getElementById(str+"_zd_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("乐麒通")!=-1){
+                    document.getElementById(str+"_lqt_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("信达")!=-1){
+                    document.getElementById(str+"_xd_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("通斗")!=-1){
+                    document.getElementById(str+"_td_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("唐山中交兴路")!=-1){
+                    document.getElementById(str+"_tzj_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("弗斯特")!=-1){
+                    document.getElementById(str+"_fst_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("神龙")!=-1){
+                    document.getElementById(str+"_sl_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("广安")!=-1){
+                    document.getElementById(str+"_ga_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("首航")!=-1){
+                    document.getElementById(str+"_sh_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("万合")!=-1){
+                    document.getElementById(str+"_wh_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("融星")!=-1){
+                    document.getElementById(str+"_rx_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("奇华")!=-1){
+                    document.getElementById(str+"_qh_zz").innerHTML=object.carTodayNum;
+                }else if(object.supplierName.indexOf("天枢")!=-1){
+                    document.getElementById(str+"_tx_zz").innerHTML=object.carTodayNum;
+                }
+            }
+
+            //上周
+            setForEachValueSZ = function(str,object){
+                if(object.supplierName.indexOf("中电科")!=-1){
+                    document.getElementById(str+"_zdk_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_zdk_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_zdk_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("烽火台")!=-1){
+                    document.getElementById(str+"_fht_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_fht_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_fht_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("轩慧")!=-1){
+                    document.getElementById(str+"_xh_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_xh_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_xh_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("河北中交兴路")!=-1){
+                    document.getElementById(str+"_zjxl_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_zjxl_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_zjxl_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("天地通")!=-1){
+                    document.getElementById(str+"_tdt_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_tdt_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_tdt_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("盛通")!=-1){
+                    document.getElementById(str+"_st_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_st_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_st_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("中斗")!=-1){
+                    document.getElementById(str+"_zd_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_zd_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_zd_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("乐麒通")!=-1){
+                    document.getElementById(str+"_lqt_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_lqt_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_lqt_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("信达")!=-1){
+                    document.getElementById(str+"_xd_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_xd_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_xd_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("通斗")!=-1){
+                    document.getElementById(str+"_td_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_td_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_td_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("唐山中交兴路")!=-1){
+                    document.getElementById(str+"_tzj_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_tzj_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_tzj_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("弗斯特")!=-1){
+                    document.getElementById(str+"_fst_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_fst_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_fst_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("神龙")!=-1){
+                    document.getElementById(str+"_sl_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_sl_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_sl_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("广安")!=-1){
+                    document.getElementById(str+"_ga_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_ga_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_ga_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("首航")!=-1){
+                    document.getElementById(str+"_sh_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_sh_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_sh_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("万合")!=-1){
+                    document.getElementById(str+"_wh_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_wh_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_wh_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("融星")!=-1){
+                    document.getElementById(str+"_rx_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_rx_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_rx_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("奇华")!=-1){
+                    document.getElementById(str+"_qh_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_qh_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_qh_ce").innerHTML=cha;
+                }else if(object.supplierName.indexOf("天枢")!=-1){
+                    document.getElementById(str+"_tx_sz").innerHTML=object.carTodayNum;
+                    //1.获取到本周的数字值
+                    var zzNum = parseInt(document.getElementById(str+"_tx_zz").innerHTML);
+                    //2.根据对象拿到当前上周的数值
+                    var szNum = object.carTodayNum;
+                    //3.定位差额标签,插入
+                    var cha = zzNum-szNum;
+                    document.getElementById(str+"_tx_ce").innerHTML=cha;
+                }
+            }
+
+
+            //删除
+            deleteVo = function (obj) {
+                layer.confirm('确定删除此记录吗？', function(index){
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/erpAddCarStatistics/deleteByIds.jsn',
+                        data:{'ids':obj.data.id},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('ErpAddCarStatistics-list',
+                                {page:
+                                    { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                    }
+                                }
+                            );
+                            layer.close(index);
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //编辑
+            editVo = function (obj) {
+                layer.open({
+                    type: 2
+                    ,title: '编辑'
+                    ,content: 'ErpAddCarStatisticsEdit.html'
+                    ,maxmin: true
+                    ,area: ['550px', '550px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpAddCarStatistics-form").click();
+
+                        othis.find('input[name="id"]').val(obj.data.id);
+                        othis.find('input[name="createTime"]').val(obj.data.createTime);
+                        othis.find('input[name="xianquId"]').val(obj.data.xianquId);
+                        othis.find('input[name="xianquName"]').val(obj.data.xianquName);
+                        othis.find('input[name="supplierName"]').val(obj.data.supplierName);
+                        othis.find('input[name="carTodayNum"]').val(obj.data.carTodayNum);
+                        othis.find('input[name="statisticsCarToday"]').val(obj.data.statisticsCarToday);
+                        othis.find('input[name="dataState"]').val(obj.data.dataState);
+                    }
+                    ,yes: function(index, layero){
+                        var submit = layero.find('iframe').contents().find("#ErpAddCarStatistics-form-edit");
+                        submit.trigger('click');
+                    }
+                });
+            }
+
+            //点击事件
+            var active = {
+                //批量删除
+                batchdel: function(){
+                    var checkStatus = table.checkStatus('ErpAddCarStatistics-list')
+                        ,checkData = checkStatus.data; //得到选中的数据
+
+                    if(checkData.length === 0){
+                        return layer.msg('请选择数据');
+                    }
+
+                    layer.confirm('确定删除吗？', function(index) {
+                        var ids = "" ;
+                        for(var i = 0;i<checkData.length;i++){
+                            if(ids==""){
+                                ids= checkData[i].id;
+                            }else {
+                                ids = ids+","+checkData[i].id;
+                            }
+                        }
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/erpAddCarStatistics/deleteByIds.jsn',
+                            data:{'ids':ids},
+                            method:"post",
+                            success:function (data) {
+                                table.reload('ErpAddCarStatistics-list',
+                                    {page:
+                                        { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                        }
+                                    }
+                                );
+                                layer.msg('删除成功', {
+                                    icon: 1
+                                });
+                            },
+                        });
+                    });
+                }
+                //添加
+                ,add: function(){
+                    layer.open({
+                        type: 2
+                        ,title: '添加'
+                        ,content: 'ErpAddCarStatisticsAdd.html'
+                        ,maxmin: true
+                        ,area: ['550px', '550px']
+                        ,btn: ['确定', '取消']
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#ErpAddCarStatistics-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+            }
+            //绑定点击事件
+            $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            //常规用法
+            laydate.render({
+                elem: '#test1'
+            });
+
+        });
+
+</script>
+</body>
+</html>
+

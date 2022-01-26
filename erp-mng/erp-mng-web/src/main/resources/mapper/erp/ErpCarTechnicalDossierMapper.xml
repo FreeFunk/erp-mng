@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCarTechnicalDossierMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCarTechnicalDossier" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="CAR_BRAND" property="carBrand"/>
+			<result column="CAR_MODEL" property="carModel"/>
+			<result column="FUEL_TYPE" property="fuelType"/>
+			<result column="TOTAL_MASS" property="totalMass"/>
+			<result column="HEDINGZAI_MASS" property="hedingzaiMass"/>
+			<result column="TRACTION_MASS" property="tractionMass"/>
+			<result column="TECH_OUTER_LENGTH" property="techOuterLength"/>
+			<result column="TECH_OUTER_WIDTH" property="techOuterWidth"/>
+			<result column="TECH_OUTER_HEIGHT" property="techOuterHeight"/>
+			<result column="BOX_INNER_LENGTH" property="boxInnerLength"/>
+			<result column="BOX_INNER_WIDTH" property="boxInnerWidth"/>
+			<result column="BOX_INNER_HEIGHT" property="boxInnerHeight"/>
+			<result column="AXLE_NUM" property="axleNum"/>
+			<result column="TYRE_NUM" property="tyreNum"/>
+			<result column="TYRE_SPECIFICATIONS" property="tyreSpecifications"/>
+			<result column="CAR_PRODUCE_DATE" property="carProduceDate"/>
+			<result column="BUSINESS_SCOPE" property="businessScope"/>
+			<result column="CAR_BODY_COLOR" property="carBodyColor"/>
+			<result column="CAR_PURCHASE_TYPE" property="carPurchaseType"/>
+			<result column="CAR_INSURING_END_TIME" property="carInsuringEndTime"/>
+			<result column="CAR_CHECK_END_TIME" property="carCheckEndTime"/>
+			<result column="LICENSE_UPLOAD_NUM" property="licenseUploadNum"/>
+			<result column="SERVICE_CONTRACT_END_TIME" property="serviceContractEndTime"/>
+			<result column="DRIVING_PERMIT_START_TIME" property="drivingPermitStartTime"/>
+			<result column="ENGINE_NUMBER" property="engineNumber"/>
+			<result column="ENGINE_MODEL" property="engineModel"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCarTechnicalDossierView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, CAR_TYPE, CAR_BRAND, CAR_MODEL, FUEL_TYPE, TOTAL_MASS, HEDINGZAI_MASS, TRACTION_MASS, TECH_OUTER_LENGTH, TECH_OUTER_WIDTH, TECH_OUTER_HEIGHT, BOX_INNER_LENGTH, BOX_INNER_WIDTH, BOX_INNER_HEIGHT, AXLE_NUM, TYRE_NUM, TYRE_SPECIFICATIONS, CAR_PRODUCE_DATE, BUSINESS_SCOPE, CAR_BODY_COLOR, CAR_PURCHASE_TYPE, CAR_INSURING_END_TIME, CAR_CHECK_END_TIME, LICENSE_UPLOAD_NUM, SERVICE_CONTRACT_END_TIME, DRIVING_PERMIT_START_TIME, ENGINE_NUMBER, ENGINE_MODEL, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.axleNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.axleNum)'>
+					AND  AXLE_NUM = #{queryObj.axleNum}
+				</if>
+				<if test='queryObj != null and  queryObj.tyreNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.tyreNum)'>
+					AND  TYRE_NUM = #{queryObj.tyreNum}
+				</if>
+				<if test='queryObj != null and  queryObj.carProduceDate != null'>
+					AND  CAR_PRODUCE_DATE = #{queryObj.carProduceDate}
+				</if>
+				<if test='queryObj != null and  queryObj.carInsuringEndTime != null'>
+					AND  CAR_INSURING_END_TIME = #{queryObj.carInsuringEndTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carCheckEndTime != null'>
+					AND  CAR_CHECK_END_TIME = #{queryObj.carCheckEndTime}
+				</if>
+				<if test='queryObj != null and  queryObj.licenseUploadNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.licenseUploadNum)'>
+					AND  LICENSE_UPLOAD_NUM = #{queryObj.licenseUploadNum}
+				</if>
+				<if test='queryObj != null and  queryObj.serviceContractEndTime != null'>
+					AND  SERVICE_CONTRACT_END_TIME = #{queryObj.serviceContractEndTime}
+				</if>
+				<if test='queryObj != null and  queryObj.drivingPermitStartTime != null'>
+					AND  DRIVING_PERMIT_START_TIME = #{queryObj.drivingPermitStartTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carPlateNum != null'>
+					AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+				</if>
+				<if test='queryObj != null and  queryObj.carFrameNum != null'>
+					AND  CAR_FRAME_NUM like '%${queryObj.carFrameNum}%'
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCarTechnicalDossierQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_technical_dossier 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCarTechnicalDossierQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_technical_dossier 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 逻辑删除 -->
+	<update id="deleteByIdsOne" parameterType="java.lang.String">
+		update erp_car_technical_dossier set DATA_STATE='0' where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdsAll" parameterType="java.util.List">
+		update erp_car_technical_dossier set DATA_STATE = '0' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<select id="selectBycarFrameNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_technical_dossier where CAR_FRAME_NUM=#{carFrameNum} and DATA_STATE='1'
+	</select>
+
+
+	<insert id="insertListErpCarTechnicalDossier" parameterType="java.util.List">
+		insert into erp_car_technical_dossier
+		(	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, CAR_TYPE,
+		CAR_BRAND, CAR_MODEL, FUEL_TYPE, TOTAL_MASS, HEDINGZAI_MASS, TRACTION_MASS, TECH_OUTER_LENGTH, TECH_OUTER_WIDTH,
+		TECH_OUTER_HEIGHT, BOX_INNER_LENGTH, BOX_INNER_WIDTH, BOX_INNER_HEIGHT, AXLE_NUM, TYRE_NUM, TYRE_SPECIFICATIONS,
+		CAR_PRODUCE_DATE, BUSINESS_SCOPE, CAR_BODY_COLOR, CAR_PURCHASE_TYPE, CAR_INSURING_END_TIME, CAR_CHECK_END_TIME,
+		LICENSE_UPLOAD_NUM, SERVICE_CONTRACT_END_TIME, DRIVING_PERMIT_START_TIME, ENGINE_NUMBER, ENGINE_MODEL, DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id},#{item.createTime},#{item.createUserId},#{item.createUserName},#{item.carPlateNum},#{item.carPlateColor},#{item.carFrameNum},#{item.carType},
+			#{item.carBrand},#{item.carModel},#{item.fuelType},#{item.totalMass},#{item.hedingzaiMass},#{item.tractionMass},#{item.techOuterLength},#{item.techOuterWidth},
+			#{item.techOuterHeight},#{item.boxInnerLength},#{item.boxInnerWidth},#{item.boxInnerHeight},#{item.axleNum},#{item.tyreNum},#{item.tyreSpecifications},
+			#{item.carProduceDate},#{item.businessScope},#{item.carBodyColor},#{item.carPurchaseType},#{item.carInsuringEndTime},#{item.carCheckEndTime},
+			#{item.licenseUploadNum},#{item.serviceContractEndTime},#{item.drivingPermitStartTime},#{item.engineNumber},#{item.engineModel},#{item.dataState}
+			)
+		</foreach>
+	</insert>
+
+
+
+
+</mapper>

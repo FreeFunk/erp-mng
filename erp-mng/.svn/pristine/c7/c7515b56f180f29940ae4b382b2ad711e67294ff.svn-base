@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpChangeNetSumMonthMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpChangeNetSumMonth" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="NOW_PT" property="nowPt"/>
+			<result column="HAI_GANG_QU" property="haiGangQu"/>
+			<result column="SHAN_HAI_GUAN_QU" property="shanHaiGuanQu"/>
+			<result column="BEI_DAI_HE_QU" property="beiDaiHeQu"/>
+			<result column="FU_NING_QU" property="fuNingQu"/>
+			<result column="QING_LONG_XIAN" property="qingLongXian"/>
+			<result column="CHANG_LI_XIAN" property="changLiXian"/>
+			<result column="LU_LONG_XIAN" property="luLongXian"/>
+			<result column="KAI_FA_QU" property="kaiFaQu"/>
+			<result column="COUNT_MONTH" property="countMonth"/>
+			<result column="COUNT_DATA" property="countData"/>
+			<result column="COUNT_TYPE" property="countType"/>
+			<result column="SUM_COUNT" property="sumCount"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpChangeNetSumMonthView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, NOW_PT,CHANGE_NET_TYPE, HAI_GANG_QU, SHAN_HAI_GUAN_QU, BEI_DAI_HE_QU, FU_NING_QU, QING_LONG_XIAN, CHANG_LI_XIAN, LU_LONG_XIAN, KAI_FA_QU, COUNT_MONTH, COUNT_DATA, COUNT_TYPE, SUM_COUNT, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.haiGangQu != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.haiGangQu)'>
+					AND  HAI_GANG_QU = #{queryObj.haiGangQu}
+				</if>
+				<if test='queryObj != null and  queryObj.shanHaiGuanQu != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.shanHaiGuanQu)'>
+					AND  SHAN_HAI_GUAN_QU = #{queryObj.shanHaiGuanQu}
+				</if>
+				<if test='queryObj != null and  queryObj.beiDaiHeQu != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.beiDaiHeQu)'>
+					AND  BEI_DAI_HE_QU = #{queryObj.beiDaiHeQu}
+				</if>
+				<if test='queryObj != null and  queryObj.fuNingQu != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.fuNingQu)'>
+					AND  FU_NING_QU = #{queryObj.fuNingQu}
+				</if>
+				<if test='queryObj != null and  queryObj.qingLongXian != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.qingLongXian)'>
+					AND  QING_LONG_XIAN = #{queryObj.qingLongXian}
+				</if>
+				<if test='queryObj != null and  queryObj.changLiXian != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.changLiXian)'>
+					AND  CHANG_LI_XIAN = #{queryObj.changLiXian}
+				</if>
+				<if test='queryObj != null and  queryObj.luLongXian != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.luLongXian)'>
+					AND  LU_LONG_XIAN = #{queryObj.luLongXian}
+				</if>
+				<if test='queryObj != null and  queryObj.kaiFaQu != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.kaiFaQu)'>
+					AND  KAI_FA_QU = #{queryObj.kaiFaQu}
+				</if>
+				<if test='queryObj != null and  queryObj.countMonth != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.countMonth)'>
+					AND  COUNT_MONTH = #{queryObj.countMonth}
+				</if>
+				<if test='queryObj != null and  queryObj.sumCount != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.sumCount)'>
+					AND  SUM_COUNT = #{queryObj.sumCount}
+				</if>
+				<if test='queryObj != null and  queryObj.countData != null'>
+					AND  COUNT_DATA = #{queryObj.countData}
+				</if>
+				<if test='queryObj != null and  queryObj.changeNetType != null'>
+					AND  CHANGE_NET_TYPE = #{queryObj.changeNetType}
+				</if>
+
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpChangeNetSumMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_change_net_sum_month 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByList" parameterType="com.edgedo.sys.queryvo.ErpChangeNetCounMonthQuery" resultMap="BaseResultViewMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_change_net_sum_month <include refid="where"/>
+	</select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpChangeNetSumMonthQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_change_net_sum_month 
+  		<include refid="where"/>
+  </select>
+
+	<select id="queryAll" parameterType="String" resultMap="BaseResultViewMap">
+		select * from erp_change_net_sum_month
+		WHERE  COUNT_DATA=#{newdata}
+	</select>
+
+
+  
+  
+</mapper>

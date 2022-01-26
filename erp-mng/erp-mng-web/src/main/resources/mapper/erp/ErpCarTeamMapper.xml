@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCarTeamMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCarTeam" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="CAR_TEAM_NAME" property="carTeamName"/>
+			<result column="CONTACT_PERSON" property="contactPerson"/>
+			<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+			<result column="TEAM_ADDRESS" property="teamAddress"/>
+			<result column="REMARK" property="remark"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+
+	<!-- 县区字段-->
+	<resultMap id="BaseResultMapSysXianQu" type="com.edgedo.sys.entity.SysXianqu" >
+		<id column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="ORDER_NUMBER" property="orderNumber"/>
+	</resultMap>
+
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCarTeamView" extends="BaseResultMap">
+
+    </resultMap>
+
+
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, CAR_TEAM_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, TEAM_ADDRESS, REMARK, DATA_STATE
+  </sql>
+
+	<sql id="Base_Column_List_SysXianQu">
+		ID id, NAME, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, ORDER_NUMBER
+	</sql>
+
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.xianquName != null'>
+					AND  XIANQU_NAME like '%${queryObj.xianquName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.carTeamName != null'>
+					AND  CAR_TEAM_NAME like '%${queryObj.carTeamName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.contactPhoneNum != null'>
+					AND  CONTACT_PHONE_NUM like '%${queryObj.contactPhoneNum}%'
+				</if>
+  	</where>
+
+  </sql>
+
+  <!-- ******* 排序判断  ******
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+
+
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCarTeamQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_team
+  		<include refid="where"/>
+  </select>
+
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCarTeamQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_team
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="selectByXianQuList" resultMap="BaseResultMapSysXianQu">
+		select ID id,NAME name from sys_xianqu
+	</select>
+
+	<select id="selectByXianQuId" parameterType="java.lang.String" resultMap="BaseResultMapSysXianQu">
+		select * from sys_xianqu where ID=#{xianQuId}
+	</select>
+
+
+	<!-- 逻辑删除 -->
+	<update id="deleteByIdsOne" parameterType="java.lang.String">
+		update erp_car_team set DATA_STATE='0' where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdsAll" parameterType="java.util.List">
+		update erp_car_team set DATA_STATE = '0' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<select id="selectByCarTeamId" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_car_team where ID=#{ownerTeamName} and DATA_STATE='1'
+	</select>
+
+	<select id="selecByCarTeamName" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from erp_car_team where CAR_TEAM_NAME=#{carTeamName} and DATA_STATE='1'
+	</select>
+  
+</mapper>

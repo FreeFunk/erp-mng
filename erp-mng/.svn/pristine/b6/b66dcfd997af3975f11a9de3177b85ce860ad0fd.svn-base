@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<style type="text/css">
+    .layui-table-cell{
+        padding: 0px 1px;
+    }
+</style>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">车牌号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.carPlateNum" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">
+                    <label class="layui-form-label">车架号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.carFrameNum" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>-->
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpCarSimpleInfo-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <!--<button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>-->
+                <!--<button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>-->
+                <button id="updateBtn" class="layui-btn layuiadmin-btn-comm" data-type="update">更新</button>
+                <button type="button" class="layui-btn layui-btn-warm" id="carInfoExcel"><i class="layui-icon">&#xe67c;</i>导出车辆信息</button>
+            </div>
+            <table id="ErpCarSimpleInfo-list" lay-filter="ErpCarSimpleInfo-list"></table>
+            <!--<script type="text/html" id="table-ErpCarSimpleInfo-list">-->
+                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>-->
+                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>-->
+            <!--</script>-->
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common',
+            excel:'excel'
+        }).use(['index','table', 'form','common','excel','element'], function(exports){
+            var $ = layui.$
+                ,table = layui.table
+                ,common = layui.common
+                ,admin = layui.admin
+                ,form = layui.form
+                ,excel = layui.excel
+                ,element = layui.element;
+
+            //查询
+
+            form.on('submit(ErpCarSimpleInfo-search)', function(data){
+                var field = data.field;
+
+                //执行重载
+                table.reload('ErpCarSimpleInfo-list', {
+                    where: field,
+                    page:{
+                        curr:1
+                    }
+                });
+            });
+
+            checkIsUpdating = function(){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpCarSimpleInfo/checkIsUpdating.jsn',
+                    data:{},
+                    method:"post",
+                    success:function (data) {
+                        debugger;
+                        if(data.success && data.data == "1"){
+                            $("#updateBtn").html("更新中");
+                            $("#updateBtn").attr("disabled","disabled");
+                            $("#updateBtn").attr("class","layui-btn layui-btn-disabled");
+                        }
+                    },
+                })
+            }
+
+            /*
+            * 定义表格
+            * */
+            defineTable = function () {
+                checkIsUpdating();
+                var headers = layui.admin.getTokenHeader();
+                table.render({
+                    elem: '#ErpCarSimpleInfo-list' //指定原始表格的选择器（id选择器）
+                    ,url:layui.setter.basePath +'/admin/erpCarSimpleInfo/listpage.jsn' //模拟接口
+                    ,headers:headers
+                    ,method: 'post'
+                    ,parseData: function(res){ //res 即为原始返回的数据
+                        return {
+                            "code": res.success, //解析接口状态
+                            "msg": res.errMsg, //解析提示文本
+                            "count": res.totalCount, //解析数据长度
+                            "data": res.list //解析数据列表
+                        };
+                    }
+                    ,response: {
+                        statusCode: true //规定成功的状态码，默认：0
+                    }
+                    ,cols: [[
+                        // {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id',align: 'center', width: 200, title: '主键',sort: true,hide:true}
+            ,{field: 'carPlateNum',align: 'center', width: '10%', title: '车牌号'}
+            /*,{field: 'carFrameNum',align: 'center', width: 200, title: '车架号',sort: true}*/
+            ,{field: 'createTime',align: 'center', width: '10%', title: '更新时间',templet: function(d){
+                            return Format(d.createTime,"MM-dd hh:mm");}}
+            ,{field: 'yehuName',align: 'center', width: '18%', title: '业户名称'}
+            ,{field: 'placeOfOrigin',align: 'center', width: '18%', title: '籍贯地'}
+            ,{field: 'supplierName',align: 'center', width: '18%', title: '供应商名'}
+            ,{field: 'terminalName',align: 'center', width: '18%', title: '终端厂商'}
+            ,{field: 'terminalType',align: 'center', width: '10%', title: '终端硬件类型'}
+            ,{field: 'carType',align: 'center', width: '10%', title: '车辆类型'}
+                    ,{field: 'endLocationTime',align: 'center', width: '10%', title: '最后定位时间',templet: function(d){
+                    return common.DateFormat(d.endLocationTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'insertNetwork',align: 'center', width: '10%', title: '入网时间',templet: function(d){
+                    return common.DateFormat(d.insertNetwork,"yyyy-MM-dd");},sort: true}
+            ,{field: 'daysCount',align: 'center', width: '8%', title: '入网天数',sort: true}
+            ,{field: 'dataState',align: 'center', width: 200, title: '数据状态',sort: true,hide:true}
+                    // ,{title: '操作', minWidth: 150, align: 'center', fixed: 'right', toolbar: '#table-ErpCarSimpleInfo-list'}
+            ]]
+            ,autoSort: false
+                    ,page: true
+                    ,limit: 10
+                    ,limits: [10, 20, 30,40]
+                    ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+                //为toolbar添加事件响应
+                table.on('tool(ErpCarSimpleInfo-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    /*var data = obj.data;*///获得当前行数据
+                    //区分事件
+                    switch(obj.event){
+                        case 'del':
+                            deleteVo(obj);
+                            break;
+                        case 'edit':
+                            editVo(obj);
+                            break;
+                    };
+                });
+
+                //监听排序事件
+                table.on('sort(ErpCarSimpleInfo-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                    var sort = obj.field;
+                    //默认排序
+                    switch(obj.field){
+                        case 'id':
+                            sort ="ID";
+                            break;
+                        case 'createTime':
+                            sort ="CREATE_TIME";
+                            break;
+                        case 'carPlateNum':
+                            sort ="CAR_PLATE_NUM";
+                            break;
+                        case 'carFrameNum':
+                            sort ="CAR_FRAME_NUM";
+                            break;
+                        case 'yehuName':
+                            sort ="YEHU_NAME";
+                            break;
+                        case 'placeOfOrigin':
+                            sort ="PLACE_OF_ORIGIN";
+                            break;
+                        case 'supplierName':
+                            sort ="SUPPLIER_NAME";
+                            break;
+                        case 'terminalName':
+                            sort ="TERMINAL_NAME";
+                            break;
+                        case 'terminalType':
+                            sort ="TERMINAL_TYPE";
+                            break;
+                        case 'carType':
+                            sort ="CAR_TYPE";
+                            break;
+                        case 'endLocationTime':
+                            sort ="END_LOCATION_TIME";
+                            break;
+                        case 'insertNetwork':
+                            sort ="INSERT_NETWORK";
+                            break;
+                        case 'daysCount':
+                            sort ="DAYS_COUNT";
+                            break;
+                        case 'dataState':
+                            sort ="DATA_STATE";
+                            break;
+                    };
+                    if(obj.type==null){
+                        return;
+                    }
+                    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                    table.reload('ErpCarSimpleInfo-list', {
+                        initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                        ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                            orderBy: sort+" "+obj.type //排序字段
+                        }
+                    });
+                });
+            }
+            defineTable();
+
+            $('#carInfoExcel').on('click', function(){
+                $("#carInfoExcel").html("导出中");
+                $("#carInfoExcel").attr("class","layui-btn layui-btn-disabled");
+                var loading = layer.load(2,{
+                    shade: [0.3, '#393D49'],
+                    time: 100*1000
+                });
+                // 模拟从后端接口读取需要导出的数据
+                admin.req({
+                    url: layui.setter.basePath +'/admin/erpCarSimpleInfo/carInfoExcel.jsn'
+                    ,dataType: 'json'
+                    ,method:"post"
+                    ,success(res) {
+                        debugger
+                        var data = res.data.list;
+                        console.log(res);
+                        // 后端给的数据顺序和映射关系不对，请执行梳理函数后导出
+                        data = excel.filterExportData(data, [
+                            'carPlateNum'
+                            ,'carFrameNum'
+                            ,'yehuName'
+                            ,'placeOfOrigin'
+                            ,'supplierName'
+                            ,'terminalName'
+                            ,'terminalType'
+                            ,'carType'
+                            ,'endLocationTime'
+                            ,'insertNetwork'
+                            ,'daysCount'
+                        ]);
+                        //加一个表头，表头的键名顺序需要与最终导出的数据一致
+                        data.unshift({ carPlateNum: "车牌号", carFrameNum: "车架号",yehuName: '业户名称',
+                            placeOfOrigin: "籍贯地",supplierName: "供应商名",terminalName: '终端厂商', terminalType: "终端硬件类型",
+                            carType: "车辆类型",endLocationTime: '最后定位时间', insertNetwork: "入网时间",daysCount: "入网天数"});
+
+                        excel.exportExcel(data, '所有车辆.xlsx', 'xlsx');
+                        $("#carInfoExcel").html("导出车辆信息");
+                        $("#carInfoExcel").attr("class","layui-btn layui-btn-warm");
+                        layer.close(loading);
+                    },
+                    error() {
+                        layer.alert('获取数据失败，请检查是否部署在本地服务器环境下');
+                    }
+                });
+            });
+            //删除
+            deleteVo = function (obj) {
+                layer.confirm('确定删除此记录吗？', function(index){
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/erpCarSimpleInfo/deleteByIds.jsn',
+                        data:{'ids':obj.data.id},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('ErpCarSimpleInfo-list',
+                                {page:
+                                    { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                    }
+                                }
+                            );
+                            layer.close(index);
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //编辑
+            editVo = function (obj) {
+                layer.open({
+                    type: 2
+                    ,title: '编辑'
+                    ,content: 'ErpCarSimpleInfoEdit.html'
+                    ,maxmin: true
+                    ,area: ['550px', '550px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpCarSimpleInfo-form").click();
+
+                        othis.find('input[name="id"]').val(obj.data.id);
+                        othis.find('input[name="createTime"]').val(obj.data.createTime);
+                        othis.find('input[name="carPlateNum"]').val(obj.data.carPlateNum);
+                        othis.find('input[name="carFrameNum"]').val(obj.data.carFrameNum);
+                        othis.find('input[name="yehuName"]').val(obj.data.yehuName);
+                        othis.find('input[name="placeOfOrigin"]').val(obj.data.placeOfOrigin);
+                        othis.find('input[name="supplierName"]').val(obj.data.supplierName);
+                        othis.find('input[name="terminalName"]').val(obj.data.terminalName);
+                        othis.find('input[name="terminalType"]').val(obj.data.terminalType);
+                        othis.find('input[name="carType"]').val(obj.data.carType);
+                        othis.find('input[name="endLocationTime"]').val(obj.data.endLocationTime);
+                        othis.find('input[name="insertNetwork"]').val(obj.data.insertNetwork);
+                        othis.find('input[name="daysCount"]').val(obj.data.daysCount);
+                        othis.find('input[name="dataState"]').val(obj.data.dataState);
+                    }
+                    ,yes: function(index, layero){
+                        var submit = layero.find('iframe').contents().find("#ErpCarSimpleInfo-form-edit");
+                        submit.trigger('click');
+                    }
+                });
+            }
+
+
+            
+            var  flag = 1;
+            //点击事件
+            var active = {
+                //批量删除
+                batchdel: function(){
+                    var checkStatus = table.checkStatus('ErpCarSimpleInfo-list')
+                        ,checkData = checkStatus.data; //得到选中的数据
+
+                    if(checkData.length === 0){
+                        return layer.msg('请选择数据');
+                    }
+
+                    layer.confirm('确定删除吗？', function(index) {
+                        var ids = "" ;
+                        for(var i = 0;i<checkData.length;i++){
+                            if(ids==""){
+                                ids= checkData[i].id;
+                            }else {
+                                ids = ids+","+checkData[i].id;
+                            }
+                        }
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/erpCarSimpleInfo/deleteByIds.jsn',
+                            data:{'ids':ids},
+                            method:"post",
+                            success:function (data) {
+                                table.reload('ErpCarSimpleInfo-list',
+                                    {page:
+                                        { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                        }
+                                    }
+                                );
+                                layer.msg('删除成功', {
+                                    icon: 1
+                                });
+                            },
+                        });
+                    });
+                }
+                //添加
+                ,add: function(){
+                    layer.open({
+                        type: 2
+                        ,title: '添加'
+                        ,content: 'ErpCarSimpleInfoAdd.html'
+                        ,maxmin: true
+                        ,area: ['550px', '550px']
+                        ,btn: ['确定', '取消']
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#ErpCarSimpleInfo-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+                //更新方法
+                ,update : function () {//flag
+                    admin.req({
+                        url:layui.setter.basePath + '/admin/Login/checkLoginStateHD.jsn',
+                        data:{},
+                        method:'post',
+                        success:function(data){
+                            debugger;
+                            if(data.success){
+                                if(data.data == "未登录状态"){
+                                    layer.open({
+                                        type: 2
+                                        ,title: '更新车辆信息'
+                                        ,content: 'ErpCarSimpleInfoUpdate.html'
+                                        ,area: ['550px','300px']
+                                        ,btn: ['开始更新','取消']
+                                        ,yes: function(index, layero){
+                                            //点击确认触发 iframe 内容中的按钮提交
+                                            var submit = layero.find('iframe').contents().find("#ErpCarSimpleInfoUpdate-form-submit");
+                                            //将更新按钮禁用
+                                            debugger;
+                                            $("#updateBtn").html("更新中");
+                                            $("#updateBtn").attr("disabled","disabled");
+                                            $("#updateBtn").attr("class","layui-btn layui-btn-disabled");
+                                            submit.click();
+                                        }
+                                    })
+                                }else{
+                                    layer.confirm('确定开始进行更新吗？', function(index) {
+                                        layer.close(index);
+                                        if(flag==1){
+                                            layer.msg('更新中');
+                                            flag+=1;
+                                        }
+                                        admin.req({
+                                            url:layui.setter.basePath +'/admin/erpCarSimpleInfo/updateCarInfoNew.jsn',
+                                            data:{},
+                                            method:"post",
+                                            success:function (data) {
+                                                debugger
+                                                if(!data.success){
+                                                    if(data.errMsg=="请重新登录"){
+
+                                                    }else {
+                                                        layer.alert('当前正在更新', {
+                                                            offset: 'auto',
+                                                        });
+                                                    }
+                                                }else if(data.success){
+
+                                                    table.reload('ErpCarSimpleInfo-list');
+                                                    layer.msg('更新成功', {
+                                                        icon: 1
+                                                    });
+                                                    flag = 1;
+                                                }
+                                            },
+                                        });
+                                    });
+                                    $("#updateBtn").html("更新中");
+                                    $("#updateBtn").attr("disabled","disabled");
+                                    $("#updateBtn").attr("class","layui-btn layui-btn-disabled");
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+            //绑定点击事件
+            $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+        });
+
+</script>
+</body>
+</html>
+

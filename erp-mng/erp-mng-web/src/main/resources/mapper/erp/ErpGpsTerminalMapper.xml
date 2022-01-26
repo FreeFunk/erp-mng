@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpGpsTerminalMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpGpsTerminal" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="TERMINAL_CHANGSHANG" property="terminalChangshang"/>
+			<result column="TERMINAL_CODE" property="terminalCode"/>
+			<result column="TERMINAL_MODEL" property="terminalModel"/>
+			<result column="TERMINAL_TYPE" property="terminalType"/>
+			<result column="SUPPLIER_ID" property="supplierId"/>
+			<result column="SUPPLIER_NAME" property="supplierName"/>
+			<result column="SUPPLIER_GOODS_NUM" property="supplierGoodsNum"/>
+			<result column="TERMINAL_STATE" property="terminalState"/>
+			<result column="TERMINAL_USER_ID" property="terminalUserId"/>
+			<result column="USER_TYPE" property="userType"/>
+			<result column="TERMINAL_USER_NAME" property="terminalUserName"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="INSTALL_TIME" property="installTime"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpGpsTerminalView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, TERMINAL_CHANGSHANG, TERMINAL_CODE, TERMINAL_MODEL, TERMINAL_TYPE,SUPPLIER_ID, SUPPLIER_NAME, SUPPLIER_GOODS_NUM, TERMINAL_STATE, TERMINAL_USER_ID, USER_TYPE, TERMINAL_USER_NAME, CAR_PLATE_NUM, CAR_FRAME_NUM, INSTALL_TIME, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE = '1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.installTime != null'>
+					AND  INSTALL_TIME = #{queryObj.installTime}
+				</if>
+				<if test='queryObj != null and queryObj.terminalUserName != null'>
+					AND  TERMINAL_USER_NAME like '%${queryObj.terminalUserName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.supplierName != null'>
+					AND  SUPPLIER_NAME like '%${queryObj.supplierName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.terminalType != null '>
+					AND  TERMINAL_TYPE like '%${queryObj.terminalType}%'
+				</if>
+				<if test='queryObj != null and  queryObj.terminalCode != null'>
+					AND  TERMINAL_CODE like '%${queryObj.terminalCode}%'
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpGpsTerminalQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_gps_terminal
+	  	<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpGpsTerminalQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_gps_terminal 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 查询供应商表id
+	,erp_gps_terminal-->
+	<select id="selectSupplierId" parameterType="String" resultMap="BaseResultViewMap" >
+		select ID from erp_supplier where SUPPLIER_NAME = #{supplierName} and SUPPLIER_TYPE = 'GPS'
+	</select>
+
+	<!-- 查询供应商名称-->
+	<select id="selectSupplierName" resultMap="BaseResultViewMap">
+		SELECT * FROM erp_supplier WHERE DATA_STATE='1'
+	</select>
+
+	 <!--逻辑删除-->
+	<update id="deleteByDataState" parameterType="java.util.List">
+		UPDATE erp_gps_terminal set  DATA_STATE= '0'
+		where id in
+		<foreach collection="list" item="bean" index="index" open="(" close=")" separator=",">
+			#{bean}
+		</foreach>
+	</update>
+
+	<select id="listBySysUser" parameterType="com.edgedo.sys.queryvo.SysUserQuery" resultType="com.edgedo.sys.queryvo.SysUserView">
+		select * from sys_user where DEFAULT_ROLE_ID='AGENT' or DEFAULT_ROLE_ID='STAFF'
+	</select>
+
+	<select id="selectByTerminalCodeByBySupplierIdBySupplierName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_gps_terminal where TERMINAL_CODE=#{terminalCode} and SUPPLIER_ID=#{supplierId} and SUPPLIER_NAME=#{supplierName} and DATA_STATE='1'
+	</select>
+
+</mapper>

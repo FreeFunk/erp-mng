@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpTerminalChangeRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpTerminalChangeRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="OWNER_CAR_INFO_ID" property="ownerCarInfoId"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="ORG_TERMINAL_CODE" property="orgTerminalCode"/>
+			<result column="NEW_TERMINAL_CODE" property="newTerminalCode"/>
+			<result column="CHANGE_TERMINAL_TIME" property="changeTerminalTime"/>
+			<result column="CHANGE_TERMINAL_PERSON" property="changeTerminalPerson"/>
+			<result column="CHANGE_TERMINAL_REMARK" property="changeTerminalRemark"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpTerminalChangeRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, OWNER_CAR_INFO_ID, CAR_PLATE_NUM, CAR_FRAME_NUM, ORG_TERMINAL_CODE, NEW_TERMINAL_CODE, CHANGE_TERMINAL_TIME, CHANGE_TERMINAL_PERSON, CHANGE_TERMINAL_REMARK, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.changeTerminalTime != null'>
+					AND  CHANGE_TERMINAL_TIME = #{queryObj.changeTerminalTime}
+				</if>
+				<if test='queryObj != null and  queryObj.carPlateNum != ""'>
+					AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+				</if>
+				<if test='queryObj != null and queryObj.orgTerminalCode != ""'>
+					AND  ORG_TERMINAL_CODE like '%${queryObj.orgTerminalCode}%' or NEW_TERMINAL_CODE like '%${queryObj.orgTerminalCode}%'
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpTerminalChangeRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_terminal_change_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpTerminalChangeRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_terminal_change_rec 
+  		<include refid="where"/>
+  </select>
+  
+  
+</mapper>

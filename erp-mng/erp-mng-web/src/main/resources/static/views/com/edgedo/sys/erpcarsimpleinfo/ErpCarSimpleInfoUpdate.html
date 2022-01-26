@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/login.css" media="all">
+</head>
+<body>
+
+<div class="layadmin-user-login-box layadmin-user-login-body layui-form" lay-filter="ErpCarSimpleInfo-form" id="ErpCarSimpleInfo-form" style="padding: 20px 30px 0 0;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-block">
+            <i class="layadmin-user-login-icon layui-icon layui-icon-picture"></i>
+            <input id="imgCode" name="imgCode" class="layui-input" placeholder="验证码" lay-verify="required" maxlength="4" style="width:60%;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <img id="imgCode_img" style="width:38%;height:38px;cursor:pointer" title="验证码，如看不清请点击刷新" src="/admin/Login/getImageCode2.jsn">
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpCarSimpleInfoUpdate-form-submit" id="ErpCarSimpleInfoUpdate-form-submit" value="开始更新">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(ErpCarSimpleInfoUpdate-form-submit)', function(data){
+                var field = data.field;
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/Login/updateErpCarSimpleInfo.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        if(data.success){
+                            //如果成功直接执行更新方法
+                            admin.req({
+                                url:layui.setter.basePath +'/admin/erpCarSimpleInfo/updateCarInfoNew.jsn',
+                                data:{},
+                                method:"post",
+                                success:function (data) {
+                                    debugger
+                                    if(!data.success){
+                                        if(data.errMsg=="请重新登录"){
+
+                                        }else {
+                                            layer.alert('当前正在更新', {
+                                                offset: 'auto',
+                                            });
+                                        }
+                                    }else{
+                                        if(data.success){
+                                            table.reload('ErpCarSimpleInfo-list');
+                                            layer.msg('更新成功', {
+                                                icon: 1
+                                            });
+                                            flag = 1;
+                                        }
+                                    }
+                                },
+                            });
+                            parent.layer.close(index); //再执行关闭
+                            parent.layer.msg('正在更新中...', {
+                                icon: 1
+                            });
+                        }else{
+                            layer.alert(data.errMsg);
+                        }
+                    },
+                });
+
+            });
+
+            $("#imgCode_img").click(function() {
+                refreshRandomCheckCode();
+            });
+            function refreshRandomCheckCode() {
+                $("#imgCode_img").attr("src", layui.setter.basePath+"/admin/Login/getImageCode2.jsn?d"+new Date().getTime());
+            }
+
+        })
+</script>
+</body>
+</html>

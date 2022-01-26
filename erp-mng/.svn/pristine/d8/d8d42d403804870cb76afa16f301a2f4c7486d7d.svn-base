@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCarSimpleInfoMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCarSimpleInfo" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="YEHU_NAME" property="yehuName"/>
+			<result column="PLACE_OF_ORIGIN" property="placeOfOrigin"/>
+			<result column="SUPPLIER_NAME" property="supplierName"/>
+			<result column="TERMINAL_NAME" property="terminalName"/>
+			<result column="TERMINAL_TYPE" property="terminalType"/>
+			<result column="CAR_TYPE" property="carType"/>
+			<result column="END_LOCATION_TIME" property="endLocationTime"/>
+			<result column="INSERT_NETWORK" property="insertNetwork"/>
+			<result column="DAYS_COUNT" property="daysCount"/>
+			<result column="DATA_STATE" property="dataState"/>
+			<result column="BATCH_ID" property="batchId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCarSimpleInfoView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, YEHU_NAME, PLACE_OF_ORIGIN, SUPPLIER_NAME, TERMINAL_NAME, TERMINAL_TYPE,
+	  CAR_TYPE, END_LOCATION_TIME, INSERT_NETWORK, DAYS_COUNT, DATA_STATE,BATCH_ID,PROVINCE_NAME,CITY_NAME,XIANQU_NAME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.endLocationTime != null'>
+					AND  END_LOCATION_TIME = #{queryObj.endLocationTime}
+				</if>
+				<if test='queryObj != null and  queryObj.insertNetwork != null'>
+					AND  INSERT_NETWORK = #{queryObj.insertNetwork}
+				</if>
+				<if test='queryObj != null and  queryObj.carPlateNum != null'>
+					AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+				</if>
+				<if test='queryObj != null and  queryObj.carFrameNum != null'>
+					AND  CAR_FRAME_NUM like '%${queryObj.carFrameNum}%'
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCarSimpleInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_simple_info 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCarSimpleInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_simple_info 
+  		<include refid="where"/>
+  </select>
+
+	<select id="selectByCarFrameNumNew" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_car_simple_info
+		WHERE CAR_FRAME_NUM=#{carFrameNum} AND DATA_STATE='1'
+	</select>
+
+
+
+	<!-- 根据剧典id list查询剧典 -->
+	<select id="selectByFrameNum" parameterType="java.util.List" resultMap="BaseResultMap">
+		select * from erp_car_simple_info where CAR_FRAME_NUM in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item.carFrameNum}
+		</foreach>
+	</select>
+
+	<select id="selectByCarNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from erp_car_simple_info where CAR_FRAME_NUM=#{carFrameNum} AND DATA_STATE='1'
+	</select>
+	<select id="selectAll" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(DISTINCT CAR_FRAME_NUM) from erp_car_simple_info where CREATE_TIME BETWEEN #{betweenDateStr} and #{currDateStr} and DATA_STATE='1'
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deteleByAll" parameterType="java.util.List">
+		delete from erp_car_simple_info where CAR_FRAME_NUM in
+		<foreach collection="list" item="item" index="no" open="(" separator="," close=")">
+			#{item.carFrameNum}
+		</foreach>
+	</delete>
+
+
+	<insert id="insertByList" parameterType="java.util.List">
+		insert into erp_car_simple_info
+		( ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, YEHU_NAME, PLACE_OF_ORIGIN, SUPPLIER_NAME, TERMINAL_NAME, TERMINAL_TYPE, CAR_TYPE, END_LOCATION_TIME, INSERT_NETWORK, DAYS_COUNT, DATA_STATE,)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id},
+			#{item.createTime},
+			#{item.vehicleNo},
+			#{item.vinCode},
+			#{item.yehuName},
+			#{item.placeOfOrigin},
+			#{item.supplierName},
+			#{item.terminalName},
+			#{item.terminalType},
+			#{item.carType},
+			#{item.endLocationTime},
+			#{item.insertNetwork},
+			#{item.daysCount},
+			#{item.dataState}
+			)
+		</foreach>
+	</insert>
+
+
+	<update id="updateByList" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			UPDATE erp_car_simple_info
+			<set>
+				ID=#{item.id},
+			  CREATE_TIME=#{item.createTime},
+			  CAR_PLATE_NUM=#{item.carPlateNum},
+			  CAR_FRAME_NUM=#{item.carFrameNum},
+			  YEHU_NAME=#{item.yehuName},
+			  PLACE_OF_ORIGIN=#{item.placeOfOrigin},
+			  SUPPLIER_NAME=#{item.supplierName},
+			  TERMINAL_NAME=#{item.terminalName},
+			  TERMINAL_TYPE=#{item.terminalType},
+			  CAR_TYPE=#{item.carType},
+			  END_LOCATION_TIME=#{item.endLocationTime},
+			  INSERT_NETWORK=#{item.insertNetwork},
+				DAYS_COUNT=#{item.daysCount},
+				DATA_STATE=#{item.dataState}
+			</set>
+			<where>
+				CAR_FRAME_NUM=#{item.carFrameNum}
+			</where>
+		</foreach>
+	</update>
+
+	<delete id="deleteByAllCarFrame" >
+		DELETE FROM erp_car_simple_info WHERE CAR_FRAME_NUM IN
+				(SELECT * FROM
+						(SELECT CAR_FRAME_NUM FROM erp_car_simple_info GROUP BY CAR_FRAME_NUM HAVING COUNT(CAR_FRAME_NUM) > 1) t1)
+								AND id NOT IN (SELECT * FROM
+				(SELECT MIN(id) FROM erp_car_simple_info GROUP BY CAR_FRAME_NUM HAVING COUNT(CAR_FRAME_NUM) > 1) t2)
+	</delete>
+
+	<delete id="deleteByTime" parameterType="java.lang.String">
+		DELETE FROM erp_car_simple_info WHERE id IN
+				(SELECT * FROM
+						(SELECT id FROM erp_car_simple_info WHERE NOT CREATE_TIME BETWEEN #{betweenDateStr} and #{currDateStr} and DATA_STATE='1') t1)
+	</delete>
+
+	<select id="selectBySupplierNameNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM erp_car_simple_info WHERE SUPPLIER_NAME LIKE "%"#{supplierName}"%" and PLACE_OF_ORIGIN LIKE "%"#{xianQu}"%" and DATA_STATE='1'
+	</select>
+
+	<select id="selectByRuWangTime" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM erp_car_simple_info WHERE SUPPLIER_NAME LIKE "%"#{supplierName}"%" and PLACE_OF_ORIGIN LIKE "%"#{xianQu}"%" and DATA_STATE='1' and INSERT_NETWORK BETWEEN #{betweenDate} and #{currDate}
+	</select>
+
+	<select id="selectByAll" resultType="java.lang.Integer">
+		SELECT COUNT(DISTINCT CAR_FRAME_NUM) FROM erp_car_simple_info
+	</select>
+
+	<select id="selectByCarPlateNum" resultType="String" resultMap="BaseResultViewMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_car_simple_info
+		WHERE CAR_PLATE_NUM=#{terminalUserName}
+	</select>
+
+	<insert id="insertAll" parameterType="java.util.List">
+		insert IGNORE  erp_car_simple_info
+		( ID, CREATE_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, YEHU_NAME, PLACE_OF_ORIGIN, SUPPLIER_NAME, TERMINAL_NAME, TERMINAL_TYPE,
+		CAR_TYPE, END_LOCATION_TIME, INSERT_NETWORK, DAYS_COUNT, DATA_STATE,BATCH_ID,PROVINCE_NAME,CITY_NAME,XIANQU_NAME,XIANQU_ID)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			replace(uuid(),'-','') ,
+			NOW(),
+			#{item.vehicleNo},
+			#{item.vinCode},
+			#{item.orgShortname},
+			#{item.areaName} #{item.cityName} #{item.countyName},
+			#{item.platformName},
+			#{item.fullName},
+			'北斗',
+			#{item.vehicleType},
+			#{item.sysutc},
+			#{item.firstSysutc},
+			#{item.daysCount},
+			'1',
+			'1',
+			#{item.areaName},
+			#{item.cityName},
+			#{item.countyName},
+			#{item.county}
+			)
+		</foreach>
+	</insert>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll">
+		delete from erp_car_simple_info
+	</delete>
+
+	<select id="countByXianquId" parameterType="java.lang.String" resultType="int">
+		select count(1) from erp_car_simple_info WHERE
+		XIANQU_ID = #{xianquId}
+	</select>
+
+	<select id="selectAllCarInfo" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_simple_info
+	</select>
+
+  
+</mapper>

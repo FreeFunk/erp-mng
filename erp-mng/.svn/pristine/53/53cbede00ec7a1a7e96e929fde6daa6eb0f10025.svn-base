@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:c="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpGpsTerminal-form" id="ErpGpsTerminal-form" style="padding: 20px 30px 0 0;">
+        <!--<div class="layui-form-item">
+            <label class="layui-form-label">终端厂商</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalChangshang" lay-verify="required" placeholder="请输入终端厂商" autocomplete="off" class="layui-input">
+            </div>
+        </div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">终端编号</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalCode" lay-verify="required" placeholder="请输入终端编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">终端型号</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalModel" lay-verify="required" placeholder="请输入终端型号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">终端类型</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="terminalType" lay-verify="required" placeholder="请输入终端类型" autocomplete="off" class="layui-input">-->
+                <select name="terminalType">
+                    <option value=""></option>
+                    <option value="前装">前装</option>
+                    <option value="自采">自采</option>
+                </select>
+            </div>
+        </div>
+        <!--<div class="layui-form-item">
+            <label class="layui-form-label">供应商ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="supplierId" lay-verify="required" placeholder="请输入供应商ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">供应商名</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="supplierName" lay-verify="required" placeholder="请输入供应商名" autocomplete="off" class="layui-input">-->
+                <select id="selectSupplierName" lay-filter="province"  autocomplete="off" class="layui-input" name="supplierName" lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">供应商货号</label>
+            <div class="layui-input-block">
+                <input type="text" name="supplierGoodsNum" lay-verify="required" placeholder="请输入供应商货号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-form-item layui-hide">
+        <label class="layui-form-label">设备状态</label>
+        <div class="layui-input-block">
+            <!--未使用，正常运行，注销，被占用-->
+            <input type="text" id="terminalState" name="terminalState" placeholder="请输入设备状态" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">设备状态</label>
+        <div class="layui-input-block">
+            <!--未使用，正常运行，注销，被占用-->
+            <input type="radio"  lay-filter="clickSex" id="terminalNotUsed" name="xuanzeTerminalState" value="未使用" title="未使用">
+            <input type="radio"  lay-filter="clickSex" id="terminalNormal" name="xuanzeTerminalState" value="正常运行" title="正常运行" >
+            <input type="radio"  lay-filter="clickSex" id="terminalLogout" name="xuanzeTerminalState" value="注销" title="注销" >
+            <input type="radio"  lay-filter="clickSex" id="terminalOccupy" name="xuanzeTerminalState" value="被占用" title="被占用" >
+        </div>
+    </div>
+        <!--<div class="layui-form-item">
+            <label class="layui-form-label">占用人ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="terminalUserId" lay-verify="required" placeholder="请输入占用人ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>-->
+        <!--<div class="layui-form-item">
+            <label class="layui-form-label">占用人TYPE</label>
+            <div class="layui-input-block">
+                <input type="text" name="userType" lay-verify="required" placeholder="请输入占用人TYPE" autocomplete="off" class="layui-input">
+            </div>
+        </div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">设备占用人</label>
+            <div class="layui-input-block">
+                <!--<input type="text" name="terminalUserName" lay-verify="required" placeholder="请输入设备占用人" autocomplete="off" class="layui-input">-->
+                <select id="selectUserName"  name="terminalUserName" lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车牌号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPlateNum"  placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车架号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carFrameNum"  placeholder="请输入车架号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">安装时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="installTime" id="installTime"  placeholder="请输入安装时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpGpsTerminal-form-submit" id="ErpGpsTerminal-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            var radioVal;
+            form.on('submit(ErpGpsTerminal-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                $("input[type='radio']:checked").each(function (i) {
+                    radioVal=$(this).val();
+                });
+                data.field.terminalState = radioVal;
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpGpsTerminal/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        
+                        parent.layui.table.reload('ErpGpsTerminal-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                        
+                    },
+                });
+
+            });
+            //供应商名下拉框的方法
+            function initSupplierName(){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpGpsTerminal/selectBySupplierName.jsn',
+                    method:"post",
+                    success:function (data) {
+                        debugger;
+                        var provinceList = data.list;
+                        if(provinceList!="undefined"){
+                            for(var i=0;i<provinceList.length;i++){
+                                $("#selectSupplierName").append("<option value="+provinceList[i].supplierName+">"+provinceList[i].supplierName+"</option>");
+                                layui.form.render('select');
+                            }
+                        }
+                    },
+                });
+            }
+            //初始化供应商名下拉框;
+            initSupplierName();
+
+
+
+            //设备占用人下拉框的方法
+            function initTerminalUserName(){
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpGpsTerminal/listAllUserType.jsn',
+                    method:"post",
+                    data:{},
+                    success:function (data) {
+                        var usernameList = data.list;
+                        if(usernameList!="undefined"){
+                            for(var i=0;i<usernameList.length;i++){
+                                $("#selectUserName").append("<option value="+usernameList[i].userName+">"+usernameList[i].userName+"</option>");
+                                layui.form.render('select');
+                            }
+                        }
+                    },
+                });
+            }
+            //初始化设备占用人下拉框;
+            initTerminalUserName();
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#installTime', //指定元素
+                type:'datetime'
+            });
+           
+        })
+
+       
+        
+</script>
+</body>
+</html>

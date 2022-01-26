@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpWorkTask-form" id="ErpWorkTask-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="taskTitle" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">类型</label>
+                        <div id="taskTypeId" class="layui-input-block">
+                            <input type="radio" name="taskType" value="0" title="维修">
+                            <input type="radio" name="taskType" value="1" title="安装">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="taskDesc" placeholder="请输入描述" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">优先级</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="priorityLevelInput" name="priorityLevelInput" class="layui-input">
+                            <select id="priorityLevel" name="priorityLevel" lay-search="">
+                                <option value=""></option>
+                                <option value="0">一般</option>
+                                <option value="1">加急</option>
+                                <option value="2">可缓</option>
+                            </select>
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">完成时限</label>
+                <div class="layui-input-block">
+                    <input type="text" name="endTime" id="endTime"  placeholder="请输入完成时限" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">委托人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="weituoUser"  placeholder="请输入委托人" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">业户名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yehuName"  placeholder="请输入业户名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">任务状态</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="taskState" placeholder="请输入任务状态" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">原因</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="reason"  placeholder="请输入原因" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否收钱</label>
+                        <div id="isGetMoneyId" class="layui-input-block">
+                            <input type="radio" name="isGetMoney" value="1" title="是">
+                            <input type="radio" name="isGetMoney" value="0" title="否">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">完成人ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="finishedUserId" placeholder="请输入完成人ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">完成人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="finishedUserName" placeholder="请输入完成人" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="finishedTime" id="finishedTime" placeholder="请输入确认时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">收钱金额</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="getMoneyNum" lay-verify="required" placeholder="请输入收钱金额" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpWorkTask-form-edit" id="ErpWorkTask-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpWorkTask-form-edit)', function(data){
+                //服务类型
+                var taskType = $('#taskTypeId input[name="taskType"]:checked ').val();
+                data.field.taskType = taskType;
+
+                //是否收钱
+                var isGetMoney = $('#isGetMoneyId input[name="isGetMoney"]:checked ').val();
+                data.field.isGetMoney = isGetMoney;
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpWorkTask/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpWorkTask-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            //任务优先级
+            function priorityLevel() {
+                var priorityLevelInput = $("#priorityLevelInput").val();
+                if(priorityLevelInput==0){
+                    $("#priorityLevel").val(priorityLevelInput);
+                    layui.form.render('select');//重新渲染表格
+                }else if (priorityLevelInput==1) {
+                    $("#priorityLevel").val(priorityLevelInput);
+                    layui.form.render('select');//重新渲染表格
+                }else if (priorityLevelInput==2) {
+                    $("#priorityLevel").val(priorityLevelInput);
+                    layui.form.render('select');//重新渲染表格
+                }
+            }
+            priorityLevel();
+
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#endTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#finishedTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

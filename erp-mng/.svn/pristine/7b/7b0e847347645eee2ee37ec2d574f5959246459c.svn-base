@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCarSimChangeRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCarSimChangeRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="OWNER_CAR_INFO_ID" property="ownerCarInfoId"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="ORG_SIM_NUM" property="orgSimNum"/>
+			<result column="ORG_SIM_OPERATOR" property="orgSimOperator"/>
+			<result column="NEW_SIM_NUM" property="newSimNum"/>
+			<result column="NEW_SIM_OPERATOR" property="newSimOperator"/>
+			<result column="CHANGE_SIM_TIME" property="changeSimTime"/>
+			<result column="CHANGE_SIM_PERSON" property="changeSimPerson"/>
+			<result column="CHANGE_SIM_REMARK" property="changeSimRemark"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+
+	<resultMap id="BaseResultMapErpSim" type="com.edgedo.sys.entity.ErpSim" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER_ID" property="createUserId"/>
+		<result column="CREATE_USER_NAME" property="createUserName"/>
+		<result column="SIM_NUM" property="simNum"/>
+		<result column="SUPPLIER_ID" property="supplierId"/>
+		<result column="SUPPLIER_NAME" property="supplierName"/>
+		<result column="SET_MEAL_NAME" property="setMealName"/>
+		<result column="SIM_STATE" property="simState"/>
+		<result column="SIM_START_TIME" property="simStartTime"/>
+		<result column="SIM_RETICENT_NUM" property="simReticentNum"/>
+		<result column="ACTIVE_TIME" property="activeTime"/>
+		<result column="END_TIME" property="endTime"/>
+		<result column="FIRST_USE_TIME" property="firstUseTime"/>
+		<result column="PAY_TIME" property="payTime"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+		<result column="YEHU_NAME" property="yehuName"/>
+		<result column="SIM_USER_ID" property="simUserId"/>
+		<result column="USER_TYPE" property="userType"/>
+		<result column="SIM_USER_NAME" property="simUserName"/>
+		<result column="DATA_STATE" property="dataState"/>
+	</resultMap>
+
+	<resultMap id="BaseResultMapCarInfo" type="com.edgedo.sys.entity.ErpCarInfo" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER_ID" property="createUserId"/>
+		<result column="CREATE_USER_NAME" property="createUserName"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+		<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+		<result column="ROAD_TRANSPORT_NUM" property="roadTransportNum"/>
+		<result column="BUSINESS_LICENSE_NUMBER" property="businessLicenseNumber"/>
+		<result column="YEHU_NAME" property="yehuName"/>
+		<result column="CONTACT_PERSON" property="contactPerson"/>
+		<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+		<result column="TERMINAL_ID" property="terminalId"/>
+		<result column="TERMINAL_CHANGSHANG" property="terminalChangshang"/>
+		<result column="TERMINAL_CODE" property="terminalCode"/>
+		<result column="SIM_CODE" property="simCode"/>
+		<result column="END_TIME" property="endTime"/>
+		<result column="LAST_XUFEI_TIME" property="lastXufeiTime"/>
+		<result column="CHANNEL_AGENT" property="channelAgent"/>
+		<result column="BEIDOU_OPERATOR" property="beidouOperator"/>
+		<result column="REMARK" property="remark"/>
+		<result column="DATA_STATE" property="dataState"/>
+	</resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCarSimChangeRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, OWNER_CAR_INFO_ID, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, ORG_SIM_NUM, ORG_SIM_OPERATOR, NEW_SIM_NUM, NEW_SIM_OPERATOR, CHANGE_SIM_TIME, CHANGE_SIM_PERSON, CHANGE_SIM_REMARK, DATA_STATE
+  </sql>
+
+	<sql id="Base_Column_List_ErpSim">
+		ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, SIM_NUM, SUPPLIER_ID, SUPPLIER_NAME, SET_MEAL_NAME, SIM_STATE, SIM_START_TIME, SIM_RETICENT_NUM, ACTIVE_TIME, END_TIME, FIRST_USE_TIME, PAY_TIME, CAR_PLATE_NUM, CAR_FRAME_NUM, YEHU_NAME, SIM_USER_ID, USER_TYPE, SIM_USER_NAME, DATA_STATE
+	</sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.carPlateNum != ""'>
+					AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+				</if>
+				<if test='queryObj != null and queryObj.orgSimNum != "" '>
+					AND  (ORG_SIM_NUM like '%${queryObj.orgSimNum}%' or NEW_SIM_NUM like '%${queryObj.orgSimNum}%')
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCarSimChangeRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_sim_change_rec 
+  		<include refid="where"/> ORDER BY CHANGE_SIM_TIME DESC
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCarSimChangeRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_sim_change_rec 
+  		<include refid="where"/>  ORDER BY CHANGE_SIM_TIME DESC
+  </select>
+
+	<select id="selectByNewSimCode" parameterType="java.lang.String" resultMap="BaseResultMapErpSim">
+		select <include refid="Base_Column_List_ErpSim"/> from erp_sim where SIM_NUM=#{newSimNum} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByCarNum" parameterType="java.lang.String" resultMap="BaseResultMapCarInfo">
+		select * from erp_car_info where ID=#{id} and DATA_STATE='1'
+	</select>
+
+	<!-- 逻辑删除-->
+	<update id="deleteByIdsOne" parameterType="java.lang.String">
+		update erp_car_sim_change_rec set DATA_STATE='0' where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdAll" parameterType="java.util.List">
+		update erp_car_sim_change_rec set DATA_STATE = '0' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<update id="updateBySimNum" parameterType="java.lang.String" >
+		update erp_car_info set SIM_CODE=#{newSimNum} where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+  
+</mapper>

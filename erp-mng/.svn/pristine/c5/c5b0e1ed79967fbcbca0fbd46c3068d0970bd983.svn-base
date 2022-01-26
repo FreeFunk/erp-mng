@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpUserWorkLog-form" id="ErpUserWorkLog-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属员工ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="userId"  placeholder="请输入所属员工ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">员工姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="userName"  placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="workDate" id="workDate" lay-verify="required" placeholder="请输入日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">星期</label>
+            <div class="layui-input-block">
+                <input type="text" name="week" lay-verify="required" placeholder="请输入星期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务内容</label>
+            <div class="layui-input-block">
+                <input type="text" name="workText" lay-verify="required" placeholder="请输入服务内容" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否加班</label>
+            <div id="isOverWorkId" class="layui-input-block">
+                <input type="radio" name="isOverWork" value="1" title="是">
+                <input type="radio" name="isOverWork" value="0" title="否">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">加班时长(分钟)</label>
+            <div class="layui-input-block">
+                <input type="text" name="overWorkTime" placeholder="请输入加班时长(分钟)" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">加班描述</label>
+            <div class="layui-input-block">
+                <input type="text" name="overWorkDesc" placeholder="请输入加班描述" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">外勤补助</label>
+            <div class="layui-input-block">
+                <input type="text" name="outGetMoney"  placeholder="请输入外勤补助" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">审核状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="shenheState"  placeholder="请输入审核状态" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">审核人ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="shenheUserId"  placeholder="请输入审核人ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">审核人名</label>
+            <div class="layui-input-block">
+                <input type="text" name="shenheUserName"  placeholder="请输入审核人名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">审核时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="shenheTime" id="shenheTime"  placeholder="请输入审核时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpUserWorkLog-form-submit" id="ErpUserWorkLog-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(ErpUserWorkLog-form-submit)', function(data){
+                var isOverWork = $('#isOverWorkId input[name="isOverWork"]:checked ').val();//是否加班
+                data.field.isOverWork = isOverWork;
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpUserWorkLog/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpUserWorkLog-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('添加成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#workDate', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#shenheTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

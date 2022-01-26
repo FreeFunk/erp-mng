@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpCarInfo-form" id="ErpCarInfo-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" lay-verify="required" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div id="carPaiColor" class="layui-input-block">
+                            <input type="radio" name="carPlateColor" lay-verify="required" value="1" title="黄色" checked="">
+                            <input type="radio" name="carPlateColor" lay-verify="required" value="0" title="蓝色">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum" lay-verify="required" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">道路运输证号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="roadTransportNum"  placeholder="请输入道路运输证号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">经营许可证号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="businessLicenseNumber"  placeholder="请输入经营许可证号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">业户名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yehuName" lay-verify="required" placeholder="请输入业户名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">所属车队ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerTeamId" placeholder="请输入所属车队ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">车队名</label>
+                        <div class="layui-input-block" lay-filter="ownerTeam">
+                            <input  style="display: none" class="layui-hide" type="text" id="ownerTeamNameInput" name="ownerTeamNameInput" class="layui-input">
+                            <select id="ownerTeamName"  name="ownerTeamName"  lay-search="" >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">联系人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contactPerson"  placeholder="请输入联系人" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contactPhoneNum"  placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide " >
+                        <label class="layui-form-label layui-hide" >省ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceId"  placeholder="请输入省ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">省名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceName"  placeholder="请输入省名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">城市ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityId"  placeholder="请输入城市ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">城市名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityName" placeholder="请输入城市名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">县区ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquId"  placeholder="请输入县区ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">县区名</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="xianquNameInput" name="xianquNameInput" class="layui-input">
+                            <select id="xianquName"  name="xianquName"  >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">供应商名</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="supplierNameInput" name="supplierNameInput" class="layui-input">
+                            <select id="supplierName"  name="supplierName" lay-search="" >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">所属终端ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="terminalId"  placeholder="请输入所属终端ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;" layui-hide>
+                        <label class="layui-form-label">终端厂商</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="terminalChangshang" placeholder="请输入终端厂商" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">终端编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="terminalCode" placeholder="请输入终端编号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">终端安装类型</label>
+                        <div id="InstallType" class="layui-input-block">
+                            <input type="radio" name="terminalInstallType" value="1" title="前装">
+                            <input type="radio" name="terminalInstallType" value="0" title="非前装">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">SIM卡号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simCode"  placeholder="请输入SIM卡号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">渠道代理ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="channelAgentId" placeholder="请输入渠道代理ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">渠道代理</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="channelAgentNameInput" name="channelAgentNameInput" class="layui-input">
+                            <select id="channelAgentName"  name="channelAgentName" lay-search=""  >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">业务人员ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="yewuUserId" placeholder="请输入业务人员ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">业务人员名</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="yewuUserNameInput" name="yewuUserNameInput" class="layui-input">
+                            <select id="yewuUserName"  name="yewuUserName" lay-search="" >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">安装人员ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="installUserId" placeholder="请输入安装人员ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">安装人员名</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="installUserNameInput" name="installUserNameInput" class="layui-input">
+                            <select id="installUserName"  name="installUserName" lay-search="" >
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label layui-hide">录入人员ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="inputUserId"  placeholder="请输入录入人员ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">录入人员名</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="inputUserNameInput" name="inputUserNameInput"  placeholder="请输入录入人员ID" autocomplete="off" class="layui-input">
+                            <!--<select id="inputUserName"  name="inputUserName" lay-search="" >-->
+                                <!--<option value=""></option>-->
+                            <!--</select>-->
+                        </div>
+                    </div>
+                    <div class="layui-form-item " style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">北斗平台</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="beidouOperator" name="beidouOperator" class="layui-input">
+                            <!--<select id="beidouOperator"  name="beidouOperator" lay-search="" >-->
+                                <!--<option value=""></option>-->
+                            <!--</select>-->
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">是否收款</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="payStateInput" name="payStateInput" class="layui-input">
+                            <select id="payState" name="payState">
+                                <option value=""></option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>
+                <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                    <label class="layui-form-label">收款金额</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="getMoneyNum" placeholder="请输入收款金额" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                    <label class="layui-form-label">收款人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="getMoneyUser"  placeholder="请输入收款人" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                    <label class="layui-form-label">收款方式</label>
+                    <div class="layui-input-block">
+                        <input  style="display: none" class="layui-hide" type="text" id="getMoneyTypeInput" name="getMoneyTypeInput" class="layui-input">
+                        <select id="getMoneyType" name="getMoneyType">
+                            <option value=""></option>
+                            <option value="0">微信支付</option>
+                            <option value="1">现金支付</option>
+                            <option value="2">银行转账</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                    <label class="layui-form-label">服务费抵扣</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="serviceMoneyDeduction"  placeholder="请输入服务费抵扣" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">业务负责人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="yehuPerson"  placeholder="请输入业务负责人" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">安装时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="installationTime" id="installationTime" placeholder="请输入到期时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">到期时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="endTime" id="endTime" placeholder="请输入到期时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                <label class="layui-form-label">上次续费时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="lastXufeiTime" id="lastXufeiTime"  placeholder="请输入上次续费时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <div class="layui-form-item" style="display: inline-block;width: 350px;height: 30px;">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="remark"  placeholder="请输入备注" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpCarInfo-form-edit" id="ErpCarInfo-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpCarInfo-form-edit)', function(data){
+                var xianquId =  $("#xianquName").val();
+                data.field.xianquId=xianquId;//县区id
+
+                var ownerTeamName =  $("#ownerTeamName").val();
+                data.field.ownerTeamName=ownerTeamName;//车队名
+
+                var supplierId =  $("#supplierName").val();
+                data.field.supplierId=supplierId;//供应商id
+
+                var channelAgentId =  $("#channelAgentName").val();
+                data.field.channelAgentId=channelAgentId;//渠道代理id
+
+                var yewuUserId =  $("#yewuUserName").val();
+                data.field.yewuUserId=yewuUserId;//业务人员id
+
+                var installUserId =  $("#installUserName").val();
+                data.field.installUserId=installUserId;//安装人员id
+
+                var inputUserId =  $("#inputUserName").val();
+                data.field.inputUserId=inputUserId;//录入人员id
+
+                var getMoneyType =  $("#getMoneyType").val();
+                data.field.getMoneyType=getMoneyType;//收款方式
+
+                var val_terminalInstallType = $('#InstallType input[name="terminalInstallType"]:checked ').val();//安装类型
+                data.field.terminalInstallType = val_terminalInstallType;
+
+                var carPlateColor = $('#carPaiColor input[name="carPlateColor"]:checked ').val();//车辆颜色
+                data.field.carPlateColor = carPlateColor;
+
+                // var beidouOperator =  $("#beidouOperator").val();
+                // data.field.beidouOperator=beidouOperator;//北斗id
+                var field = data.field; //获取提交的字段
+
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpCarInfo/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpCarInfo-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#endTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#lastXufeiTime', //指定元素
+                type:'datetime'
+            });
+
+            laydate.render({
+                elem: '#installationTime', //指定元素
+                type:'datetime'
+            });
+
+            //付款状态
+            function payState() {
+                var payStateInput = $("#payStateInput").val();
+                if(payStateInput==0){
+                    $("#payState").val(payStateInput);
+                    layui.form.render('select');//重新渲染表格
+                }else if (payStateInput==1) {
+                    $("#payState").val(payStateInput);
+                    layui.form.render('select');//重新渲染表格
+                }
+            }
+            payState();
+
+            //付款状态
+            function getMoneyType() {
+                var getMoneyTypeInput = $("#getMoneyTypeInput").val();
+                if(getMoneyTypeInput==0){
+                    $("#getMoneyType").val(getMoneyTypeInput);
+                    layui.form.render('select');//重新渲染表格
+                }else if (payStateInput==1) {
+                    $("#getMoneyType").val(getMoneyTypeInput);
+                    layui.form.render('select');//重新渲染表格
+                }else if (payStateInput==2) {
+                    $("#getMoneyType").val(getMoneyTypeInput);
+                    layui.form.render('select');//重新渲染表格
+                }
+            }
+            getMoneyType();
+
+
+            //查询所有车队
+            function ownerTeamNameList() {
+                var ownerTeamNameInput = $("#ownerTeamNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/selectCarTeam.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var catTeam = data.data;
+                        //将查询到的角色列表展示到下拉框中去;
+                        if(catTeam!="undefined"){
+                            for(var i=0;i<catTeam.length;i++){
+                                var s = catTeam[i].id+","+catTeam[i].carTeamName
+                                $("#ownerTeamName").append("<option value="+s+">"+catTeam[i].carTeamName+"</option>");
+                                if(s==ownerTeamNameInput){
+                                    $("#ownerTeamName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            ownerTeamNameList();
+
+            //查询所有地区
+            function addressList() {
+                var xianquNameInput = $("#xianquNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarTeam/listAllXianQu.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var xianQu = data.data;
+                        //将查询到的角色列表展示到下拉框中去;
+                        if(xianQu!="undefined"){
+                            for(var i=0;i<xianQu.length;i++){
+                                var s = xianQu[i].id+","+xianQu[i].name
+                                $("#xianquName").append("<option value="+s+">"+xianQu[i].name+"</option>");
+                                if(s==xianquNameInput){
+                                    $("#xianquName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            addressList();
+
+            //渠道代理
+            function channelAgentNameList() {
+                var channelAgentNameInput = $("#channelAgentNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllChannelAgentNameList.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var channelAgentName = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(channelAgentName!="undefined"){
+                            for(var i=0;i<channelAgentName.length;i++){
+                                var s = channelAgentName[i].id+","+channelAgentName[i].channelAgentName
+                                $("#channelAgentName").append("<option value="+s+">"+channelAgentName[i].channelAgentName+"</option>");
+                                if(s==channelAgentNameInput){
+                                    $("#channelAgentName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            channelAgentNameList();
+
+
+
+            //查询供应商名
+            function supplierList() {
+                var supplierNameInput = $("#supplierNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllSupplier.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var supplier = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(supplier!="undefined"){
+                            for(var i=0;i<supplier.length;i++){
+                                debugger
+                                if(supplier[i].supplierName==undefined){
+                                    continue;
+                                }
+                                var s = supplier[i].id+","+supplier[i].supplierName
+                                $("#supplierName").append("<option value="+s+">"+supplier[i].supplierName+"</option>");
+                                if(s==supplierNameInput){
+                                    $("#supplierName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            supplierList();
+
+            //查询业务人员
+            function yeWuList() {
+                var yewuUserNameInput = $("#yewuUserNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllYeWu.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var yewu = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(yewu!="undefined"){
+                            for(var i=0;i<yewu.length;i++){
+                                var s = yewu[i].id+","+yewu[i].userName
+                                $("#yewuUserName").append("<option value="+s+">"+yewu[i].userName+"</option>");
+                                if(s==yewuUserNameInput){
+                                    $("#yewuUserName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            yeWuList();
+
+            //查询安装人员
+            function installList() {
+                var installUserNameInput = $("#installUserNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllYeWu.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var install = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(install!="undefined"){
+                            for(var i=0;i<install.length;i++){
+                                var s = install[i].id+","+install[i].userName
+                                $("#installUserName").append("<option value="+s+">"+install[i].userName+"</option>");
+                                if(s==installUserNameInput){
+                                    $("#installUserName").val(s);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            installList();
+
+            //查询录入人员
+            function beidouOperator() {
+                var beidouOperatorInput = $("#beidouOperatorInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllbeidouOperator.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var beidouOperator = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(beidouOperator!="undefined"){
+                            for(var i=0;i<beidouOperator.length;i++){
+                                $("#beidouOperator").append("<option value="+beidouOperator[i].id+">"+beidouOperator[i].name+"</option>");
+                                if(beidouOperatorInput==beidouOperator[i].name){
+                                    $("#beidouOperator").val(beidouOperator[i].id);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            beidouOperator();
+
+            //查询SIM卡
+            /*function simList() {
+                var simCodeInput = $("#simCodeInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/simList.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        debugger
+                        var simArr = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(simArr.length>0){
+                            for(var i=0;i<simArr.length;i++){
+
+                                $("#simCode").append("<option value="+simArr[i].simNum+">"+simArr[i].simNum+"</option>");
+                                if(simCodeInput!=""){
+                                    $("#simCode").append("<option value="+simCodeInput+">"+simCodeInput+"</option>");
+                                    $("#simCode").val(simCodeInput);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }else {
+                            if(simCodeInput!=""){
+                                $("#simCode").append("<option value="+simCodeInput+">"+simCodeInput+"</option>");
+                                $("#simCode").val(simCodeInput);
+                            }
+                            layui.form.render('select');//重新渲染表格
+                        }
+                    }
+                });
+            }
+            simList();*/
+        })
+</script>
+</body>
+</html>

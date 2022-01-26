@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">车牌号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.carPlateNum" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">车架号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.carFrameNum" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpCarTechnicalDossier-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>
+            </div>
+            <table id="ErpCarTechnicalDossier-list" lay-filter="ErpCarTechnicalDossier-list"></table>
+            <script type="text/html" id="table-ErpCarTechnicalDossier-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common'
+        }).use(['index','table', 'form','common'], function(exports){
+            var $ = layui.$
+                ,table = layui.table
+                ,common = layui.common
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            //查询
+            form.on('submit(ErpCarTechnicalDossier-search)', function(data){
+                var field = data.field;
+
+                //执行重载
+                table.reload('ErpCarTechnicalDossier-list', {
+                    where: field,
+                    page:{
+                        curr:1
+                    }
+                });
+            });
+
+            /*
+            * 定义表格
+            * */
+            defineTable = function () {
+                var headers = layui.admin.getTokenHeader();
+                table.render({
+                    elem: '#ErpCarTechnicalDossier-list' //指定原始表格的选择器（id选择器）
+                    ,url:layui.setter.basePath +'/admin/erpCarTechnicalDossier/listpage.jsn' //模拟接口
+                    ,headers:headers
+                    ,method: 'post'
+                    ,parseData: function(res){ //res 即为原始返回的数据
+                        return {
+                            "code": res.success, //解析接口状态
+                            "msg": res.errMsg, //解析提示文本
+                            "count": res.totalCount, //解析数据长度
+                            "data": res.list //解析数据列表
+                        };
+                    }
+                    ,response: {
+                        statusCode: true //规定成功的状态码，默认：0
+                    }
+                    ,cols: [[
+                        {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id',align: 'center', width: 200, title: '主键',sort: true,hide:true}
+                    ,{field: 'createTime',align: 'center', width: 200, title: '创建时间',templet: function(d){
+                    return common.DateFormat(d.createTime,"yyyy-MM-dd");},sort: true,hide:true}
+            ,{field: 'createUserId',align: 'center', width: 200, title: '创建人ID',sort: true,hide:true}
+            ,{field: 'createUserName',align: 'center', width: 200, title: '创建人名',sort: true,hide:true}
+            ,{field: 'carPlateNum',align: 'center', width: 200, title: '车牌号',sort: true}
+            ,{field: 'carPlateColor',align: 'center', width: 200, title: '车牌颜色',sort: true
+                ,templet: function(d) {
+                    if(d.carPlateColor=="0"){
+                        return "蓝色";
+                    }else if(d.carPlateColor=="1") {
+                        return "黄色";
+                    }else {
+                        return "";
+                    }
+                }
+            }
+            ,{field: 'carFrameNum',align: 'center', width: 200, title: '车架号',sort: true}
+            ,{field: 'carType',align: 'center', width: 200, title: '车辆类型',sort: true}
+            ,{field: 'carBrand',align: 'center', width: 200, title: '车辆品牌',sort: true}
+            ,{field: 'carModel',align: 'center', width: 200, title: '车辆型号',sort: true}
+            ,{field: 'fuelType',align: 'center', width: 200, title: '燃料类型',sort: true}
+            ,{field: 'totalMass',align: 'center', width: 200, title: '总质量',sort: true}
+            ,{field: 'hedingzaiMass',align: 'center', width: 200, title: '核定载质量',sort: true}
+            ,{field: 'tractionMass',align: 'center', width: 200, title: '准牵引总质量',sort: true}
+            ,{field: 'techOuterLength',align: 'center', width: 200, title: '外廓尺寸长',sort: true}
+            ,{field: 'techOuterWidth',align: 'center', width: 200, title: '外廓尺寸宽',sort: true}
+            ,{field: 'techOuterHeight',align: 'center', width: 200, title: '外廓尺寸高',sort: true}
+            ,{field: 'boxInnerLength',align: 'center', width: 200, title: '货箱内部尺寸-长',sort: true}
+            ,{field: 'boxInnerWidth',align: 'center', width: 200, title: '货厢内部尺寸-宽',sort: true}
+            ,{field: 'boxInnerHeight',align: 'center', width: 200, title: '货厢内部尺寸-高',sort: true}
+            ,{field: 'axleNum',align: 'center', width: 200, title: '轴数',sort: true}
+            ,{field: 'tyreNum',align: 'center', width: 200, title: '轮胎数',sort: true}
+            ,{field: 'tyreSpecifications',align: 'center', width: 200, title: '轮胎规格',sort: true}
+                    ,{field: 'carProduceDate',align: 'center', width: 200, title: '车辆出厂日期',templet: function(d){
+                    return common.DateFormat(d.carProduceDate,"yyyy-MM-dd");},sort: true}
+            ,{field: 'businessScope',align: 'center', width: 200, title: '经营范围',sort: true}
+            ,{field: 'carBodyColor',align: 'center', width: 200, title: '车身颜色',sort: true}
+            ,{field: 'carPurchaseType',align: 'center', width: 200, title: '车辆购置方式',sort: true}
+                    ,{field: 'carInsuringEndTime',align: 'center', width: 200, title: '车辆保险到期时间',templet: function(d){
+                    return common.DateFormat(d.carInsuringEndTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'carCheckEndTime',align: 'center', width: 200, title: '检验有效期至',templet: function(d){
+                    return common.DateFormat(d.carCheckEndTime,"yyyy-MM-dd");},sort: true}
+            ,{field: 'licenseUploadNum',align: 'center', width: 200, title: '执照上传数',sort: true}
+                    ,{field: 'serviceContractEndTime',align: 'center', width: 200, title: '服务合同到期时间',templet: function(d){
+                    return common.DateFormat(d.serviceContractEndTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'drivingPermitStartTime',align: 'center', width: 200, title: '行驶证发证时间',templet: function(d){
+                    return common.DateFormat(d.drivingPermitStartTime,"yyyy-MM-dd");},sort: true}
+            ,{field: 'engineNumber',align: 'center', width: 200, title: '发动机号',sort: true}
+            ,{field: 'engineModel',align: 'center', width: 200, title: '发动机型号',sort: true}
+            ,{field: 'dataState',align: 'center', width: 200, title: '数据状态',sort: true,hide:true}
+                    ,{title: '操作', minWidth: 150, align: 'center', fixed: 'right', toolbar: '#table-ErpCarTechnicalDossier-list'}
+            ]]
+            ,autoSort: false
+                    ,page: true
+                    ,limit: 10
+                    ,limits: [10, 20, 30,40]
+                    ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+                //为toolbar添加事件响应
+                table.on('tool(ErpCarTechnicalDossier-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    /*var data = obj.data;*///获得当前行数据
+                    //区分事件
+                    switch(obj.event){
+                        case 'del':
+                            deleteVo(obj);
+                            break;
+                        case 'edit':
+                            editVo(obj);
+                            break;
+                    };
+                });
+
+                //监听排序事件
+                table.on('sort(ErpCarTechnicalDossier-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                    var sort = obj.field;
+                    //默认排序
+                    switch(obj.field){
+                        case 'id':
+                            sort ="ID";
+                            break;
+                        case 'createTime':
+                            sort ="CREATE_TIME";
+                            break;
+                        case 'createUserId':
+                            sort ="CREATE_USER_ID";
+                            break;
+                        case 'createUserName':
+                            sort ="CREATE_USER_NAME";
+                            break;
+                        case 'carPlateNum':
+                            sort ="CAR_PLATE_NUM";
+                            break;
+                        case 'carPlateColor':
+                            sort ="CAR_PLATE_COLOR";
+                            break;
+                        case 'carFrameNum':
+                            sort ="CAR_FRAME_NUM";
+                            break;
+                        case 'carType':
+                            sort ="CAR_TYPE";
+                            break;
+                        case 'carBrand':
+                            sort ="CAR_BRAND";
+                            break;
+                        case 'carModel':
+                            sort ="CAR_MODEL";
+                            break;
+                        case 'fuelType':
+                            sort ="FUEL_TYPE";
+                            break;
+                        case 'totalMass':
+                            sort ="TOTAL_MASS";
+                            break;
+                        case 'hedingzaiMass':
+                            sort ="HEDINGZAI_MASS";
+                            break;
+                        case 'tractionMass':
+                            sort ="TRACTION_MASS";
+                            break;
+                        case 'techOuterLength':
+                            sort ="TECH_OUTER_LENGTH";
+                            break;
+                        case 'techOuterWidth':
+                            sort ="TECH_OUTER_WIDTH";
+                            break;
+                        case 'techOuterHeight':
+                            sort ="TECH_OUTER_HEIGHT";
+                            break;
+                        case 'boxInnerLength':
+                            sort ="BOX_INNER_LENGTH";
+                            break;
+                        case 'boxInnerWidth':
+                            sort ="BOX_INNER_WIDTH";
+                            break;
+                        case 'boxInnerHeight':
+                            sort ="BOX_INNER_HEIGHT";
+                            break;
+                        case 'axleNum':
+                            sort ="AXLE_NUM";
+                            break;
+                        case 'tyreNum':
+                            sort ="TYRE_NUM";
+                            break;
+                        case 'tyreSpecifications':
+                            sort ="TYRE_SPECIFICATIONS";
+                            break;
+                        case 'carProduceDate':
+                            sort ="CAR_PRODUCE_DATE";
+                            break;
+                        case 'businessScope':
+                            sort ="BUSINESS_SCOPE";
+                            break;
+                        case 'carBodyColor':
+                            sort ="CAR_BODY_COLOR";
+                            break;
+                        case 'carPurchaseType':
+                            sort ="CAR_PURCHASE_TYPE";
+                            break;
+                        case 'carInsuringEndTime':
+                            sort ="CAR_INSURING_END_TIME";
+                            break;
+                        case 'carCheckEndTime':
+                            sort ="CAR_CHECK_END_TIME";
+                            break;
+                        case 'licenseUploadNum':
+                            sort ="LICENSE_UPLOAD_NUM";
+                            break;
+                        case 'serviceContractEndTime':
+                            sort ="SERVICE_CONTRACT_END_TIME";
+                            break;
+                        case 'drivingPermitStartTime':
+                            sort ="DRIVING_PERMIT_START_TIME";
+                            break;
+                        case 'engineNumber':
+                            sort ="ENGINE_NUMBER";
+                            break;
+                        case 'engineModel':
+                            sort ="ENGINE_MODEL";
+                            break;
+                        case 'dataState':
+                            sort ="DATA_STATE";
+                            break;
+                    };
+                    if(obj.type==null){
+                        return;
+                    }
+                    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                    table.reload('ErpCarTechnicalDossier-list', {
+                        initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                        ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                            orderBy: sort+" "+obj.type //排序字段
+                        }
+                    });
+                });
+            }
+            defineTable();
+
+            //删除
+            deleteVo = function (obj) {
+                layer.confirm('确定删除此记录吗？', function(index){
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/erpCarTechnicalDossier/deleteByIds.jsn',
+                        data:{'ids':obj.data.id},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('ErpCarTechnicalDossier-list',
+                                {page:
+                                    { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                    }
+                                }
+                            );
+                            layer.close(index);
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //编辑
+            editVo = function (obj) {
+                layer.open({
+                    type: 2
+                    ,title: '编辑'
+                    ,content: 'ErpCarTechnicalDossierEdit.html'
+                    ,maxmin: true
+                    ,area: ['800px', '620px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpCarTechnicalDossier-form").click();
+
+                        othis.find('input[name="id"]').val(obj.data.id);
+                        othis.find('input[name="createTime"]').val(obj.data.createTime);
+                        othis.find('input[name="createUserId"]').val(obj.data.createUserId);
+                        othis.find('input[name="createUserName"]').val(obj.data.createUserName);
+                        othis.find('input[name="carPlateNum"]').val(obj.data.carPlateNum);
+                        othis.find('input[name="carPlateColor"][value=\'0\']').attr("checked", obj.data.carPlateColor == 0 ? true : false);
+                        othis.find('input[name="carPlateColor"][value=\'1\']').attr("checked", obj.data.carPlateColor == 1 ? true : false);
+                        othis.find('input[name="carFrameNum"]').val(obj.data.carFrameNum);
+                        othis.find('input[name="carType"]').val(obj.data.carType);
+                        othis.find('input[name="carBrand"]').val(obj.data.carBrand);
+                        othis.find('input[name="carModel"]').val(obj.data.carModel);
+                        othis.find('input[name="fuelType"]').val(obj.data.fuelType);
+                        othis.find('input[name="totalMass"]').val(obj.data.totalMass);
+                        othis.find('input[name="hedingzaiMass"]').val(obj.data.hedingzaiMass);
+                        othis.find('input[name="tractionMass"]').val(obj.data.tractionMass);
+                        othis.find('input[name="techOuterLength"]').val(obj.data.techOuterLength);
+                        othis.find('input[name="techOuterWidth"]').val(obj.data.techOuterWidth);
+                        othis.find('input[name="techOuterHeight"]').val(obj.data.techOuterHeight);
+                        othis.find('input[name="boxInnerLength"]').val(obj.data.boxInnerLength);
+                        othis.find('input[name="boxInnerWidth"]').val(obj.data.boxInnerWidth);
+                        othis.find('input[name="boxInnerHeight"]').val(obj.data.boxInnerHeight);
+                        othis.find('input[name="axleNum"]').val(obj.data.axleNum);
+                        othis.find('input[name="tyreNum"]').val(obj.data.tyreNum);
+                        othis.find('input[name="tyreSpecifications"]').val(obj.data.tyreSpecifications);
+                        othis.find('input[name="carProduceDate"]').val(obj.data.carProduceDate);
+                        othis.find('input[name="businessScope"]').val(obj.data.businessScope);
+                        othis.find('input[name="carBodyColor"]').val(obj.data.carBodyColor);
+                        othis.find('input[name="carPurchaseType"]').val(obj.data.carPurchaseType);
+                        othis.find('input[name="carInsuringEndTime"]').val(obj.data.carInsuringEndTime);
+                        othis.find('input[name="carCheckEndTime"]').val(obj.data.carCheckEndTime);
+                        othis.find('input[name="licenseUploadNum"]').val(obj.data.licenseUploadNum);
+                        othis.find('input[name="serviceContractEndTime"]').val(obj.data.serviceContractEndTime);
+                        othis.find('input[name="drivingPermitStartTime"]').val(obj.data.drivingPermitStartTime);
+                        othis.find('input[name="engineNumber"]').val(obj.data.engineNumber);
+                        othis.find('input[name="engineModel"]').val(obj.data.engineModel);
+                        othis.find('input[name="dataState"]').val(obj.data.dataState);
+                    }
+                    ,yes: function(index, layero){
+                        var submit = layero.find('iframe').contents().find("#ErpCarTechnicalDossier-form-edit");
+                        submit.trigger('click');
+                    }
+                });
+            }
+
+            //点击事件
+            var active = {
+                //批量删除
+                batchdel: function(){
+                    var checkStatus = table.checkStatus('ErpCarTechnicalDossier-list')
+                        ,checkData = checkStatus.data; //得到选中的数据
+
+                    if(checkData.length === 0){
+                        return layer.msg('请选择数据');
+                    }
+
+                    layer.confirm('确定删除吗？', function(index) {
+                        var ids = "" ;
+                        for(var i = 0;i<checkData.length;i++){
+                            if(ids==""){
+                                ids= checkData[i].id;
+                            }else {
+                                ids = ids+","+checkData[i].id;
+                            }
+                        }
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/erpCarTechnicalDossier/deleteByIds.jsn',
+                            data:{'ids':ids},
+                            method:"post",
+                            success:function (data) {
+                                table.reload('ErpCarTechnicalDossier-list',
+                                    {page:
+                                        { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                        }
+                                    }
+                                );
+                                layer.msg('删除成功', {
+                                    icon: 1
+                                });
+                            },
+                        });
+                    });
+                }
+                //添加
+                ,add: function(){
+                    layer.open({
+                        type: 2
+                        ,title: '添加'
+                        ,content: 'ErpCarTechnicalDossierAdd.html'
+                        ,maxmin: true
+                        ,area: ['800px', '620px']
+                        ,btn: ['确定', '取消']
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#ErpCarTechnicalDossier-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+            }
+            //绑定点击事件
+            $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+
+        });
+
+</script>
+</body>
+</html>
+

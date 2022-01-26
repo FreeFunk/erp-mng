@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpCarInfo-form" id="ErpCarInfo-form" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">所属车辆ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="ownerCarInfoId"  placeholder="请输入所属车辆ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide" style="display: inline-block;width: 290px;">
+            <label class="layui-form-label">车牌号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carPlateNum"  placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">车牌颜色</label>
+            <div id="carPaiColor" class="layui-input-block">
+                <input type="text" name="carPlateColor"  placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                <!--<input type="radio" name="carPlateColor"  value="1" title="黄色" checked="">-->
+                <!--<input type="radio" name="carPlateColor"  value="0" title="蓝色">-->
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">车架号</label>
+            <div class="layui-input-block">
+                <input type="text" name="carFrameNum"  placeholder="请输入车架号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    <!--
+        <div class="layui-form-item">
+            <label class="layui-form-label">渠道代理ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="channelAgentId" lay-verify="required" placeholder="请输入渠道代理ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">渠道代理</label>
+            <div class="layui-input-block">
+                <select id="channelAgentName"  name="channelAgentName" lay-search=""  >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">续费时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="xufeiTime" id="xufeiTime" lay-verify="required" placeholder="请输入续费时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">续费金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="xufeiMoney" lay-verify="required" placeholder="请输入续费金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" >
+            <label class="layui-form-label">续费类型</label>
+            <div id="isInstallXufeiId" class="layui-input-block">
+                <input type="radio" name="isInstallXufei" value="1" title="新装费">
+                <input type="radio" name="isInstallXufei" value="0" title="服务费">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">开始时间</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="serviceStartTime" id="serviceStartTime" lay-verify="required" placeholder="请输入开始时间" autocomplete="off" class="layui-input">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">到期时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceEndTime" id="serviceEndTime" placeholder="请输入到期时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">前装续费金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="installXufeiMoney" placeholder="请输入前装续费金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">供应商ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="supplierId"  placeholder="请输入供应商ID" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">供应商名</label>
+            <div class="layui-input-block">
+                <input type="text" name="supplierName" placeholder="请输入付费人" autocomplete="off" class="layui-input">
+                <!--<select id="supplierName"  name="supplierName" lay-search="">-->
+                    <!--<option value=""></option>-->
+                <!--</select>-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">付费人</label>
+            <div class="layui-input-block">
+                <select id="payUser"  name="payUser" lay-search=""  >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收款人</label>
+            <div class="layui-input-block">
+                <!--<select id="getMoneyUser"  name="getMoneyUser" lay-search="">
+                    <option value=""></option>
+                    <option value="李欣">李欣</option>
+                </select>-->
+                <select id="getMoneyUser"  name="getMoneyUser" lay-search=""  >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    <!--
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceStartTime" id="serviceStartTime" lay-verify="required" placeholder="请输入服务开始时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务结束时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="serviceEndTime" id="serviceEndTime" lay-verify="required" placeholder="请输入服务结束时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入备注" autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpCarInfo-form-submit" id="ErpCarInfo-form-submit" value="确认">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(ErpCarInfo-form-submit)', function(data){
+                var channelAgentId =  $("#channelAgentName").val();
+                data.field.channelAgentId=channelAgentId;//渠道代理id
+
+                var getMoneyUser =  $("#getMoneyUser").val();
+                data.field.getMoneyUser=getMoneyUser;//收款人
+                // var supplierId =  $("#supplierName").val();
+                // data.field.supplierId=supplierId;//供应商id
+                var val_isInstallXufei = $('#isInstallXufeiId input[name="isInstallXufei"]:checked ').val();//安装类型
+                data.field.isInstallXufei = val_isInstallXufei;
+
+                // var carPlateColor = $('#carPaiColor input[name="carPlateColor"]:checked ').val();//车辆颜色
+                // data.field.carPlateColor = carPlateColor;
+
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpCarXufeiRec/saveOrUpdateNew.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpCarInfo-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('续费成功', {
+                            icon: 1
+                        });
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime',
+                trigger: 'click'
+            });
+            laydate.render({
+                elem: '#xufeiTime', //指定元素
+                type:'date',
+                trigger: 'click'
+            });
+            laydate.render({
+                elem: '#serviceEndTime', //指定元素
+                type:'date',
+                trigger: 'click'
+            });
+            laydate.render({
+                elem: '#serviceStartTime', //指定元素
+                type:'date',
+                trigger: 'click'
+            });
+            //渠道代理
+            function channelAgentNameList() {
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllChannelAgentNameList.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var channelAgentName = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(channelAgentName!="undefined"){
+                            for(var i=0;i<channelAgentName.length;i++){
+                                var s = channelAgentName[i].id+","+channelAgentName[i].channelAgentName;
+                                $("#channelAgentName").append("<option value="+s+">"+channelAgentName[i].channelAgentName+"</option>");
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            channelAgentNameList();
+
+            //查询供应商名
+            function supplierList() {
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarInfo/listAllSupplier.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var supplier = data.data;
+                        //将查询到列表展示到下拉框中去;
+                        if(supplier!="undefined"){
+                            for(var i=0;i<supplier.length;i++){
+                                $("#supplierName").append("<option value="+supplier[i].id+">"+supplier[i].supplierName+"</option>");
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            supplierList();
+            //收款人
+            payUserList();
+            function payUserList() {
+                admin.req({
+                    url:layui.setter.basePath + '/erp/erpbaseuser/erpBaseUser/listpage.jsn',
+                    method:"post",
+                    data:{"queryObj.userType":'0'} ,
+                    success:function(data){
+                        var payUserList = data.list;
+                        //将查询到列表展示到下拉框中去;
+                        for(var i=0;i<payUserList.length;i++){
+                            $("#payUser").append("<option value="+payUserList[i].userName+">"+payUserList[i].userName+"</option>");
+                            layui.form.render('select');//重新渲染表格
+                        }
+                    }
+                });
+            }
+            //收款人
+            getMoneyUserList();
+            function getMoneyUserList() {
+                admin.req({
+                    url:layui.setter.basePath + '/erp/erpbaseuser/erpBaseUser/listpage.jsn',
+                    method:"post",
+                    data:{"queryObj.userType":'1'} ,
+                    success:function(data){
+                        var getMoneyUserList = data.list;
+                        //将查询到列表展示到下拉框中去;
+                        for(var i=0;i<getMoneyUserList.length;i++){
+                            $("#getMoneyUser").append("<option value="+getMoneyUserList[i].userName+">"+getMoneyUserList[i].userName+"</option>");
+                            layui.form.render('select');//重新渲染表格
+                        }
+                    }
+                });
+            }
+
+        })
+</script>
+</body>
+</html>

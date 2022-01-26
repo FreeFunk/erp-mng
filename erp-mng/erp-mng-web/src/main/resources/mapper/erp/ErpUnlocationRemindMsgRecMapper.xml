@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpUnlocationRemindMsgRecMapper" >
+
+
+	<resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpUnlocationRemindMsgRec" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER_ID" property="createUserId"/>
+		<result column="CREATE_USER_NAME" property="createUserName"/>
+		<result column="OWNER_UNLOCATION_REMIND_ID" property="ownerUnlocationRemindId"/>
+		<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+		<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+		<result column="SEND_TYPE" property="sendType"/>
+		<result column="MSG_TEXT" property="msgText"/>
+		<result column="CONTACT_PERSON" property="contactPerson"/>
+		<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+		<result column="SEND_TIME" property="sendTime"/>
+		<result column="SEND_STATE" property="sendState"/>
+		<result column="SMS_ID" property="smsId"/>
+		<result column="DATA_STATE" property="dataState"/>
+	</resultMap>
+
+	<resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpUnlocationRemindMsgRecView" extends="BaseResultMap">
+
+	</resultMap>
+
+
+	<!-- ******* 新增字段请修改这里  ******  -->
+	<sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, OWNER_UNLOCATION_REMIND_ID, CAR_PLATE_NUM, CAR_FRAME_NUM, SEND_TYPE, MSG_TEXT, CONTACT_PERSON, CONTACT_PHONE_NUM, SEND_TIME, SEND_STATE, SMS_ID,DATA_STATE
+  </sql>
+
+	<!-- ******* 利用好这里的动态查询条件  ******  -->
+	<sql id="where">
+		<where>
+			DATA_STATE='1'
+			<if test='queryObj != null and  queryObj.createTime != null'>
+				AND  CREATE_TIME = #{queryObj.createTime}
+			</if>
+			<if test='queryObj != null and  queryObj.sendTime != null'>
+				AND  SEND_TIME = #{queryObj.sendTime}
+			</if>
+			<if test='queryObj != null and  queryObj.contactPhoneNum != null'>
+				AND  CONTACT_PHONE_NUM like '%${queryObj.contactPhoneNum}%'
+			</if>
+			<if test='queryObj != null and  queryObj.carPlateNum != null'>
+				AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+			</if>
+		</where>
+
+	</sql>
+
+	<!-- ******* 排序判断  ******
+    <sql id="orderBy">
+        <if test="orderBy != null and orderBy!= '' ">
+            order by  ${orderBy}
+        </if>
+    </sql>-->
+
+
+	<!-- 分页条件查询  -->
+	<select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpUnlocationRemindMsgRecQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_unlocation_remind_msg_rec
+		<include refid="where"/>
+	</select>
+
+	<!-- 不分页条件查询  -->
+	<select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpUnlocationRemindMsgRecQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_unlocation_remind_msg_rec
+		<include refid="where"/>
+	</select>
+
+	<select id="selectByCarId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_unlocation_remind_msg_rec where OWNER_UNLOCATION_REMIND_ID=#{ownerUnlocationRemindId} and DATA_STATE='1' order by SEND_TIME desc LIMIT 1
+	</select>
+
+	<select id="selectByCarIdState" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_unlocation_remind_msg_rec
+		where OWNER_UNLOCATION_REMIND_ID=#{ownerUnlocationRemindId}
+		and DATA_STATE='1' and SEND_STATE='1' order by SEND_TIME desc LIMIT 1
+	</select>
+
+	<insert id="insertNewSendManyMessage" parameterType="java.util.List">
+		insert into erp_unlocation_remind_msg_rec
+		(ID,OWNER_UNLOCATION_REMIND_ID,SEND_STATE,DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id},
+			#{item.ownerUnlocationRemindId},
+			#{item.sendState},
+			#{item.dataState}
+			)
+		</foreach>
+	</insert>
+
+	<select id="selectByAllNewManyInfo" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_unlocation_remind_msg_rec where DATA_STATE='1' and SEND_TYPE='1' and SEND_STATE= '0' and CONTACT_PHONE_NUM is null
+	</select>
+	<select id="selectByAllNewAllInfo" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from erp_unlocation_remind_msg_rec
+		where DATA_STATE='1'
+		and SEND_STATE= '0'
+		AND CAR_PLATE_NUM IS NOT null AND CONTACT_PHONE_NUM IS NOT null
+		LIMIT 100
+	</select>
+
+
+
+	<update id="updateManyMsg" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			UPDATE erp_unlocation_remind_msg_rec
+			<set>
+				CREATE_TIME=#{item.createTime},
+				CAR_PLATE_NUM=#{item.carPlateNum},
+				MSG_TEXT=#{item.msgText},
+				CONTACT_PERSON=#{item.contactPerson},
+				CONTACT_PHONE_NUM=#{item.contactPhoneNum},
+				SEND_TIME=#{item.sendTime},
+				SEND_STATE=#{item.sendState}
+			</set>
+			<where>
+				ID=#{item.id}
+			</where>
+		</foreach>
+	</update>
+
+	<insert id="insertNewSendAllMessage" parameterType="java.util.List">
+		insert into erp_unlocation_remind_msg_rec
+		(ID,CREATE_TIME,OWNER_UNLOCATION_REMIND_ID,CAR_PLATE_NUM,MSG_TEXT,SEND_STATE,DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id},
+			#{item.createTime},
+			#{item.ownerUnlocationRemindId},
+			#{item.carPlateNum},
+			#{item.sendState},
+			#{item.dataState}
+			)
+		</foreach>
+	</insert>
+
+	<!-- 批量删除 -->
+	<delete id="deleteByList" parameterType="java.util.List">
+		delete from erp_unlocation_remind_msg_rec where ID in
+		<foreach collection="list" item="item" index="no" open="(" separator="," close=")">
+			#{item.id}
+		</foreach>
+	</delete>
+
+	<update id="updateAllMessage" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			UPDATE erp_unlocation_remind_msg_rec
+			<set>
+				CREATE_TIME=#{item.createTime},
+				CAR_PLATE_NUM=#{item.carPlateNum},
+				MSG_TEXT=#{item.msgText},
+				CONTACT_PERSON=#{item.contactPerson},
+				CONTACT_PHONE_NUM=#{item.contactPhoneNum},
+				SEND_TIME=#{item.sendTime},
+				SEND_STATE=#{item.sendState}
+			</set>
+			<where>
+				ID=#{item.id}
+			</where>
+		</foreach>
+	</update>
+
+	<select id="selectByCarIdNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from erp_unlocation_remind_msg_rec where OWNER_UNLOCATION_REMIND_ID=#{id} AND DATA_STATE='1'
+	</select>
+
+	<select id="selectBySendMessageId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from
+		erp_unlocation_remind_msg_rec
+		where OWNER_UNLOCATION_REMIND_ID=#{ownerUnlocationRemindId} AND DATA_STATE='1' order by SEND_TIME desc LIMIT 1
+	</select>
+
+	<select id="selectByCarIdList" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from
+		erp_unlocation_remind_msg_rec
+		where OWNER_UNLOCATION_REMIND_ID=#{ids} AND DATA_STATE='1'
+	</select>
+
+	<!-- 查询在三个月之内发送过的短信 -->
+	<select id="selectByCarPlateNumDate" parameterType="java.lang.String" resultType="int">
+		SELECT count(1) FROM erp_unlocation_remind_msg_rec
+		WHERE CAR_PLATE_NUM= #{carPlateNum} AND TO_DAYS(now())-TO_DAYS(CREATE_TIME) >= 90
+	</select>
+
+	<!-- 查询在三个月之内发送过的短信 -->
+	<select id="countSendNum" parameterType="map" resultType="int">
+		SELECT count(1) FROM erp_unlocation_remind_msg_rec
+		WHERE CAR_PLATE_NUM like concat('',#{carPlateNum},'') and SEND_TYPE = 'OFFLINE_TZ_MSG'
+		AND CREATE_TIME >DATE_SUB(CURDATE(), INTERVAL #{sendMessageDay} DAY)
+		and DATA_STATE = '1'
+	</select>
+
+
+	<select id="selectByCarPlateNum" parameterType="java.lang.String" resultType="int">
+		SELECT count(1) FROM erp_unlocation_remind_msg_rec
+		WHERE CAR_PLATE_NUM= #{carPlateNum}
+	</select>
+
+	<update id="updateByState" parameterType="com.edgedo.sys.entity.ErpUnlocationRemindMsgRec">
+		UPDATE erp_unlocation_remind_msg_rec
+		SET
+			SEND_TIME = #{erpUnlocationRemindMsgRec.sendTime},
+			SEND_STATE = #{erpUnlocationRemindMsgRec.sendState}
+		WHERE
+			ID = #{erpUnlocationRemindMsgRec.id}
+	</update>
+
+	<select id="selectByPhoneNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_unlocation_remind_msg_rec WHERE CONTACT_PHONE_NUM=#{moblie} AND SEND_STATE='1' AND SMS_ID=NULL order by CREATE_TIME
+	</select>
+
+	<select id="selectBySendState" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_unlocation_remind_msg_rec WHERE SEND_STATE='1'
+	</select>
+
+
+
+
+	<update id="updateBySendState" parameterType="com.edgedo.sys.entity.ErpUnlocationRemindMsgRec">
+		UPDATE erp_unlocation_remind_msg_rec
+		SET
+			SEND_TIME = #{sendTime},
+			SEND_STATE = #{sendState},
+			SMS_ID = #{smsId}
+		WHERE ID=#{id}
+	</update>
+
+	<update id="updateBySendStateNew" parameterType="com.edgedo.sys.entity.ErpUnlocationRemindMsgRec">
+		UPDATE erp_unlocation_remind_msg_rec
+		SET
+			SEND_TIME = #{sendTime},
+			SEND_STATE = #{sendState},
+			SMS_ID = #{smsId}
+		WHERE CONTACT_PHONE_NUM=#{contactPhoneNum} 	and SEND_TYPE = #{sendType}
+	</update>
+
+	<select id="selectBySendTypeGroupByPhoneNum" parameterType="string" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from erp_unlocation_remind_msg_rec
+		where DATA_STATE='1'
+		and SEND_STATE= '0'
+		and SEND_TYPE = #{sendType}
+		GROUP BY CONTACT_PHONE_NUM
+		LIMIT 150
+	</select>
+
+	<select id="selectBySendType" parameterType="string" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from erp_unlocation_remind_msg_rec
+		where DATA_STATE='1'
+		and SEND_STATE= '0'
+		and SEND_TYPE = #{sendType}
+		LIMIT 150
+	</select>
+
+	<insert id="insertAll" parameterType="java.util.List">
+		insert into  erp_unlocation_remind_msg_rec
+		(	 ID, CREATE_TIME, CAR_PLATE_NUM,SEND_TYPE, MSG_TEXT,CONTACT_PERSON, CONTACT_PHONE_NUM, SEND_STATE,DATA_STATE)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			replace(uuid(),'-','') ,
+			NOW(),
+			#{item.carPlateNum},
+			'OFFLINE_TZ_MSG',
+			#{item.terminalChangshang},
+			#{item.contactPerson},
+			#{item.contactPhoneNum},
+			'0',
+			'1'
+			)
+		</foreach>
+	</insert>
+
+</mapper>

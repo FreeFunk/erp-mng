@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpChannelAgent-form" id="ErpChannelAgent-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">渠道代理</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="channelAgentName"  placeholder="请输入渠道代理" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contactPhoneNum"  placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">所属用户ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sysUserId"placeholder="请输入所属用户ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">省ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceId" placeholder="请输入省ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">省名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceName" placeholder="请输入省名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">城市ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityId" placeholder="请输入城市ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">城市名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityName"  placeholder="请输入城市名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">县区ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquId"  placeholder="请输入县区ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区名</label>
+                        <div class="layui-input-block">
+                            <input  style="display: none" class="layui-hide" type="text" id="xianquNameInput" name="xianquNameInput" class="layui-input">
+                            <select id="xianquName"  name="xianquName"  lay-search="">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpChannelAgent-form-edit" id="ErpChannelAgent-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpChannelAgent-form-edit)', function(data){
+                var xianquId =  $("#xianquName").val();
+                data.field.xianquId=xianquId;//县区id
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpChannelAgent/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpChannelAgent-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+
+            //查询所有地区
+            function addressList() {
+                var xianquNameInput = $("#xianquNameInput").val();
+                admin.req({
+                    url:layui.setter.basePath + '/admin/erpCarTeam/listAllXianQu.jsn',
+                    method:"post",
+                    data:{} ,
+                    success:function(data){
+                        var xianQu = data.data;
+                        //将查询到的角色列表展示到下拉框中去;
+                        if(xianQu!="undefined"){
+                            for(var i=0;i<xianQu.length;i++){
+                                $("#xianquName").append("<option value="+xianQu[i].id+">"+xianQu[i].name+"</option>");
+                                if(xianQu[i].id==xianquNameInput){
+                                    $("#xianquName").val(xianquNameInput);
+                                }
+                                layui.form.render('select');//重新渲染表格
+                            }
+                        }
+                    }
+                });
+            }
+            addressList();
+
+
+        })
+</script>
+</body>
+</html>

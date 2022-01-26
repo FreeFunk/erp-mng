@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+    <style type="text/css">
+        .layui-table-cell {
+            padding: 0 5px;
+        }
+        .layui-table-body{
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">未上线天数</label>
+                    <div class="layui-input-inline">
+                        <select id="unlocatonDay" name="queryObj.unlocatonDay">
+                            <option value=""></option>
+                            <option value="1">7天未上线</option>
+                            <option value="2">30天未上线</option>
+                            <option value="3">90天未上线</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">车牌号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.carPlateNum" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">联系电话</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="queryObj.contactPhoneNum" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpNotnolineCarInfo-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <!--<button class="layui-btn layuiadmin-btn-comm" data-type="batchdel">删除</button>-->
+                <!--<button class="layui-btn layuiadmin-btn-comm" data-type="add">添加</button>-->
+                <button id="updateBtn" class="layui-btn layuiadmin-btn-comm" data-type="update">更新信息</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="sendManyMessages">发送短信</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="sendAllMessages">全部发送</button>
+            </div>
+            <table id="ErpNotnolineCarInfo-list" lay-filter="ErpNotnolineCarInfo-list"></table>
+            <script type="text/html" id="table-ErpNotnolineCarInfo-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="sendMessages">发送短信</a>
+               <!-- <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="sendJilu">发送记录</a>-->
+                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>-->
+            </script>
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index:'lib/index',
+            common:'common'
+        }).use(['index','table', 'form','common'], function(exports){
+            var $ = layui.$
+                ,table = layui.table
+                ,common = layui.common
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            //查询
+            form.on('submit(ErpNotnolineCarInfo-search)', function(data){
+                var field = data.field;
+
+                //执行重载
+                table.reload('ErpNotnolineCarInfo-list', {
+                    where: field,
+                    page:{
+                        curr:1
+                    }
+                });
+            });
+
+            /*
+            * 查看是否处于更新中
+            */
+            checkIsUpdating = function(){
+                admin.req({
+                    url: layui.setter.basePath + '/admin/erpNotnolineCarInfo/checkIsUpdating.jsn',
+                    data: {},
+                    method: "post",
+                    success: function (data) {
+                        if(data.success && data.data == '1'){
+                            $("#updateBtn").html("更新中");
+                            $("#updateBtn").attr("disabled","disabled");
+                            $("#updateBtn").attr("class","layui-btn layui-btn-disabled");
+                        }
+                    }
+                });
+            }
+
+            /*
+            * 定义表格
+            * */
+            defineTable = function () {
+                var headers = layui.admin.getTokenHeader();
+                table.render({
+                    elem: '#ErpNotnolineCarInfo-list' //指定原始表格的选择器（id选择器）
+                    ,url:layui.setter.basePath +'/admin/erpNotnolineCarInfo/listpage.jsn' //模拟接口
+                    ,headers:headers
+                    ,method: 'post'
+                    ,parseData: function(res){ //res 即为原始返回的数据
+                        return {
+                            "code": res.success, //解析接口状态
+                            "msg": res.errMsg, //解析提示文本
+                            "count": res.totalCount, //解析数据长度
+                            "data": res.list //解析数据列表
+                        };
+                    }
+                    ,response: {
+                        statusCode: true //规定成功的状态码，默认：0
+                    }
+                    ,cols: [[
+                        {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id',align: 'center', width: 200, title: '主键',sort: true,hide:true}
+                        ,{field: 'createTime',align: 'center', width: '10%', title: '更新时间',sort: true,templet: function(d){
+                                return Format(d.createTime,"MM-dd hh:mm");}}
+            ,{field: 'carPlateNum',align: 'center', width: '10%', title: '车牌号'}
+            ,{field: 'unlocatonDay',align: 'center', width: '10%', title: '未上线天数',
+                templet: function(d) {
+                    if(d.unlocatonDay==1){
+                        return "7天未上线";
+                    }else if(d.unlocatonDay==2) {
+                        return "30天未上线";
+                    }else if(d.unlocatonDay==3) {
+                        return "90天未上线";
+                    }else {
+                        return "";
+                    }
+                }
+            }
+            ,{field: 'yehuName',align: 'center', width: '20%', title: '业户/车主'}
+            ,{field: 'contactPerson',align: 'center', width: '10%', title: '联系人'}
+            ,{field: 'contactPhoneNum',align: 'center', width: '10%', title: '联系电话'}
+  /*          ,{field: 'terminalChangshang',align: 'center', width: 230, title: '终端厂商',sort: true,hide:true}
+            ,{field: 'terminalModel',align: 'center', width: 200, title: '终端型号',sort: true,hide:true}*/
+
+          /*  ,{field: 'sendMsgNum',align: 'center', width: 200, title: '短信提醒次数',sort: true}*/
+              ,{field: 'sysutc',align: 'center', width: '10%', title: '最后定位时间',templet: function(d){
+                    return formatTime(parseInt(d.sysutc),'Y/M/D h:m:s')}}
+         /*   ,{field: 'dataState',align: 'center', width: 200, title: '数据状态',sort: true,hide:true}*/
+                    ,{title: '操作', minWidth: 200, align: 'center', fixed: 'right', toolbar: '#table-ErpNotnolineCarInfo-list'}
+            ]]
+            ,autoSort: false
+                    ,page: true
+                    ,limit: 10
+                    ,limits: [10, 20, 30,40]
+                    ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+                //为toolbar添加事件响应
+                table.on('tool(ErpNotnolineCarInfo-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    /*var data = obj.data;*///获得当前行数据
+                    //区分事件
+                    switch(obj.event){
+                        case 'del':
+                            deleteVo(obj);
+                            break;
+                        case 'edit':
+                            editVo(obj);
+                            break;
+                        case'sendMessages':
+                            sendMessagesVo(obj);
+                            break;
+                        case'sendJilu':
+                            sendJiluVo(obj);
+                            break;
+                    };
+                });
+
+                //监听排序事件
+                table.on('sort(ErpNotnolineCarInfo-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                    var sort = obj.field;
+                    //默认排序
+                    switch(obj.field){
+                        case 'id':
+                            sort ="ID";
+                            break;
+                        case 'createTime':
+                            sort ="CREATE_TIME";
+                            break;
+                        case 'carPlateNum':
+                            sort ="CAR_PLATE_NUM";
+                            break;
+                        case 'yehuName':
+                            sort ="YEHU_NAME";
+                            break;
+                        case 'contactPerson':
+                            sort ="CONTACT_PERSON";
+                            break;
+                        case 'contactPhoneNum':
+                            sort ="CONTACT_PHONE_NUM";
+                            break;
+                        case 'terminalChangshang':
+                            sort ="TERMINAL_CHANGSHANG";
+                            break;
+                        case 'terminalModel':
+                            sort ="TERMINAL_MODEL";
+                            break;
+                        case 'unlocatonDay':
+                            sort = "UNLOCATION_DAY";
+                            break;
+                        case 'sendMsgNum':
+                            sort = "SEND_MSG_NUM";
+                            break;
+                        case 'lastLocaltionTime':
+                            sort ="LAST_LOCALTION_TIME";
+                            break;
+                        case 'dataState':
+                            sort ="DATA_STATE";
+                            break;
+                    };
+                    if(obj.type==null){
+                        return;
+                    }
+                    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                    table.reload('ErpNotnolineCarInfo-list', {
+                        initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                        ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                            orderBy: sort+" "+obj.type //排序字段
+                        }
+                    });
+                });
+            }
+            checkIsUpdating();
+            defineTable();
+
+
+            sendJiluVo = function(obj){
+                layer.open({
+                    type: 2
+                    ,title: '发送短信列表'
+                    ,content: 'ErpNotnolineCarSendMessageInfo.html'
+                    ,btn: ['返回']
+                    ,closeBtn: false
+                    ,maxmin: false
+                    ,area: ['550px', '550px']
+                    ,success: function (layero, index) {
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpNotnolineCarInfo-form").click();
+
+                        othis.find('input[name="ownerUnlocationRemindId"]').val(obj.data.id);
+                    }
+                    ,yes: function(index, layero){
+                        layer.close(index);
+                    }
+                });
+
+            };
+
+
+            sendMessagesVo = function (obj) {
+                layer.confirm('确定要发送这个业户吗？', function(index){
+                    admin.req({
+                        url: layui.setter.basePath + '/admin/erpNotnolineCarInfo/sendOneMessages.jsn',
+                        data: {'carPlateNum': obj.data.carPlateNum,'id':obj.data.id,'contactPerson':obj.data.contactPerson,'contactPhoneNum':obj.data.contactPhoneNum},
+                        method: "post",
+                        success: function (data) {
+                            table.reload('ErpNotnolineCarInfo-list');
+                            layer.close(index);
+                            layer.msg('发送成功', {
+                                icon: 1
+                            });
+                        }
+                    });
+                });
+                debugger;
+
+            }
+
+            //删除
+            deleteVo = function (obj) {
+                layer.confirm('确定删除此记录吗？', function(index){
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/erpNotnolineCarInfo/deleteByIds.jsn',
+                        data:{'ids':obj.data.id},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('ErpNotnolineCarInfo-list',
+                                {page:
+                                    { curr: common.deleteJumpPage(obj) // 执行页面跳转方法
+                                    }
+                                }
+                            );
+                            layer.close(index);
+                            layer.msg('删除成功', {
+                                icon: 1
+                            });
+                        },
+                    });
+                });
+            }
+            //编辑
+            editVo = function (obj) {
+                layer.open({
+                    type: 2
+                    ,title: '编辑'
+                    ,content: 'ErpNotnolineCarInfoEdit.html'
+                    ,maxmin: true
+                    ,area: ['550px', '550px']
+                    ,btn: ['确定', '取消']
+                    ,success: function(layero, index){
+                        var s = layero.find('iframe');
+                        $("id",s[0].contentWindow.document).val(obj.data.id);
+                        //给iframe元素赋值
+                        var othis = layero.find('iframe').contents().find("#ErpNotnolineCarInfo-form").click();
+
+                        othis.find('input[name="id"]').val(obj.data.id);
+                        othis.find('input[name="createTime"]').val(obj.data.createTime);
+                        othis.find('input[name="carPlateNum"]').val(obj.data.carPlateNum);
+                        othis.find('input[name="yehuName"]').val(obj.data.yehuName);
+                        othis.find('input[name="contactPerson"]').val(obj.data.contactPerson);
+                        othis.find('input[name="contactPhoneNum"]').val(obj.data.contactPhoneNum);
+                        othis.find('input[name="terminalChangshang"]').val(obj.data.terminalChangshang);
+                        othis.find('input[name="terminalModel"]').val(obj.data.terminalModel);
+                        othis.find('input[name="unlocatonDay"]').val(obj.data.unlocatonDay);
+                        othis.find('input[name="lastLocaltionTime"]').val(obj.data.lastLocaltionTime);
+                        othis.find('input[name="dataState"]').val(obj.data.dataState);
+                    }
+                    ,yes: function(index, layero){
+                        var submit = layero.find('iframe').contents().find("#ErpNotnolineCarInfo-form-edit");
+                        submit.trigger('click');
+                    }
+                });
+            }
+
+            var flag = 1;
+            //点击事件
+            var active = {
+                //批量删除
+                batchdel: function(){
+                    var checkStatus = table.checkStatus('ErpNotnolineCarInfo-list')
+                        ,checkData = checkStatus.data; //得到选中的数据
+
+                    if(checkData.length === 0){
+                        return layer.msg('请选择数据');
+                    }
+
+                    layer.confirm('确定删除吗？', function(index) {
+                        var ids = "" ;
+                        for(var i = 0;i<checkData.length;i++){
+                            if(ids==""){
+                                ids= checkData[i].id;
+                            }else {
+                                ids = ids+","+checkData[i].id;
+                            }
+                        }
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/erpNotnolineCarInfo/deleteByIds.jsn',
+                            data:{'ids':ids},
+                            method:"post",
+                            success:function (data) {
+                                table.reload('ErpNotnolineCarInfo-list',
+                                    {page:
+                                        { curr: common.deleteDulJumpPage(checkStatus) // 执行页面跳转方法
+                                        }
+                                    }
+                                );
+                                layer.msg('删除成功', {
+                                    icon: 1
+                                });
+                            },
+                        });
+                    });
+                }
+                //添加
+                ,add: function(){
+                    layer.open({
+                        type: 2
+                        ,title: '添加'
+                        ,content: 'ErpNotnolineCarInfoAdd.html'
+                        ,maxmin: true
+                        ,area: ['550px', '550px']
+                        ,btn: ['确定', '取消']
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#ErpNotnolineCarInfo-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+                //发送多个短信
+                ,sendManyMessages : function () {
+                    var checkStatus = table.checkStatus('ErpNotnolineCarInfo-list')
+                        ,checkData = checkStatus.data; //得到选中的数据
+
+                    if(checkData.length === 0){
+                        return layer.msg('请选择数据');
+                    }
+                    var ids = "" ;
+                    for(var i = 0;i<checkData.length;i++){
+                        if(ids==""){
+                            ids= checkData[i].id;
+                        }else {
+                            ids = ids+","+checkData[i].id;
+                        }
+                    }
+                    layer.confirm('确定要发送给选中用户吗？', function(index){
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/erpNotnolineCarInfo/sendManyMessages.jsn',
+                            data:{'ids':ids},
+                            method:"post",
+                            success:function (data) {
+                                table.reload('ErpNotnolineCarInfo-list');
+                                layer.msg('发送成功', {
+                                    icon: 1
+                                });
+                            },
+                        });
+                    });
+
+                }
+                //发送全部
+                ,sendAllMessages : function (){
+                    var unlocatonDay = $("#unlocatonDay").val();
+                    if(unlocatonDay==""){
+                        layer.alert('请选择未定位的天数区间', {
+                            offset: 'auto',
+                        });
+                    }else {
+                        layer.confirm('确定要发送所有的业户吗？', function(index){
+                            layer.close(index);
+                            var loading = layer.load(2,{
+                                shade: [0.3, '#393D49'],
+                                time: 100*1000
+                            });
+                            admin.req({
+                                url:layui.setter.basePath +'/admin/erpNotnolineCarInfo/sendAllMessages.jsn',
+                                data:{'unlocatonDay':unlocatonDay},
+                                method:"post",
+                                success:function (data) {
+                                    table.reload('ErpNotnolineCarInfo-list');
+                                    layer.closeAll();
+                                    layer.msg('发送成功', {
+                                        icon: 1
+                                    });
+                                },
+                            });
+                        });
+                    }
+                }
+                ,update : function () {
+                    admin.req({
+                        url:layui.setter.basePath + '/admin/Login/checkLoginStateCAR.jsn',
+                        data:{},
+                        method:'post',
+                        success:function(data){
+                            if(data.success){
+                                if(data.data == "未登录状态"){
+                                    layer.open({
+                                        type: 2
+                                        ,title: '更新车辆信息'
+                                        ,content: 'ErpNotnolineCarInfoUpdate.html'
+                                        ,area: ['550px','300px']
+                                        ,btn: ['开始更新','取消']
+                                        ,yes: function(index, layero){
+                                            //点击确认触发 iframe 内容中的按钮提交
+                                            var submit = layero.find('iframe').contents().find("#ErpNotnolineCarInfoUpdate-form-submit");
+                                            submit.click();
+                                            $("#updateBtn").html("更新中");
+                                            $("#updateBtn").attr("disabled","disabled");
+                                            $("#updateBtn").attr("class","layui-btn layui-btn-disabled");
+                                        }
+                                    })
+                                }else{
+                                    layer.confirm('确定开始进行更新吗？', function(index){
+                                        layer.close(index);
+                                        if(flag==1){
+                                            layer.msg('更新中');
+                                            flag+=1;
+                                        }
+                                        admin.req({
+                                            url:layui.setter.basePath +'/admin/erpNotnolineCarInfo/updateCarInfo.jsn',
+                                            data:{},
+                                            method:"post",
+                                            success:function (data) {
+                                                if(!data.success){
+                                                    if(data.errMsg=="请重新登录"){
+
+                                                    }else {
+                                                        layer.alert('当前正在更新', {
+                                                            offset: 'auto',
+                                                        });
+                                                    }
+                                                }else if(data.success){
+                                                    table.reload('ErpNotnolineCarInfo-list');
+                                                    layer.msg('更新成功', {
+                                                        icon: 1
+                                                    });
+                                                    flag = 1;
+                                                }
+                                            },
+                                        });
+                                        $("#updateBtn").html("更新中");
+                                        $("#updateBtn").attr("disabled","disabled");
+                                        $("#updateBtn").attr("class","layui-btn layui-btn-disabled");
+                                    });
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+
+            //绑定点击事件
+            $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            /**
+             * 时间戳转化为年 月 日 时 分 秒
+             * number: 传入时间戳
+             * format：返回格式，支持自定义，但参数必须与formateArr里保持一致
+             */
+            function formatTime(number,format) {
+
+                var formateArr  = ['Y','M','D','h','m','s'];
+                var returnArr   = [];
+
+                var date = new Date(number);
+                returnArr.push(date.getFullYear());
+                returnArr.push(formatNumber(date.getMonth() + 1));
+                returnArr.push(formatNumber(date.getDate()));
+
+                returnArr.push(formatNumber(date.getHours()));
+                returnArr.push(formatNumber(date.getMinutes()));
+                returnArr.push(formatNumber(date.getSeconds()));
+
+                for (var i in returnArr)
+                {
+                    format = format.replace(formateArr[i], returnArr[i]);
+                }
+                return format;
+            }
+
+//数据转化
+            function formatNumber(n) {
+                n = n.toString()
+                return n[1] ? n : '0' + n
+            }
+
+
+
+        });
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,839 @@
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2020/6/23 10:57:00                           */
+/*==============================================================*/
+
+
+drop table if exists erp_car_detailed_info;
+
+drop table if exists erp_car_info;
+
+drop table if exists erp_car_sim_change_rec;
+
+drop table if exists erp_car_simple_info;
+
+drop table if exists erp_car_team;
+
+drop table if exists erp_car_technical_dossier;
+
+drop table if exists erp_car_xufei_rec;
+
+drop table if exists erp_change_net_count_month;
+
+drop table if exists erp_change_net_rec;
+
+drop table if exists erp_change_net_sum_month;
+
+drop table if exists erp_channel_agent;
+
+drop table if exists erp_comp_code;
+
+drop table if exists erp_gps_terminal;
+
+drop table if exists erp_instructions_form;
+
+drop table if exists erp_into_form;
+
+drop table if exists erp_notnoline_car_info;
+
+drop table if exists erp_out_form;
+
+drop table if exists erp_sim;
+
+drop table if exists erp_sim_xufei_rec;
+
+drop table if exists erp_supplier;
+
+drop table if exists erp_terminal_change_rec;
+
+drop table if exists erp_unlocation_remind;
+
+drop table if exists erp_unlocation_remind_car_info;
+
+drop table if exists erp_unlocation_remind_msg_rec;
+
+drop table if exists erp_user_work_log;
+
+drop table if exists erp_work_task;
+
+drop table if exists erp_work_task_order;
+
+drop table if exists erp_work_task_order_user;
+
+/*==============================================================*/
+/* Table: erp_car_detailed_info                                 */
+/*==============================================================*/
+create table erp_car_detailed_info
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   IS_LOCATION          varchar(40) comment '是否定位',
+   PLACE_OF_ORIGIN      varchar(40) comment '所属地区',
+   INSERT_NETWORK       datetime comment '入网时间',
+   YEHU_NAME            varchar(50) comment '业户名称',
+   CONTACT_PERSON       varchar(16) comment '联系人',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   CAR_PLATE_NUM        varchar(20) comment '车牌号',
+   CAR_PLATE_COLOR      varchar(20) comment '车牌颜色',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   CAR_TYPE             varchar(20) comment '车辆类型',
+   CAR_BRAND            varchar(36) comment '车辆品牌',
+   CAR_MODEL            varchar(36) comment '车辆型号',
+   FUEL_TYPE            varchar(36) comment '燃料类型',
+   TOTAL_MASS           decima(16,2) comment '总质量',
+   HEDINGZAI_MASS       decimal(16,2) comment '核定载质量',
+   TRACTION_MASS        decimal(16,2) comment '准牵引总质量',
+   TECH_OUTER_LENGTH    varchar(16) comment '外廓尺寸长',
+   TECH_OUTER_WIDTH     varchar(16) comment '外廓尺寸宽',
+   TECH_OUTER_HEIGHT    varchar(16) comment '外廓尺寸高',
+   AXLE_NUM             int(11) comment '轴数',
+   TYRE_NUM             int(11) comment '轮胎数',
+   TYRE_SPECIFICATIONS  varchar(36) comment '轮胎规格',
+   CAR_PRODUCE_DATE     datetime comment '车辆出厂日期',
+   BUSINESS_SCOPE       varchar(36) comment '经营范围',
+   CAR_BODY_COLOR       varchar(16) comment '车身颜色',
+   CAR_PURCHASE_TYPE    varchar(16) comment '车辆购置方式',
+   CAR_INSURING         varchar(36) comment '车辆保险',
+   CAR_INSURING_END_TIME datetime comment '车辆保险到期时间',
+   ROAD_TRANSPORT_NUM   varchar(36) comment '道路运输证号',
+   BUSINESS_LICENSE_NUMBER varchar(36) comment '经营许可证号',
+   TERMINAL_ID          varchar(50) comment '终端ID',
+   TERMINAL_CODE        varchar(50) comment '终端编号',
+   SIM_CODE             varchar(16) comment 'SIM卡号',
+   TERMINAL_NAME        varchar(50) comment '终端厂商',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_detailed_info comment '车辆详细信息';
+
+/*==============================================================*/
+/* Table: erp_car_info                                          */
+/*==============================================================*/
+create table erp_car_info
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_PLATE_COLOR      varchar(10) comment '车牌颜色',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   ROAD_TRANSPORT_NUM   varchar(36) comment '道路运输证号',
+   BUSINESS_LICENSE_NUMBER varchar(36) comment '经营许可证号',
+   YEHU_NAME            varchar(50) comment '业户名称',
+   OWNER_TEAM_ID        varchar(50) comment '所属车队ID',
+   OWNER_TEAM_NAME      varchar(50) comment '车队名',
+   CONTACT_PERSON       varchar(16) comment '联系人',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   PROVINCE_ID          varchar(50) comment '省ID',
+   PROVINCE_NAME        varchar(20) comment '省名',
+   CITY_ID              varchar(50) comment '城市ID',
+   CITY_NAME            varchar(36) comment '城市名',
+   XIANQU_ID            varchar(50) comment '县区ID',
+   XIANQU_NAME          varchar(36) comment '县区名',
+   SUPPLIER_ID          varchar(20) comment '供应商ID',
+   SUPPLIER_NAME        varchar(20) comment '供应商名',
+   TERMINAL_ID          varchar(50) comment '所属终端ID',
+   TERMINAL_CODE        varchar(50) comment '终端编号',
+   TERMINAL_INSTALL_TYPE varchar(20) comment '终端安装类型',
+   SIM_CODE             varchar(16) comment 'SIM卡号',
+   CHANNEL_AGENT_ID     varchar(50) comment '渠道代理ID',
+   CHANNEL_AGENT_NAME   varchar(50) comment '渠道代理',
+   YEWU_USER_ID         varchar(50) comment '业务人员ID',
+   YEWU_USER_NAME       varchar(20) comment '业务人员名',
+   INSTALL_USER_ID      varchar(50) comment '安装人员ID',
+   INSTALL_USER_NAME    varchar(20) comment '安装人员名',
+   INPUT_USER_ID        varchar(50) comment '录入人员ID',
+   INPUT_USER_NAME      varchar(20) comment '录入人员名',
+   BEIDOU_OPERATOR      varchar(20) comment '北斗平台',
+   PAY_STATE            varchar(10) comment '付款状态',
+   END_TIME             datetime comment '到期时间',
+   LAST_XUFEI_TIME      datetime comment '上次续费时间',
+   REMARK               varchar(200) comment '备注',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_info comment '车辆信息管理';
+
+/*==============================================================*/
+/* Table: erp_car_sim_change_rec                                */
+/*==============================================================*/
+create table erp_car_sim_change_rec
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_CAR_INFO_ID    varchar(50) comment '所属车辆ID',
+   CAR_PLATE_NUM        varchar(20) comment '车牌号',
+   CAR_PLATE_COLOR      varchar(20) comment '车牌颜色',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   ORG_SIM_NUM          varchar(16) comment '原卡号',
+   ORG_SIM_OPERATOR     varchar(20) comment '原卡运营商',
+   NEW_SIM_NUM          varchar(16) comment '新卡号',
+   NEW_SIM_OPERATOR     varchar(20) comment '新卡运营商',
+   CHANGE_SIM_TIME      datetime comment '换卡时间',
+   CHANGE_SIM_PERSON    varchar(16) comment '换卡操作人',
+   CHANGE_SIM_REMARK    varchar(200) comment '换卡备注',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_sim_change_rec comment '车辆换卡记录';
+
+/*==============================================================*/
+/* Table: erp_car_simple_info                                   */
+/*==============================================================*/
+create table erp_car_simple_info
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   YEHU_NAME            varchar(50) comment '业户名称',
+   PLACE_OF_ORIGIN      varchar(40) comment '籍贯地',
+   SUPPLIER_NAME        varchar(50) comment '供应商名',
+   TERMINAL_NAME        varchar(50) comment '终端厂商',
+   TERMINAL_TYPE        varchar(50) comment '终端硬件类型',
+   CAR_TYPE             varchar(30) comment '车辆类型',
+   END_LOCATION_TIME    datetime comment '最后定位时间',
+   INSERT_NETWORK       datetime comment '入网时间',
+   DAYS_COUNT           varchar(30) comment '入网天数',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_simple_info comment '车辆信息';
+
+/*==============================================================*/
+/* Table: erp_car_team                                          */
+/*==============================================================*/
+create table erp_car_team
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   PROVINCE_ID          varchar(50) comment '省ID',
+   PROVINCE_NAME        varchar(20) comment '省名',
+   CITY_ID              varchar(50) comment '城市ID',
+   CITY_NAME            varchar(36) comment '城市名',
+   XIANQU_ID            varchar(50) comment '县区ID',
+   XIANQU_NAME          varchar(36) comment '县区名',
+   CAR_TEAM_NAME        varchar(50) comment '车队名',
+   CONTACT_PERSON       varchar(16) comment '联系人',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   TEAM_ADDRESS         varchar(50) comment '地址',
+   REMARK               varchar(200) comment '备注',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_team comment '车队管理';
+
+/*==============================================================*/
+/* Table: erp_car_technical_dossier                             */
+/*==============================================================*/
+create table erp_car_technical_dossier
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   CAR_PLATE_NUM        varchar(20) comment '车牌号',
+   CAR_PLATE_COLOR      varchar(20) comment '车牌颜色',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   CAR_TYPE             varchar(10) comment '车辆类型',
+   CAR_BRAND            varchar(36) comment '车辆品牌',
+   CAR_MODEL            varchar(36) comment '车辆型号',
+   FUEL_TYPE            varchar(36) comment '燃料类型',
+   TOTAL_MASS           decima(16,2) comment '总质量',
+   HEDINGZAI_MASS       decimal(16,2) comment '核定载质量',
+   TRACTION_MASS        decimal(16,2) comment '准牵引总质量',
+   TECH_OUTER_LENGTH    varchar(16) comment '外廓尺寸长',
+   TECH_OUTER_WIDTH     varchar(16) comment '外廓尺寸宽',
+   TECH_OUTER_HEIGHT    varchar(16) comment '外廓尺寸高',
+   BOX_INNER_LENGTH     varchar(16) comment '货箱内部尺寸-长',
+   BOX_INNER_WIDTH      varchar(16) comment '货厢内部尺寸-宽',
+   BOX_INNER_HEIGHT     varchar(16) comment '货厢内部尺寸-高',
+   AXLE_NUM             int(11) comment '轴数',
+   TYRE_NUM             int(11) comment '轮胎数',
+   TYRE_SPECIFICATIONS  varchar(36) comment '轮胎规格',
+   CAR_PRODUCE_DATE     datetime comment '车辆出厂日期',
+   BUSINESS_SCOPE       varchar(36) comment '经营范围',
+   CAR_BODY_COLOR       varchar(16) comment '车身颜色',
+   CAR_PURCHASE_TYPE    varchar(16) comment '车辆购置方式',
+   CAR_INSURING_END_TIME datetime comment '车辆保险到期时间',
+   CAR_CHECK_END_TIME   datetime comment '检验有效期至',
+   LICENSE_UPLOAD_NUM   int(11) comment '执照上传数',
+   SERVICE_CONTRACT_END_TIME datetime comment '服务合同到期时间',
+   DRIVING_PERMIT_START_TIME datetime comment '行驶证发证时间',
+   ENGINE_NUMBER        varchar(16) comment '发动机号',
+   ENGINE_MODEL         varchar(16) comment '发动机型号',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_technical_dossier comment '车辆技术档案';
+
+/*==============================================================*/
+/* Table: erp_car_xufei_rec                                     */
+/*==============================================================*/
+create table erp_car_xufei_rec
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_CAR_INFO_ID    varchar(50) comment '所属车辆ID',
+   CAR_PLATE_NUM        varchar(20) comment '车牌号',
+   CAR_PLATE_COLOR      varchar(20) comment '车牌颜色',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   CHANNEL_AGENT_ID     varchar(50) comment '渠道代理ID',
+   CHANNEL_AGENT_NAME   varchar(50) comment '渠道代理',
+   XUFEI_TIME           datetime comment '续费时间',
+   XUFEI_MONEY          decimal(16,2) comment '续费金额',
+   IS_INSTALL_XUFEI     varchar(10) comment '是否前装续费(前装续费，非前装续费)',
+   INSTALL_XUFEI_MONEY  decimal(16,2) comment '前装续费金额',
+   SUPPLIER_ID          varchar(50) comment '供应商ID',
+   SUPPLIER_NAME        varchar(20) comment '供应商名',
+   PAY_USER             varchar(20) comment '付费人',
+   GET_MONEY_USER       varchar(20) comment '收款人',
+   SERVICE_START_TIME   datetime comment '服务开始时间',
+   SERVICE_END_TIME     datetime comment '服务结束时间',
+   REMARK               varchar(200) comment '备注',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_car_xufei_rec comment '车辆续费记录';
+
+/*==============================================================*/
+/* Table: erp_change_net_count_month                            */
+/*==============================================================*/
+create table erp_change_net_count_month
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   OWNER_PT             varchar(50) comment '所属平台',
+   CHANGE_NET_TYPE      varchar(16) comment '装网类型',
+   HAI_GANG_QU          int(11) comment '海港区',
+   SHAN_HAI_GUAN_QU     int(11) comment '山海关区',
+   BEI_DAI_HE_QU        int(11) comment '北戴河区',
+   FU_NING_QU           int(11) comment '抚宁区',
+   QING_LONG_XIAN       int(11) comment '青龙县',
+   CHANG_LI_XIAN        int(11) comment '昌黎县',
+   LU_LONG_XIAN         int(11) comment '卢龙县',
+   KAI_FA_QU            int(11) comment '开发区',
+   COUNT_MONTH          int(11) comment '统计月份',
+   COUNT_TYPE           varchar(10) comment '统计类型',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_change_net_count_month comment '转网记录月度统计';
+
+/*==============================================================*/
+/* Table: erp_change_net_rec                                    */
+/*==============================================================*/
+create table erp_change_net_rec
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_CAR_INFO_ID    varchar(50) comment '所属车辆ID',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   CHANGE_NET_TYPE      varchar(16) comment '转网类型',
+   CUSTOMER_NAME        varchar(20) comment '客户名称',
+   CONTACT_PHONE        varchar(16) comment '联系电话',
+   TERMINAL_ID          varchar(50) comment '所属终端ID',
+   TERMINAL_CHANGSHANG  varchar(20) comment '终端厂商',
+   TERMINAL_CODE        varchar(50) comment '终端编号',
+   SIM_NUM              varchar(16) comment 'SIM卡号',
+   ORG_PT               varchar(36) comment '原平台',
+   SUBMIT_PERSON        varchar(20) comment '提交人',
+   SUBMIT_TIME          datetime comment '提交时间',
+   PROVINCE_ID          varchar(50) comment '省ID',
+   PROVINCE_NAME        varchar(20) comment '省名',
+   CITY_ID              varchar(50) comment '城市id',
+   CITY_NAME            varchar(20) comment '城市名',
+   XIANQU_ID            varchar(50) comment '县区ID',
+   XIANQU_NAME          varchar(20) comment '县区名',
+   GIVE_INFORMATION     varchar(200) comment '提供资料复选(车身照,行驶证,登记证，执照身/份证,合同)',
+   NOW_PT               varchar(36) comment '现平台',
+   LOCATION             varchar(20) comment '定位情况',
+   REMARK               varchar(200) comment '备注',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_change_net_rec comment '车辆转网记录';
+
+/*==============================================================*/
+/* Table: erp_change_net_sum_month                              */
+/*==============================================================*/
+create table erp_change_net_sum_month
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   HAI_GANG_QU          int(11) comment '海港区',
+   SHAN_HAI_GUAN_QU     int(11) comment '山海关区',
+   BEI_DAI_HE_QU        int(11) comment '北戴河区',
+   FU_NING_QU           int(11) comment '抚宁区',
+   QING_LONG_XIAN       int(11) comment '青龙县',
+   CHANG_LI_XIAN        int(11) comment '昌黎县',
+   LU_LONG_XIAN         int(11) comment '卢龙县',
+   KAI_FA_QU            int(11) comment '开发区',
+   COUNT_MONTH          int(11) comment '统计月份',
+   COUNT_TYPE           varchar(10) comment '统计类型',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_change_net_sum_month comment '转网记录县区月度汇总';
+
+/*==============================================================*/
+/* Table: erp_channel_agent                                     */
+/*==============================================================*/
+create table erp_channel_agent
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   CHANNEL_AGENT_NAME   varchar(50) comment '渠道代理',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   SYS_USER_ID          varchar(50) comment '所属用户ID',
+   PROVINCE_ID          varchar(50) comment '省ID',
+   PROVINCE_NAME        varchar(20) comment '省名',
+   CITY_ID              varchar(50) comment '城市ID',
+   CITY_NAME            varchar(36) comment '城市名',
+   XIANQU_ID            varchar(50) comment '县区ID',
+   XIANQU_NAME          varchar(36) comment '县区名',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_channel_agent comment '渠道代理';
+
+/*==============================================================*/
+/* Table: erp_comp_code                                         */
+/*==============================================================*/
+create table erp_comp_code
+(
+   ID                   vachar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       vachar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(16) comment '创建人名',
+   COMP_NAME            varchar(36) comment '公司名称',
+   COMP_CODE            varchar(50) comment '信用代码',
+   CHARGE_PERSON        varchar(16) comment '负责人',
+   PHONE_NUM            varchar(16) comment '电话',
+   LICENSE_NUM          varchar(36) comment '道路经营许可证号',
+   IMAGE_URL            varchar(300) comment '图片地址',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_comp_code comment '公司信用代码';
+
+/*==============================================================*/
+/* Table: erp_gps_terminal                                      */
+/*==============================================================*/
+create table erp_gps_terminal
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   TERMINAL_CHANGSHANG  varchar(20) comment '终端厂商',
+   TERMINAL_CODE        varchar(50) comment '终端编号',
+   TERMINAL_MODEL       varchar(20) comment '终端型号',
+   TERMINAL_TYPE        varchar(20) comment '终端类型(前装，自采)',
+   SUPPLIER_ID          varchar(50) comment '供应商ID',
+   SUPPLIER_NAME        varchar(20) comment '供应商名',
+   SUPPLIER_GOODS_NUM   varchar(36) comment '供应商货号',
+   TERMINAL_STATE       varchar(10) comment '设备状态',
+   TERMINAL_USER_ID     varchar(50) comment '占用人ID',
+   USER_TYPE            varchar(10) comment '占用人TYPE',
+   TERMINAL_USER_NAME   varchar(20) comment '设备占用人',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   INSTALL_TIME         datetime comment '安装时间',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_gps_terminal comment 'GPS终端管理';
+
+/*==============================================================*/
+/* Table: erp_instructions_form                                 */
+/*==============================================================*/
+create table erp_instructions_form
+(
+   ID                   varchar(50) not null,
+   CREATE_TIME          datetime,
+   CREATE_USER_ID       varchar(50),
+   CREATE_USER_NAME     varchar(16),
+   TERMINAL_BRAND       varchar(16),
+   INSTRUCTIONS_NAME    varchar(16),
+   INSTRUCTIONS_CONTENT varchar(50),
+   DATA_STATE           varchar(10),
+   primary key (ID)
+);
+
+alter table erp_instructions_form comment '指令大表';
+
+/*==============================================================*/
+/* Table: erp_into_form                                         */
+/*==============================================================*/
+create table erp_into_form
+(
+   ID                   vachar(50) not null,
+   CREATE_TIME          datetime,
+   CREATE_USER_ID       vachar(50),
+   CREATE_USER_NAME     vachar(16),
+   SUBMIT_TIME          datetime,
+   ORG_CAR_PLATE_NUM    vachar(16),
+   NEW_CAR_PLATE_NUM    vachar(16),
+   KEHU_NAME            vachar(16),
+   ORG_PLATFORM         vachar(36),
+   NEW_PLATFORM         vachar(36),
+   CHANNEL              vachar(10),
+   XIANQU_NAME          vachar(16),
+   CHANGE_CARD          vachar(50),
+   CHANGE_SUCCESS_TIME  datetime,
+   DATA_STATE           vachar(10),
+   primary key (ID)
+);
+
+alter table erp_into_form comment '转入大表';
+
+/*==============================================================*/
+/* Table: erp_notnoline_car_info                                */
+/*==============================================================*/
+create table erp_notnoline_car_info
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   YEHU_NAME            varchar(50) comment '业户/车主',
+   CONTACT_PERSON       varchar(16) comment '联系人',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   TERMINAL_CHANGSHANG  varchar(20) comment '终端厂商',
+   TERMINAL_MODEL       varchar(20) comment '终端型号',
+   LAST_LOCALTION_TIME  datetime comment '最后定位时间',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_notnoline_car_info comment '未上线车辆';
+
+/*==============================================================*/
+/* Table: erp_out_form                                          */
+/*==============================================================*/
+create table erp_out_form
+(
+   ID                   vachar(50) not null,
+   CREATE_TIME          datetime,
+   CREATE_USER_ID       vachar(50),
+   CREATE_USER_NAME     vachar(16),
+   OUT_TIME             datetime,
+   CAR_PLATE_NUM        vachar(16),
+   ORG_PLATFORM         vachar(36),
+   NEW_PLATFORM         vachar(36),
+   XIANQU_NAME          vachar(36),
+   DATA_STATE           vachar(10),
+   primary key (ID)
+);
+
+alter table erp_out_form comment '转出大表';
+
+/*==============================================================*/
+/* Table: erp_sim                                               */
+/*==============================================================*/
+create table erp_sim
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   SIM_NUM              varchar(16) comment 'sim卡号',
+   SUPPLIER_ID          varchar(50) comment '供应商ID',
+   SUPPLIER_NAME        varchar(20) comment '供应商名',
+   SET_MEAL_NAME        varchar(36) comment '套餐名',
+   SIM_STATE            varchar(16) comment 'sim卡状态(未激活，自动激活，使用中，注销)',
+   OUT_REASON           varchar(100) comment '注销原因',
+   SIM_START_TIME       datetime comment '开卡时间',
+   SIM_RETICENT_NUM     int(11) comment '沉默期(月)',
+   SIM_TAOCAN_DESC      varchar(100) comment '卡的套餐描述',
+   PAY_TYPE             varchar(10) comment '付费类型(月付，年付)',
+   PAY_MONEY            decimal(16,2) comment '金额',
+   ACTIVE_TIME          datetime comment '自动激活时间',
+   FIRST_USE_TIME       datetime comment '初次使用时间',
+   XUFEI_TIME           datetime comment '续费时间',
+   END_TIME             datetime comment '到期时间',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   YEHU_NAME            varchar(50) comment '业户名称',
+   SIM_USER_ID          varchar(50) comment '卡占用人ID',
+   USER_TYPE            varchar(10) comment '占用人TYPE',
+   SIM_USER_NAME        varchar(20) comment '卡占占用人',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_sim comment 'SIM卡管理';
+
+/*==============================================================*/
+/* Table: erp_sim_xufei_rec                                     */
+/*==============================================================*/
+create table erp_sim_xufei_rec
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_SIM_ID         varchar(50) comment '所属SIM卡ID',
+   SIM_NUM              varchar(16) comment 'sim卡号',
+   XUFEI_TIME           datetime comment '续费时间',
+   XUFEI_MONEY          decimal(16,2) comment '续费金额',
+   BEFORE_XUFEI_END_TIME datetime comment '续费前到期时间',
+   END_TIME             datetime comment '到期时间',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_sim_xufei_rec comment 'SIM卡续费记录';
+
+/*==============================================================*/
+/* Table: erp_supplier                                          */
+/*==============================================================*/
+create table erp_supplier
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   SUPPLIER_NAME        varchar(20) comment '供应商名',
+   GOODS_PERSON         varchar(20) comment '供货负责人',
+   SUPPLIER_TYPE        varchar(36) comment '供应商类型(SIM、GSP设备',
+   CONTACT_PHONE        varchar(16) comment '联系电话',
+   COMPANY_NAME         varchar(36) comment '公司名称',
+   COMPANY_TAX_NUM      varchar(36) comment '公司税号',
+   OPENING_BANK         varchar(20) comment '开户银行',
+   COMPANY_ADDRESS      varchar(100) comment '公司地址',
+   COMPANY_TEL          varchar(20) comment '固话',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_supplier comment '供应商管理';
+
+/*==============================================================*/
+/* Table: erp_terminal_change_rec                               */
+/*==============================================================*/
+create table erp_terminal_change_rec
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_CAR_INFO_ID    varchar(50) comment '所属车辆ID',
+   CAR_PLATE_NUM        varchar(20) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   ORG_TERMINAL_CODE    varchar(16) comment '原终端编号',
+   NEW_TERMINAL_CODE    varchar(16) comment '新终端编号',
+   CHANGE_TERMINAL_TIME datetime comment '更换时间',
+   CHANGE_TERMINAL_PERSON varchar(16) comment '更换操作人',
+   CHANGE_TERMINAL_REMARK varchar(200) comment '更换备注',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_terminal_change_rec comment '设备更换记录';
+
+/*==============================================================*/
+/* Table: erp_unlocation_remind                                 */
+/*==============================================================*/
+create table erp_unlocation_remind
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   REMIND_TITLE         varchar(50) comment '提醒标题',
+   START_TIME           datetime comment '开始时间',
+   END_TIME             datetime comment '结束时间',
+   REMIND_CAR_NUM       int(11) comment '提醒车辆数',
+   SEND_MSG_NUM         int(11) comment '发送短信数量',
+   UPDATE_TIME          datetime comment '更新时间',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_unlocation_remind comment '未定位提醒';
+
+/*==============================================================*/
+/* Table: erp_unlocation_remind_car_info                        */
+/*==============================================================*/
+create table erp_unlocation_remind_car_info
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_UNLOCATION_REMIND_ID varchar(50) comment '所属未定位提醒ID',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   YEHU_NAME            varchar(50) comment '业户名称',
+   CONTACT_PERSON       varchar(16) comment '联系人',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   TERMINAL_CHANGSHANG  varchar(20) comment '终端厂商',
+   TERMINAL_MODEL       varchar(20) comment '终端型号',
+   LAST_LOCALTION_TIME  datetime comment '最后定位时间',
+   SEND_MSG_NUM         int(11) comment '短信提醒次数',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_unlocation_remind_car_info comment '提醒车辆信息';
+
+/*==============================================================*/
+/* Table: erp_unlocation_remind_msg_rec                         */
+/*==============================================================*/
+create table erp_unlocation_remind_msg_rec
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_UNLOCATION_REMIND_ID varchar(50) comment '所属未定位提醒ID',
+   CAR_PLATE_NUM        varchar(16) comment '车牌号',
+   CAR_FRAME_NUM        varchar(36) comment '车架号',
+   SEND_TYPE            varchar(10) comment '发送类型',
+   MSG_TEXT             varchar(200) comment '短信内容',
+   CONTACT_PERSON       varchar(16) comment '联系人',
+   CONTACT_PHONE_NUM    varchar(16) comment '联系电话',
+   SEND_TIME            datetime comment '发送时间',
+   SEND_STATE           varchar(10) comment '发送状态',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_unlocation_remind_msg_rec comment '短信发送记录';
+
+/*==============================================================*/
+/* Table: erp_user_work_log                                     */
+/*==============================================================*/
+create table erp_user_work_log
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   USER_ID              varchar(50) comment '所属员工ID',
+   USER_NAME            varchar(20) comment '员工姓名',
+   WORK_DATE            datetime comment '日期',
+   WEEK                 varchar(10) comment '星期',
+   WORK_TEXT            varchar(1000) comment '服务内容',
+   IS_OVER_WORK         varchar(10) comment '是否加班',
+   OVER_WORK_TIME       int(11) comment '加班时长(分钟)',
+   OVER_WORK_DESC       varchar(200) comment '加班描述',
+   OUT_GET_MONEY        decimal(16,2) comment '外勤补助',
+   SHENHE_STATE         varchar(10) comment '审核状态',
+   SHENHE_USER_ID       varchar(50) comment '审核人ID',
+   SHENHE_USER_NAME     varchar(20) comment '审核人名',
+   SHENHE_TIME          datetime comment '审核时间',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_user_work_log comment '员工工作日志';
+
+/*==============================================================*/
+/* Table: erp_work_task                                         */
+/*==============================================================*/
+create table erp_work_task
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   TASK_TITLE           varchar(200) comment '标题',
+   TASK_TYPE            varchar(20) comment '类型(维修，安装)',
+   TASK_DESC            varchar(200) comment '描述',
+   PRIORITY_LEVEL       varchar(20) comment '优先级(一般，加急，可缓)',
+   END_TIME             datetime comment '完成时限',
+   WEITUO_USER          varchar(20) comment '委托人',
+   CAR_PLATE_NUM        varchar(20) comment '车牌号',
+   YEHU_NAME            varchar(50) comment '业户名称',
+   TASK_STATE           varchar(20) comment '任务状态(未派单，已派单，进行中，失败，完成，超时完成)',
+   REASON               varchar(200) comment '原因',
+   IS_GET_MONEY         varchar(20) comment '是否收钱',
+   FINISHED_USER_ID     varchar(50) comment '完成人ID',
+   FINISHED_USER_NAME   varchar(16) comment '完成人',
+   FINISHED_TIME        datetime comment '确认时间',
+   GET_MONEY_NUM        decimal(16,2) comment '收钱金额',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_work_task comment '工作任务表';
+
+/*==============================================================*/
+/* Table: erp_work_task_order                                   */
+/*==============================================================*/
+create table erp_work_task_order
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_WORK_TASK_ID   varchar(50) comment '所属任务ID',
+   OWNER_WORK_TASK_TITLE varchar(200) comment '任务标题',
+   OWNER_WORK_TASK_DESC varchar(200) comment '任务描述',
+   TASK_ORDER_STATE     varchar(10) comment '工单状态(未确认，已确认，已完成，转出)',
+   INNER_USER_ID        varchar(50) comment '内勤人员ID',
+   INNER_USER_NAME      varchar(20) comment '内勤人员名',
+   OUTPUT_USER_ID       varchar(300) comment '外勤人员ID',
+   OUTPUT_USER_NAME     varchar(50) comment '外勤人员名',
+   IS_OVER_WORK         varchar(10) comment '是否加班',
+   OVER_WORK_TIME       int(11) comment '加班时长(分钟)',
+   OVER_WORK_DESC       varchar(200) comment '加班描述',
+   OUT_REASON           varchar(200) comment '转出原因',
+   CONFIRM_USER_ID      varchar(50) comment '确认人ID',
+   CONFIRM_USER_NAME    varchar(16) comment '确认人',
+   CONFIRM_TIME         datetime comment '确认时间',
+   FINISHED_USER_ID     varchar(50) comment '完成人ID',
+   FINISHED_USER_NAME   varchar(16) comment '完成人',
+   FINISHED_TIME        datetime comment '确认时间',
+   OUT_USER_ID          varchar(50) comment '转出人ID',
+   OUT_USER_NAME        varchar(16) comment '转出人',
+   OUT_TIME             datetime comment '转出时间',
+   OUT_WORK_TASK_ID     varchar(50) comment '转出工单表ID',
+   DATA_STATE           varchar(10) comment '数据状态',
+   primary key (ID)
+);
+
+alter table erp_work_task_order comment '工作任务工单表';
+
+/*==============================================================*/
+/* Table: erp_work_task_order_user                              */
+/*==============================================================*/
+create table erp_work_task_order_user
+(
+   ID                   varchar(50) not null comment '主键',
+   CREATE_TIME          datetime comment '创建时间',
+   CREATE_USER_ID       varchar(50) comment '创建人ID',
+   CREATE_USER_NAME     varchar(20) comment '创建人名',
+   OWNER_WORK_TASK_ORDER_ID varchar(50) comment '所属工单ID',
+   OWNER_USER_ID        varchar(50) comment '所属员工ID',
+   OWNER_USER_NAME      varchar(20) comment '所属员工名',
+   DATA_STATE           varchar(10) comment '数据状态'
+);
+
+alter table erp_work_task_order_user comment '员工工单表';
+

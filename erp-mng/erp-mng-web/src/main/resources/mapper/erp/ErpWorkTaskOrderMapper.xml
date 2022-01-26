@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpWorkTaskOrderMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpWorkTaskOrder" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="OWNER_WORK_TASK_ID" property="ownerWorkTaskId"/>
+			<result column="OWNER_WORK_TASK_TITLE" property="ownerWorkTaskTitle"/>
+			<result column="OWNER_WORK_TASK_DESC" property="ownerWorkTaskDesc"/>
+			<result column="TASK_ORDER_STATE" property="taskOrderState"/>
+			<result column="INNER_USER_ID" property="innerUserId"/>
+			<result column="INNER_USER_NAME" property="innerUserName"/>
+			<result column="OUTPUT_USER_ID" property="outputUserId"/>
+			<result column="OUTPUT_USER_NAME" property="outputUserName"/>
+			<result column="IS_OVER_WORK" property="isOverWork"/>
+			<result column="OVER_WORK_TIME" property="overWorkTime"/>
+			<result column="OVER_WORK_DESC" property="overWorkDesc"/>
+			<result column="OUT_REASON" property="outReason"/>
+			<result column="CONFIRM_USER_ID" property="confirmUserId"/>
+			<result column="CONFIRM_USER_NAME" property="confirmUserName"/>
+			<result column="CONFIRM_TIME" property="confirmTime"/>
+			<result column="FINISHED_USER_ID" property="finishedUserId"/>
+			<result column="FINISHED_USER_NAME" property="finishedUserName"/>
+			<result column="FINISHED_TIME" property="finishedTime"/>
+			<result column="OUT_USER_ID" property="outUserId"/>
+			<result column="OUT_USER_NAME" property="outUserName"/>
+			<result column="OUT_TIME" property="outTime"/>
+			<result column="OUT_WORK_TASK_ID" property="outWorkTaskId"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+
+	<!--用户表sys_user-->
+	<resultMap id="BaseResultSysUserMap" type="com.edgedo.sys.entity.SysUser" >
+		<id column="ID" property="id"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="COMP_ID" property="compId"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER" property="createUser"/>
+		<result column="DEPT_ID" property="deptId"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_SEX" property="userSex"/>
+		<result column="AGE" property="age"/>
+		<result column="PHONE" property="phone"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="ID_CARD_NUM" property="idCardNum"/>
+		<result column="ID_CARD_PHOTO1" property="idCardPhoto1"/>
+		<result column="ID_CARD_PHOTO" property="idCardPhoto"/>
+		<result column="HEAD_PHOTO" property="headPhoto"/>
+		<result column="USER_STATE" property="userState"/>
+		<result column="DATA_STATE" property="dataState"/>
+		<result column="LOGIN_STATE" property="loginState"/>
+		<result column="LOGIN_TIME" property="loginTime"/>
+		<result column="DEFAULT_ROLE_ID" property="defaultRoleId"/>
+		<result column="DEFAULT_ROLE_NAME" property="defaultRoleName"/>
+		<result column="IS_UP_PWD" property="isUpPwd"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+	</resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpWorkTaskOrderView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, OWNER_WORK_TASK_ID, OWNER_WORK_TASK_TITLE, OWNER_WORK_TASK_DESC, TASK_ORDER_STATE, INNER_USER_ID, INNER_USER_NAME, OUTPUT_USER_ID, OUTPUT_USER_NAME, IS_OVER_WORK, OVER_WORK_TIME, OVER_WORK_DESC, OUT_REASON, CONFIRM_USER_ID, CONFIRM_USER_NAME, CONFIRM_TIME, FINISHED_USER_ID, FINISHED_USER_NAME, FINISHED_TIME, OUT_USER_ID, OUT_USER_NAME, OUT_TIME, OUT_WORK_TASK_ID, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test='queryObj != null and  queryObj.createTime != null'>
+					AND  CREATE_TIME = #{queryObj.createTime}
+				</if>
+				<if test='queryObj != null and  queryObj.overWorkTime != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.overWorkTime)'>
+					AND  OVER_WORK_TIME = #{queryObj.overWorkTime}
+				</if>
+				<if test='queryObj != null and  queryObj.confirmTime != null'>
+					AND  CONFIRM_TIME = #{queryObj.confirmTime}
+				</if>
+				<if test='queryObj != null and  queryObj.finishedTime != null'>
+					AND  FINISHED_TIME = #{queryObj.finishedTime}
+				</if>
+				<if test='queryObj != null and  queryObj.outTime != null'>
+					AND  OUT_TIME = #{queryObj.outTime}
+				</if>
+				<if test='queryObj != null and  queryObj.taskOrderState != null'>
+					AND  TASK_ORDER_STATE like '%${queryObj.taskOrderState}%'
+				</if>
+				<if test='queryObj != null and  queryObj.isOverWork != null'>
+					AND  IS_OVER_WORK like '%${queryObj.isOverWork}%'
+				</if>
+				<if test='queryObj != null and  queryObj.innerUserName != null'>
+					AND  INNER_USER_NAME like '%${queryObj.innerUserName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.outputUserName != null'>
+					AND  OUTPUT_USER_NAME like '%${queryObj.outputUserName}%'
+				</if>
+				<if test='queryObj != null and  queryObj.ownerWorkTaskTitle != null'>
+					AND  OWNER_WORK_TASK_TITLE like '%${queryObj.ownerWorkTaskTitle}%'
+				</if>
+
+
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpWorkTaskOrderQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_work_task_order 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpWorkTaskOrderQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_work_task_order 
+  		<include refid="where"/>
+  </select>
+
+
+	<select id="selectByIdsOnWorkUser" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where ID=#{ids} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByIdsOnWorkUserLog" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where ID=#{ids} and DATA_STATE='1'
+	</select>
+
+	<update id="updateByTaskState" parameterType="com.edgedo.sys.entity.ErpWorkTaskOrder">
+		update erp_work_task_order
+		set
+		    TASK_ORDER_STATE=#{taskOrderState},
+			CONFIRM_USER_ID=#{confirmUserId},
+			CONFIRM_USER_NAME=#{confirmUserName},
+			IS_OVER_WORK=#{isOverWork},
+		    CONFIRM_TIME=#{confirmTime}
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<update id="updateByOutUserName" parameterType="com.edgedo.sys.entity.ErpWorkTaskOrder">
+		update erp_work_task_order
+		set
+		    OUT_USER_ID=#{outUserId},
+		    OUT_USER_NAME=#{outUserName},
+		    OUT_TIME=#{outTime},
+		    OUT_WORK_TASK_ID=#{outWorkTaskId},
+		    OUT_REASON=#{outReason},
+			TASK_ORDER_STATE=#{taskOrderState}
+			DATA_STATE=#{dataState}
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<select id="selectyIds" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where ID=#{id} and DATA_STATE='1'
+	</select>
+
+	<update id="updateByOrderState" parameterType="com.edgedo.sys.entity.ErpWorkTaskOrder">
+		update erp_work_task_order
+		set
+		  TASK_ORDER_STATE=#{taskOrderState},
+		  FINISHED_USER_ID=#{finishedUserId},
+		  FINISHED_USER_NAME=#{finishedUserName},
+		  FINISHED_TIME=#{finishedTime}
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<update id="updateByOverWork" parameterType="com.edgedo.sys.entity.ErpWorkTaskOrder">
+		update erp_work_task_order
+		set
+			IS_OVER_WORK=#{isOverWork},
+			OVER_WORK_TIME=#{overWorkTime},
+			OVER_WORK_DESC=#{overWorkDesc}
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<!-- 逻辑删除-->
+	<update id="deleteByIdsOne" parameterType="java.lang.String">
+		update erp_work_task_order set DATA_STATE='0' where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdAll" parameterType="java.util.List">
+		update erp_work_task_order set DATA_STATE = '0' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<select id="selectByWorkState" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where TASK_ORDER_STATE='0' and DATA_STATE='1'
+	</select>
+
+	<update id="updateByOutPutUser" parameterType="java.lang.String">
+		update erp_work_task_order
+		set
+			OUTPUT_USER_ID=#{waiQinId},
+			OUTPUT_USER_NAME=#{waiQin}
+		where OWNER_WORK_TASK_ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<select id="selectByOutPutUserId" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where ID=#{ownerWorkTaskId} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByOrderId" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where ID=#{ids} and DATA_STATE='1'
+	</select>
+
+	<select id="selectTaskId" parameterType="java.lang.String" resultType="String">
+		select ID id from erp_work_task_order where OWNER_WORK_TASK_ID=#{id} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByIdWork" parameterType="java.lang.String" resultType="String">
+		select OUTPUT_USER_ID from erp_work_task_order where OWNER_WORK_TASK_ID=#{ids} and DATA_STATE='1' and TASK_ORDER_STATE='1'
+	</select>
+
+	<select id="selectByWaiQinOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_work_task_order where OWNER_WORK_TASK_ID=#{id} and DATA_STATE='1' and TASK_ORDER_STATE='1'
+	</select>
+
+	<!--业务人员  安装人员  外勤  -->
+	<select id="selectByInput" resultMap="BaseResultSysUserMap">
+		select * from sys_user where DEFAULT_ROLE_NAME='内勤' and DATA_STATE='1'
+	</select>
+
+	<update id="updateByIntput" parameterType="java.lang.String">
+		update erp_work_task_order
+		set
+			INNER_USER_ID=#{inputId},
+			INNER_USER_NAME=#{inputName}
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<!--根据任务ID查找工单-->
+	<select id="selectByWorkId" parameterType="String" resultMap="BaseResultViewMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_work_task_order
+		WHERE OWNER_WORK_TASK_ID = #{id}
+	</select>
+
+
+</mapper>

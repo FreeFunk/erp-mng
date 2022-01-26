@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCarXufeiRecMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCarXufeiRec" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="OWNER_CAR_INFO_ID" property="ownerCarInfoId"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="CHANNEL_AGENT_ID" property="channelAgentId"/>
+			<result column="CHANNEL_AGENT_NAME" property="channelAgentName"/>
+			<result column="XUFEI_TIME" property="xufeiTime"/>
+			<result column="XUFEI_MONEY" property="xufeiMoney"/>
+			<result column="IS_INSTALL_XUFEI" property="isInstallXufei"/>
+			<result column="INSTALL_XUFEI_MONEY" property="installXufeiMoney"/>
+			<result column="SUPPLIER_ID" property="supplierId"/>
+			<result column="SUPPLIER_NAME" property="supplierName"/>
+			<result column="PAY_USER" property="payUser"/>
+			<result column="GET_MONEY_USER" property="getMoneyUser"/>
+			<result column="SERVICE_START_TIME" property="serviceStartTime"/>
+			<result column="SERVICE_END_TIME" property="serviceEndTime"/>
+			<result column="REMARK" property="remark"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCarXufeiRecView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, OWNER_CAR_INFO_ID, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, CHANNEL_AGENT_ID, CHANNEL_AGENT_NAME, XUFEI_TIME, XUFEI_MONEY, IS_INSTALL_XUFEI, INSTALL_XUFEI_MONEY, SUPPLIER_ID, SUPPLIER_NAME, PAY_USER, GET_MONEY_USER, SERVICE_START_TIME, SERVICE_END_TIME, REMARK, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test="queryObj != null and queryObj.channelAgentName != null and queryObj.channelAgentName != ''">
+					AND  CHANNEL_AGENT_NAME like concat('%',#{queryObj.channelAgentName},'%')
+				</if>
+				<if test="queryObj != null and  queryObj.carPlateNum != null and queryObj.carPlateNum != ''" >
+					AND  CAR_PLATE_NUM like concat('%',#{queryObj.carPlateNum},'%')
+				</if>
+				<if test='queryObj != null and  queryObj.xufeiTimeStart != null'>
+					AND XUFEI_TIME >= #{queryObj.xufeiTimeStart}
+				</if>
+				<if test='queryObj != null and queryObj.xufeiTimeEnd != null'>
+					and XUFEI_TIME &lt;= #{queryObj.xufeiTimeEnd}
+				</if>
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCarXufeiRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_xufei_rec 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCarXufeiRecQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_xufei_rec 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 逻辑删除 -->
+	<update id="deleteByIdsOne" parameterType="java.lang.String">
+		update erp_car_xufei_rec set DATA_STATE='0' where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdsAll" parameterType="java.util.List">
+		update erp_sim set DATA_STATE = '0',SIM_STATE='注销' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+
+
+	<select id="selectAllCarInfo" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_xufei_rec
+		<where>
+			DATA_STATE='1'
+			<if test="carPlateNum != ''">
+				AND  CAR_PLATE_NUM like '%${carPlateNum}%'
+			</if>
+			<if test="channelAgentName != ''">
+				AND  CHANNEL_AGENT_NAME like '%${channelAgentName}%'
+			</if>
+
+			<if test="xufeiTimeStart != null">
+				AND XUFEI_TIME >= #{xufeiTimeStart}
+			</if>
+			<if test="xufeiTimeEnd != null">
+				AND XUFEI_TIME &lt;= #{xufeiTimeEnd}
+			</if>
+		</where>
+	</select>
+</mapper>

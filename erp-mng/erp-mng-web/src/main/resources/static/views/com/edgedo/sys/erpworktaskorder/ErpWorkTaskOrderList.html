@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>外勤人员工单表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../../../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!--<div class="layui-form layui-card-header layuiadmin-card-header-auto">-->
+        <!--<div class="layui-form-item">-->
+        <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label" style="padding: 9px 15px;width: 60px;">工单状态</label>-->
+        <!--<div class="layui-input-inline" style="width: 150px;">-->
+        <!--<select name="queryObj.taskOrderState">-->
+        <!--<option value=""></option>-->
+        <!--<option value="0">未确认</option>-->
+        <!--<option value="1">已确认</option>-->
+        <!--<option value="2">已完成</option>-->
+        <!--<option value="3">转出</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label" style="padding: 9px 15px;width: 60px;">是否加班</label>-->
+        <!--<div class="layui-input-inline" style="width: 150px;">-->
+        <!--<select name="queryObj.isOverWork">-->
+        <!--<option value=""></option>-->
+        <!--<option value="1">是</option>-->
+        <!--<option value="0">否</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label" style="padding: 9px 15px;width: 60px;">内勤人员</label>-->
+        <!--<div class="layui-input-inline" style="width: 150px;">-->
+        <!--<input type="text" name="queryObj.innerUserName" placeholder="请输入" autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-inline">-->
+        <!--<label class="layui-form-label" style="padding: 9px 15px;width: 60px;">外勤人员</label>-->
+        <!--<div class="layui-input-inline" style="width: 150px;">-->
+        <!--<input type="text" name="queryObj.outputUserName" placeholder="请输入" autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="layui-form-item">-->
+        <!--<div class="layui-inline" style="   margin-bottom: 5px;">-->
+        <!--<label class="layui-form-label" style="text-align: center;width: 60px;">任务标题</label>-->
+        <!--<div class="layui-input-inline" style="width: 150px;">-->
+        <!--<input type="text" name="queryObj.ownerWorkTaskTitle" placeholder="请输入" autocomplete="off" class="layui-input">-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="layui-inline" style="margin-bottom: 5px;">-->
+        <!--<button class="layui-btn layuiadmin-btn-comm" data-type="reload" lay-submit lay-filter="ErpWorkTaskOrder-search">-->
+        <!--<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-comm" data-type="confirmVo" style="font-size: 10px;line-height: 0px;padding: 0px;width: 40px;height: 25px;">确认</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="jiabanVo" style="font-size: 10px;line-height: 0px;padding: 0px;width: 50px;height: 25px;">加班记录</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="turnOutVo" style="font-size: 10px;line-height: 0px;padding: 0px;width: 40px;height: 25px;">转出</button>
+                <button class="layui-btn layuiadmin-btn-comm" data-type="completeVo" style="font-size: 10px;line-height: 0px;padding: 0px;width: 40px;height: 25px;">完成</button>
+            </div>
+            <table id="ErpWorkTaskOrder-list" lay-filter="ErpWorkTaskOrder-list"></table>
+            <script type="text/html" id="table-ErpWorkTaskOrder-list">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="details">详情</a>
+                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="complete"><i class="layui-icon layui-icon-edit"></i>完成</a>-->
+                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="turnOut"><i class="layui-icon layui-icon-edit"></i>转出</a>-->
+                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="jiaban"><i class="layui-icon layui-icon-edit"></i>加班记录</a>-->
+                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>-->
+            </script>
+        </div>
+    </div>
+</div>
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index:'lib/index',
+        common:'common'
+    }).use(['index','table', 'form','common'], function(exports){
+        var $ = layui.$
+            ,table = layui.table
+            ,common = layui.common
+            ,admin = layui.admin
+            ,form = layui.form;
+
+        //查询
+        form.on('submit(ErpWorkTaskOrder-search)', function(data){
+            var field = data.field;
+
+            //执行重载
+            table.reload('ErpWorkTaskOrder-list', {
+                where: field,
+                page:{
+                    curr:1
+                }
+            });
+        });
+
+        /*
+        * 定义表格
+        * */
+        defineTable = function () {
+            var headers = layui.admin.getTokenHeader();
+            table.render({
+                elem: '#ErpWorkTaskOrder-list' //指定原始表格的选择器（id选择器）
+                ,url:layui.setter.basePath +'/admin/erpWorkTaskOrder/listpage.jsn' //模拟接口
+                ,headers:headers
+                ,method: 'post'
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.success, //解析接口状态
+                        "msg": res.errMsg, //解析提示文本
+                        "count": res.totalCount, //解析数据长度
+                        "data": res.list //解析数据列表
+                    };
+                }
+                ,response: {
+                    statusCode: true //规定成功的状态码，默认：0
+                }
+                ,cols: [[
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id',align: 'center', width: 50, title: '主键',sort: true,hide:true}
+                    ,{field: 'createTime',align: 'center', width: 50, title: '创建时间',templet: function(d){
+                            return common.DateFormat(d.createTime,"yyyy-MM-dd");},sort: true,hide:true}
+                    ,{field: 'createUserId',align: 'center', width: 50, title: '创建人ID',sort: true,hide:true}
+                    ,{field: 'createUserName',align: 'center', width: 50, title: '创建人名',sort: true,hide:true}
+                    ,{field: 'ownerWorkTaskId',align: 'center', width: 50, title: '所属任务ID',sort: true,hide:true}
+                    ,{field: 'ownerWorkTaskTitle',align: 'center', width: 100, title: '任务标题',sort: true}
+                    ,{field: 'ownerWorkTaskDesc',align: 'center', width: 100, title: '任务描述',sort: true}
+                    ,{field: 'taskOrderState',align: 'center', width: 100, title: '工单状态',sort: true,
+                        templet: function(d){
+                            if(d.taskOrderState==0){
+                                return "未确认";
+                            }else if(d.taskOrderState==1) {
+                                return "已确认";
+                            }else if(d.taskOrderState==2) {
+                                return "已完成";
+                            }else if(d.taskOrderState==3) {
+                                return "转出";
+                            }else{
+                                return "";
+                            }
+                        }
+                    }
+                    ,{field: 'innerUserId',align: 'center', width: 100, title: '内勤人员ID',sort: true,hide:true}
+                    ,{field: 'innerUserName',align: 'center', width: 100, title: '内勤人员名',sort: true}
+                    ,{field: 'outputUserId',align: 'center', width: 100, title: '外勤人员ID',sort: true,hide:true}
+                    ,{field: 'outputUserName',align: 'center', width: 100, title: '外勤人员名',sort: true}
+                    ,{field: 'isOverWork',align: 'center', width: 100, title: '是否加班',sort: true,
+                        templet: function(d) {
+                            if (d.isOverWork == 1) {
+                                return '是';
+                            } else if (d.isOverWork == 0) {
+                                return '否';
+                            } else {
+                                return '';
+                            }
+                        }
+                    }
+                    ,{field: 'overWorkTime',align: 'center', width: 100, title: '加班时长(分钟)',sort: true}
+                    ,{field: 'overWorkDesc',align: 'center', width: 100, title: '加班描述',sort: true}
+                    ,{field: 'outReason',align: 'center', width: 100, title: '转出原因',sort: true}
+                    ,{field: 'confirmUserId',align: 'center', width: 100, title: '确认人ID',sort: true,hide:true}
+                    ,{field: 'confirmUserName',align: 'center', width: 100, title: '确认人',sort: true}
+                    ,{field: 'confirmTime',align: 'center', width: 100, title: '确认时间',templet: function(d){
+                            return common.DateFormat(d.confirmTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'finishedUserId',align: 'center', width: 100, title: '完成人ID',sort: true,hide:true}
+                    ,{field: 'finishedUserName',align: 'center', width: 100, title: '完成人',sort: true}
+                    ,{field: 'finishedTime',align: 'center', width: 100, title: '确认时间',templet: function(d){
+                            return common.DateFormat(d.finishedTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'outUserId',align: 'center', width: 100, title: '转出人ID',sort: true,hide:true}
+                    ,{field: 'outUserName',align: 'center', width: 100, title: '转出人',sort: true}
+                    ,{field: 'outTime',align: 'center', width: 100, title: '转出时间',templet: function(d){
+                            return common.DateFormat(d.outTime,"yyyy-MM-dd");},sort: true}
+                    ,{field: 'outWorkTaskId',align: 'center', width: 100, title: '转出工单表ID',sort: true,hide:true}
+                    ,{field: 'dataState',align: 'center', width: 100, title: '数据状态',sort: true,hide:true}
+                    ,{title: '操作', minWidth: 80, align: 'center', fixed: 'right', toolbar: '#table-ErpWorkTaskOrder-list'}
+                ]]
+                ,autoSort: false
+                ,page: true
+                ,limit: 10
+                ,limits: [10, 20, 30,40]
+                ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+            //为toolbar添加事件响应
+            table.on('tool(ErpWorkTaskOrder-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                /*var data = obj.data;*///获得当前行数据
+                //区分事件
+                switch(obj.event){
+                    case 'del':
+                        deleteVo(obj);
+                        break;
+                    case 'edit':
+                        editVo(obj);
+                        break;
+                    case 'confirm':
+                        confirmVo(obj);
+                        break;
+                    case 'complete':
+                        completeVo(obj);
+                        break;
+                    case 'turnOut':
+                        turnOutVo(obj);
+                        break;
+                    case 'jiaban':
+                        jiabanVo(obj);
+                        break;
+                    case 'details':
+                        detailsVo(obj);
+                        break;
+
+                };
+            });
+
+            //监听排序事件
+            table.on('sort(ErpWorkTaskOrder-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                var sort = obj.field;
+                //默认排序
+                switch(obj.field){
+                    case 'id':
+                        sort ="ID";
+                        break;
+                    case 'createTime':
+                        sort ="CREATE_TIME";
+                        break;
+                    case 'createUserId':
+                        sort ="CREATE_USER_ID";
+                        break;
+                    case 'createUserName':
+                        sort ="CREATE_USER_NAME";
+                        break;
+                    case 'ownerWorkTaskId':
+                        sort ="OWNER_WORK_TASK_ID";
+                        break;
+                    case 'ownerWorkTaskTitle':
+                        sort ="OWNER_WORK_TASK_TITLE";
+                        break;
+                    case 'ownerWorkTaskDesc':
+                        sort ="OWNER_WORK_TASK_DESC";
+                        break;
+                    case 'taskOrderState':
+                        sort ="TASK_ORDER_STATE";
+                        break;
+                    case 'innerUserId':
+                        sort ="INNER_USER_ID";
+                        break;
+                    case 'innerUserName':
+                        sort ="INNER_USER_NAME";
+                        break;
+                    case 'outputUserId':
+                        sort ="OUTPUT_USER_ID";
+                        break;
+                    case 'outputUserName':
+                        sort ="OUTPUT_USER_NAME";
+                        break;
+                    case 'isOverWork':
+                        sort ="IS_OVER_WORK";
+                        break;
+                    case 'overWorkTime':
+                        sort ="OVER_WORK_TIME";
+                        break;
+                    case 'overWorkDesc':
+                        sort ="OVER_WORK_DESC";
+                        break;
+                    case 'outReason':
+                        sort ="OUT_REASON";
+                        break;
+                    case 'confirmUserId':
+                        sort ="CONFIRM_USER_ID";
+                        break;
+                    case 'confirmUserName':
+                        sort ="CONFIRM_USER_NAME";
+                        break;
+                    case 'confirmTime':
+                        sort ="CONFIRM_TIME";
+                        break;
+                    case 'finishedUserId':
+                        sort ="FINISHED_USER_ID";
+                        break;
+                    case 'finishedUserName':
+                        sort ="FINISHED_USER_NAME";
+                        break;
+                    case 'finishedTime':
+                        sort ="FINISHED_TIME";
+                        break;
+                    case 'outUserId':
+                        sort ="OUT_USER_ID";
+                        break;
+                    case 'outUserName':
+                        sort ="OUT_USER_NAME";
+                        break;
+                    case 'outTime':
+                        sort ="OUT_TIME";
+                        break;
+                    case 'outWorkTaskId':
+                        sort ="OUT_WORK_TASK_ID";
+                        break;
+                    case 'dataState':
+                        sort ="DATA_STATE";
+                        break;
+                };
+                if(obj.type==null){
+                    return;
+                }
+                //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                table.reload('ErpWorkTaskOrder-list', {
+                    initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                    ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                        orderBy: sort+" "+obj.type //排序字段
+                    }
+                });
+            });
+        }
+        defineTable();
+
+        //工单详情
+        detailsVo = function(obj){
+            admin.req({
+                url: layui.setter.basePath + '/admin/erpWorkTaskOrder/queryOneOrder.jsn',
+                data: {'ids': obj.data.id},
+                method: "post",
+                success: function (data) {
+                    layer.open({
+                        type: 2
+                        ,title: '工单详情'
+                        ,content: 'ErpWorkTaskOrderDetailsVo.html'
+                        ,btn: ['返回']
+                        ,closeBtn: false
+                        ,maxmin: false
+                        ,area: ['350px', '400px']
+                        ,yes: function(index, layero){
+                            layer.close(index);
+                        }
+                    });
+                }
+            });
+        }
+
+
+        //编辑
+        editVo = function (obj) {
+            layer.open({
+                type: 2
+                ,title: '编辑'
+                ,content: 'ErpWorkTaskOrderEdit.html'
+                ,maxmin: true
+                ,area: ['550px', '550px']
+                ,btn: ['确定', '取消']
+                ,success: function(layero, index){
+                    var s = layero.find('iframe');
+                    $("id",s[0].contentWindow.document).val(obj.data.id);
+                    //给iframe元素赋值
+                    var othis = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form").click();
+
+                    othis.find('input[name="id"]').val(obj.data.id);
+                    othis.find('input[name="createTime"]').val(obj.data.createTime);
+                    othis.find('input[name="createUserId"]').val(obj.data.createUserId);
+                    othis.find('input[name="createUserName"]').val(obj.data.createUserName);
+                    othis.find('input[name="ownerWorkTaskId"]').val(obj.data.ownerWorkTaskId);
+                    othis.find('input[name="ownerWorkTaskTitle"]').val(obj.data.ownerWorkTaskTitle);
+                    othis.find('input[name="ownerWorkTaskDesc"]').val(obj.data.ownerWorkTaskDesc);
+                    othis.find('input[name="taskOrderState"]').val(obj.data.taskOrderState);
+                    othis.find('input[name="innerUserId"]').val(obj.data.innerUserId);
+                    othis.find('input[name="innerUserName"]').val(obj.data.innerUserName);
+                    othis.find('input[name="outputUserId"]').val(obj.data.outputUserId);
+                    othis.find('input[name="outputUserName"]').val(obj.data.outputUserName);
+                    othis.find('input[name="isOverWork"]').val(obj.data.isOverWork);
+                    othis.find('input[name="overWorkTime"]').val(obj.data.overWorkTime);
+                    othis.find('input[name="overWorkDesc"]').val(obj.data.overWorkDesc);
+                    othis.find('input[name="outReason"]').val(obj.data.outReason);
+                    othis.find('input[name="confirmUserId"]').val(obj.data.confirmUserId);
+                    othis.find('input[name="confirmUserName"]').val(obj.data.confirmUserName);
+                    othis.find('input[name="confirmTime"]').val(obj.data.confirmTime);
+                    othis.find('input[name="finishedUserId"]').val(obj.data.finishedUserId);
+                    othis.find('input[name="finishedUserName"]').val(obj.data.finishedUserName);
+                    othis.find('input[name="finishedTime"]').val(obj.data.finishedTime);
+                    othis.find('input[name="outUserId"]').val(obj.data.outUserId);
+                    othis.find('input[name="outUserName"]').val(obj.data.outUserName);
+                    othis.find('input[name="outTime"]').val(obj.data.outTime);
+                    othis.find('input[name="outWorkTaskId"]').val(obj.data.outWorkTaskId);
+                    othis.find('input[name="dataState"]').val(obj.data.dataState);
+
+                }
+                ,yes: function(index, layero){
+                    var submit = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form-edit");
+                    submit.trigger('click');
+                }
+            });
+        }
+
+        //展示工单
+        showOrderList = function (obj) {
+            layer.open({
+                type: 2
+                ,title: '工单信息'
+                ,content: 'ErpWorkTaskOrderSimpleInfo.html'
+                ,btn: ['确认']
+                ,closeBtn: false
+                ,maxmin: false
+                ,area: ['350px', '400px']
+                ,success: function(layero, index){
+                    var s = layero.find('iframe');
+                    $("id",s[0].contentWindow.document).val(obj.id);
+                    //给iframe元素赋值
+                    var othis = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form").click();
+
+                    othis.find('input[name="ownerWorkTaskTitle"]').val(obj.ownerWorkTaskTitle);
+                    othis.find('input[name="ownerWorkTaskDesc"]').val(obj.ownerWorkTaskDesc);
+                    othis.find('input[name="outputUserName"]').val(obj.outputUserName);
+                    othis.find('input[name="isOverWork"]').val(obj.isOverWork);
+                    othis.find('input[name="overWorkTime"]').val(obj.overWorkTime);
+                    othis.find('input[name="overWorkDesc"]').val(obj.overWorkDesc);
+                }
+                ,yes: function(index, layero){
+                    layer.close(index);
+                    layer.confirm('确定完成此工单吗？', function(index){
+                        admin.req({
+                            url:layui.setter.basePath +'/admin/erpWorkTaskOrder/updateCompleteWork.jsn',
+                            data:{'ids':obj.id},
+                            method:"post",
+                            success:function (data) {
+                                layer.open({
+                                    type: 2
+                                    ,title: '添加内勤人员'
+                                    ,content: 'ErpWorkTaskAddIntputUser.html'
+                                    ,maxmin: true
+                                    ,area: ['300px', '350px']
+                                    ,btn: ['确定', '取消']
+                                    ,success: function(layero, index){
+                                        var s = layero.find('iframe');
+                                        $("id",s[0].contentWindow.document).val(obj.id);
+                                        //给iframe元素赋值
+                                        var othis = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form").click();
+                                        othis.find('input[name="id"]').val(obj.id);
+                                    }
+                                    ,yes: function(index, layero){
+                                        //点击确认触发 iframe 内容中的按钮提交
+                                        var submit = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form-submit");
+                                        submit.click();
+                                    }
+                                });
+                            },
+                        });
+                    });
+                }
+            });
+        }
+
+        //点击事件
+        var active = {
+            //确认接收派单
+            confirmVo : function(){
+                //内勤人员
+                var checkStatus = table.checkStatus('ErpWorkTaskOrder-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+                if(checkData.length == 0){
+                    return layer.msg('请选择数据');
+                }else if(checkData.length >= 2){
+                    return layer.msg('只能操作一条记录');
+                }
+                // if(checkData[0].innerUserName==null){
+                //     layer.alert('请填写内勤人员', {
+                //         offset: 'auto',
+                //     });
+                // }
+                // //外勤人员
+                // else if(checkData[0].outputUserName==null){
+                //     layer.alert('请填写外勤人员', {
+                //         offset: 'auto',
+                //     });
+                // }
+                //工单确认
+                else if(checkData[0].taskOrderState=='1'){
+                    layer.alert('该任务工单已确认', {
+                        offset: 'auto',
+                    });
+                }
+                //工单转出
+                else if(checkData[0].taskOrderState=='3'){
+                    layer.alert('该任务工单已转出', {
+                        offset: 'auto',
+                    });
+                }
+                //工单完成
+                else if(checkData[0].taskOrderState=='2'){
+                    layer.alert('该任务工单已完成', {
+                        offset: 'auto',
+                    });
+                }else {
+                    admin.req({
+                        url:layui.setter.basePath +'/admin/erpWorkTaskOrder/updateTaskOrder.jsn',
+                        data:{'ids':checkData[0].id},
+                        method:"post",
+                        success:function (data) {
+                            table.reload('ErpWorkTaskOrder-list');
+                            layer.msg('确认成功', {
+                                icon: 1
+                            });
+
+                        },
+                    });
+                }
+            }
+            //完成派单
+            ,completeVo : function(){
+                var checkStatus = table.checkStatus('ErpWorkTaskOrder-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+                if(checkData.length == 0){
+                    return layer.msg('请选择数据');
+                }else if(checkData.length >= 2){
+                    return layer.msg('只能操作一条记录');
+                }
+                //派单完成
+                if(checkData[0].taskOrderState=='0'){
+                    layer.alert('该任务工单未确认', {
+                        offset: 'auto',
+                    });
+                } else if(checkData[0].taskOrderState=='3'){//工单转出
+                    layer.alert('该任务工单已转出', {
+                        offset: 'auto',
+                    });
+                }else if (checkData[0].taskOrderState=='2'){
+                    layer.alert('该任务工单已完成', {
+                        offset: 'auto',
+                    });
+                } else {
+                    showOrderList(checkData[0]);
+                }
+            }
+            //进行转出派单
+            ,turnOutVo : function(){
+                var checkStatus = table.checkStatus('ErpWorkTaskOrder-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+                if(checkData.length == 0){
+                    return layer.msg('请选择数据');
+                }else if(checkData.length >= 2){
+                    return layer.msg('只能操作一条记录');
+                }
+                if(checkData[0].taskOrderState=='0'){
+                    layer.alert('该任务工单未确认', {
+                        offset: 'auto',
+                    });
+                }else if(checkData[0].taskOrderState=='3'){//工单转出
+                    layer.alert('该任务工单已转出', {
+                        offset: 'auto',
+                    });
+                }else if(checkData[0].taskOrderState=='2'){
+                    layer.alert('该任务工单已完成', {
+                        offset: 'auto',
+                    });
+                }else{
+                    layer.open({
+                        type: 2
+                        ,title: '派单转出'
+                        ,content: 'ErpWorkTaskOrderTurnOut.html'
+                        ,maxmin: true
+                        ,area: ['370px', '350px']
+                        ,btn: ['确定', '取消']
+                        ,success: function(layero, index){
+                            var s = layero.find('iframe');
+                            $("id",s[0].contentWindow.document).val(checkData[0].id);
+                            //给iframe元素赋值
+                            var othis = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form").click();
+
+                            othis.find('input[name="id"]').val(checkData[0].id);
+                            othis.find('input[name="ownerWorkTaskId"]').val(checkData[0].ownerWorkTaskId);
+                        }
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+            }
+            ,//加班记录
+            jiabanVo : function(){
+                var checkStatus = table.checkStatus('ErpWorkTaskOrder-list')
+                    ,checkData = checkStatus.data; //得到选中的数据
+                if(checkData.length == 0){
+                    return layer.msg('请选择数据');
+                }else if(checkData.length >= 2){
+                    return layer.msg('只能操作一条记录');
+                }
+                //判断当前任务状态
+                if(checkData[0].taskOrderState=='0'){
+                    layer.alert('该任务未确认', {
+                        offset: 'auto',
+                    });
+                }else if(checkData[0].taskOrderState=='3'){//工单转出
+                    layer.alert('该任务工单已转出', {
+                        offset: 'auto',
+                    });
+                } else {
+                    layer.open({
+                        type: 2
+                        ,title: '加班记录'
+                        ,content: 'ErpWorkTaskOrderJiaBan.html'
+                        ,maxmin: true
+                        ,area: ['300px', '350px']
+                        ,btn: ['确定', '取消']
+                        ,success: function(layero, index){
+                            var s = layero.find('iframe');
+                            $("id",s[0].contentWindow.document).val(checkData[0].id);
+                            //给iframe元素赋值
+                            var othis = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form").click();
+
+                            othis.find('input[name="id"]').val(checkData[0].id);
+                        }
+                        ,yes: function(index, layero){
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#ErpWorkTaskOrder-form-submit");
+                            submit.click();
+                        }
+                    });
+                }
+            }
+        }
+        //绑定点击事件
+        $('.layui-btn.layuiadmin-btn-comm').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+    });
+
+</script>
+</body>
+</html>
+

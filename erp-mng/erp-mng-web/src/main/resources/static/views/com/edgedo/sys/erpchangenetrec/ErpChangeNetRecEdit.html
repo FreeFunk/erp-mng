@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpChangeNetRec-form" id="ErpChangeNetRec-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">所属车辆ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ownerCarInfoId" lay-verify="required" placeholder="请输入所属车辆ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateNum" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车架号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carFrameNum" placeholder="请输入车架号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">车牌颜色</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="carPlateColor" placeholder="请输入车牌颜色" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">转网类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="changeNetType" placeholder="请输入转网类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">客户名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="customerName" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系电话</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contactPhone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">所属终端ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="terminalId" lay-verify="required" placeholder="请输入所属终端ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>-->
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">终端厂商</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="terminalChangshang" lay-verify="required" placeholder="请输入终端厂商" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">终端编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="terminalCode" placeholder="请输入终端编号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">SIM卡号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="simNum" placeholder="请输入SIM卡号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">原平台</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="orgPt"  placeholder="请输入原平台" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">提交人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="submitPerson"  placeholder="请输入提交人" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">提交时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="submitTime" id="submitTime"  placeholder="请输入提交时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">省ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceId" lay-verify="required" placeholder="请输入省ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="provinceName"  placeholder="请输入省名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">城市id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityId" lay-verify="required" placeholder="请输入城市id" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">城市名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cityName"  placeholder="请输入城市名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label">县区ID</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquId" lay-verify="required" placeholder="请输入县区ID" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">县区名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xianquName"  placeholder="请输入县区名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                   <!-- <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">提供资料</label>
+                        <div class="layui-input-block">
+
+                        </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">提供资料</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="giveInformation" id="giveInformation"  placeholder="请输入提供资料" autocomplete="off" class="layui-input" style="display: none">
+                            <input type="checkbox" name="giveInformation1" id="giveInformation1" value="车身照" title="车身照" lay-skin="primary">
+                            <input type="checkbox" name="giveInformation1" id="giveInformation2"  value="行驶证" title="行驶证" lay-skin="primary" >
+                            <input type="checkbox" name="giveInformation1" id="giveInformation3" value="登记证" title="登记证" lay-skin="primary" >
+                            <input type="checkbox" name="giveInformation1" id="giveInformation4" value="执照" title="执照" lay-skin="primary" >
+                            <input type="checkbox" name="giveInformation1" id="giveInformation5" value="身份证" title="身份证" lay-skin="primary" >
+                            <input type="checkbox" name="giveInformation1" id="giveInformation6" value="合同" title="合同" lay-skin="primary" >
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">现平台</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nowPt" lay-verify="required" placeholder="请输入现平台" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">定位情况</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="location"  placeholder="请输入定位情况" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="remark"  placeholder="请输入备注" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpChangeNetRec-form-edit" id="ErpChangeNetRec-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpChangeNetRec-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                //选中复选框的值
+                var arr = new Array();
+                $("input:checkbox[name='giveInformation1']:checked").each(function (i) {
+                    arr[i]=$(this).val();
+                });
+                data.field.giveInformation = arr.join(",");
+
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpChangeNetRec/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpChangeNetRec-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            //回显复选框的值
+            function initGiveInformation(){
+                //复选框回显
+                var giveInformation = $("#giveInformation").val();
+                var arr = giveInformation.split(",");
+                for(var i=0;i<arr.length;i++) {
+                    $('input[name="giveInformation1"]').each(function(){//遍历每一个名字为giveInformation1的复选框
+                        if(arr[i]===$(this).val()){
+                            this.checked = data.elem.checked;
+                        1}
+                    });
+                }
+            };
+            initGiveInformation();
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+            laydate.render({
+                elem: '#submitTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>

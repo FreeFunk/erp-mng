@@ -1,0 +1,102 @@
+package com.edgedo.sys.service;
+		
+import java.util.List;
+import java.util.Map;
+
+import com.edgedo.common.util.Guid;
+import com.edgedo.sys.entity.ErpInstructionsForm;
+import com.edgedo.sys.mapper.ErpInstructionsFormMapper;
+import com.edgedo.sys.queryvo.ErpInstructionsFormQuery;
+import com.edgedo.sys.queryvo.ErpInstructionsFormView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+
+@Service
+@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+public class ErpInstructionsFormService {
+	
+	
+	@Autowired
+	private ErpInstructionsFormMapper erpInstructionsFormMapper;
+
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class,readOnly = true)
+	public List<ErpInstructionsFormView> listPage(ErpInstructionsFormQuery erpInstructionsFormQuery){
+		List list = erpInstructionsFormMapper.listPage(erpInstructionsFormQuery);
+		erpInstructionsFormQuery.setList(list);
+		return list;
+	}
+	
+	/***
+	 * 新增方法
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+	public String insert(ErpInstructionsForm erpInstructionsForm) {
+		erpInstructionsForm.setId(Guid.guid());
+		erpInstructionsFormMapper.insert(erpInstructionsForm);
+		return "";
+	}
+	
+	/***
+	 * 动态修改方法
+	 * @param
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+	public String update(ErpInstructionsForm erpInstructionsForm) {
+		erpInstructionsFormMapper.updateById(erpInstructionsForm);
+		return "";
+	}
+	
+	/***
+	 * 全修改
+	 * @param
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+	public String updateAll(ErpInstructionsForm erpInstructionsForm) {
+		erpInstructionsFormMapper.updateAllColumnById(erpInstructionsForm);
+		return "";
+	}
+	
+	
+	
+	/**
+	 * 单个删除
+	 * @param id
+	 */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+	public int delete(String id) {
+		
+		return erpInstructionsFormMapper.deleteById(id);
+	}
+	
+	/**
+	 * 批量删除
+	 * @param ids
+	 */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+	public int deleteByIds(List<String> ids) {
+		
+		return erpInstructionsFormMapper.updateByIdDelete(ids);
+	}
+	
+	
+	
+	/**
+	 * 加载单个
+	 * @param id
+	 */
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class,readOnly = true)
+	public ErpInstructionsForm loadById(String id) {
+		return erpInstructionsFormMapper.selectById(id);
+	}
+
+
+	public List<ErpInstructionsForm> selectAllCarInfo(Map<String, Object> mapQuery) {
+		return erpInstructionsFormMapper.selectAllCarInfo(mapQuery);
+	}
+}

@@ -1,0 +1,44 @@
+server:
+  port: 8188
+  tomcat:
+      uri-encoding: UTF-8
+mybatis:
+  mapper-locations: classpath:mapper/sys/*.xml,classpath:mapper/cms/*.xml
+mybatis-plus:
+  global-config:
+    db-config:
+      db-type: MYSQL
+spring:
+  profiles:
+    active: app,redis
+  datasource:
+    name: datasource
+    url: jdbc:mysql://rm-3xeiiq048flpry9af1o.mysql.rds.aliyuncs.com:3306/erp_mng?useUnicode=true&amp;characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: erp_mng
+    password: erp_mng123
+    tomcat:
+      max-active: 20
+      min-idle: 2
+      max-idle: 20
+      initial-size: 2
+      test-on-borrow: true
+      test-on-return: false
+      max-wait: 60000
+  aop:
+    proxy-target-class: true
+    auto: true
+  http:
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true
+      messages:
+        encoding: UTF-8
+  servlet:
+      multipart:
+        max-file-size: 20MB
+        max-request-size: 20MB
+
+
+controller.scanPackage: com.edgedo

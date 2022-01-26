@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.sys.mapper.ErpCarInfoMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.sys.entity.ErpCarInfo" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="CREATE_USER_ID" property="createUserId"/>
+			<result column="CREATE_USER_NAME" property="createUserName"/>
+			<result column="CAR_PLATE_NUM" property="carPlateNum"/>
+			<result column="CAR_PLATE_COLOR" property="carPlateColor"/>
+			<result column="CAR_FRAME_NUM" property="carFrameNum"/>
+			<result column="ROAD_TRANSPORT_NUM" property="roadTransportNum"/>
+			<result column="BUSINESS_LICENSE_NUMBER" property="businessLicenseNumber"/>
+			<result column="YEHU_NAME" property="yehuName"/>
+			<result column="OWNER_TEAM_ID" property="ownerTeamId"/>
+			<result column="OWNER_TEAM_NAME" property="ownerTeamName"/>
+			<result column="CONTACT_PERSON" property="contactPerson"/>
+			<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+			<result column="PROVINCE_ID" property="provinceId"/>
+			<result column="PROVINCE_NAME" property="provinceName"/>
+			<result column="CITY_ID" property="cityId"/>
+			<result column="CITY_NAME" property="cityName"/>
+			<result column="XIANQU_ID" property="xianquId"/>
+			<result column="XIANQU_NAME" property="xianquName"/>
+			<result column="SUPPLIER_ID" property="supplierId"/>
+			<result column="SUPPLIER_NAME" property="supplierName"/>
+			<result column="TERMINAL_ID" property="terminalId"/>
+			<result column="TERMINAL_CHANGSHANG" property="terminalChangshang"/>
+			<result column="TERMINAL_CODE" property="terminalCode"/>
+			<result column="TERMINAL_INSTALL_TYPE" property="terminalInstallType"/>
+			<result column="SIM_CODE" property="simCode"/>
+			<result column="CHANNEL_AGENT_ID" property="channelAgentId"/>
+			<result column="CHANNEL_AGENT_NAME" property="channelAgentName"/>
+			<result column="YEWU_USER_ID" property="yewuUserId"/>
+			<result column="YEWU_USER_NAME" property="yewuUserName"/>
+			<result column="INSTALL_USER_ID" property="installUserId"/>
+			<result column="INSTALL_USER_NAME" property="installUserName"/>
+			<result column="INPUT_USER_ID" property="inputUserId"/>
+			<result column="INPUT_USER_NAME" property="inputUserName"/>
+			<result column="BEIDOU_OPERATOR" property="beidouOperator"/>
+			<result column="INSTALLATION_TIME" property="installationTime"/>
+			<result column="PAY_STATE" property="payState"/>
+			<result column="GET_MONEY_NUM" property="getMoneyNum"/>
+			<result column="GET_MONEY_USER" property="getMoneyUser"/>
+			<result column="GET_MONEY_TYPE" property="getMoneyType"/>
+			<result column="SERVICE_MONEY_DEDUCTION" property="serviceMoneyDeduction"/>
+			<result column="YEHU_PERSON" property="yehuPerson"/>
+			<result column="END_TIME" property="endTime"/>
+			<result column="LAST_XUFEI_TIME" property="lastXufeiTime"/>
+			<result column="REMARK" property="remark"/>
+			<result column="DATA_STATE" property="dataState"/>
+			<result column="PHONE_VERIFICATION_STATE" property="phoneVerificationState"/>
+			<result column="FIRST_ONLINE_TIME" property="firstOnlineTime"/>
+			<result column="SIM_ID" property="simId"/>
+			<result column="DELETE_REMARK" property="deleteRemark"/>
+			<result column="SERVICE_MONEY_END_TIME" property="serviceMoneyEndTime"/>
+			<result column="ADMISSION_TIME" property="admissionTime"/>
+			<result column="DELETE_TIME" property="deleteTime"/>
+    </resultMap>
+
+	<!--车队名字段-->
+	<resultMap id="BaseResultMapCarTeam" type="com.edgedo.sys.entity.ErpCarTeam" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER_ID" property="createUserId"/>
+		<result column="CREATE_USER_NAME" property="createUserName"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+		<result column="CAR_TEAM_NAME" property="carTeamName"/>
+		<result column="CONTACT_PERSON" property="contactPerson"/>
+		<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+		<result column="TEAM_ADDRESS" property="teamAddress"/>
+		<result column="REMARK" property="remark"/>
+		<result column="DATA_STATE" property="dataState"/>
+	</resultMap>
+
+
+	<!--供应商表字段-->
+	<resultMap id="BaseResultMapSupplier" type="com.edgedo.sys.entity.ErpSupplier" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER_ID" property="createUserId"/>
+		<result column="CREATE_USER_NAME" property="createUserName"/>
+		<result column="SUPPLIER_NAME" property="supplierName"/>
+		<result column="GOODS_PERSON" property="goodsPerson"/>
+		<result column="SUPPLIER_TYPE" property="supplierType"/>
+		<result column="CONTACT_PHONE" property="contactPhone"/>
+		<result column="COMPANY_NAME" property="companyName"/>
+		<result column="COMPANY_TAX_NUM" property="companyTaxNum"/>
+		<result column="OPENING_BANK" property="openingBank"/>
+		<result column="COMPANY_ADDRESS" property="companyAddress"/>
+		<result column="COMPANY_TEL" property="companyTel"/>
+		<result column="DATA_STATE" property="dataState"/>
+	</resultMap>
+
+	<!--用户表sys_user-->
+	<resultMap id="BaseResultSysUserMap" type="com.edgedo.sys.entity.SysUser" >
+		<id column="ID" property="id"/>
+		<result column="USER_CODE" property="userCode"/>
+		<result column="COMP_ID" property="compId"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER" property="createUser"/>
+		<result column="DEPT_ID" property="deptId"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_SEX" property="userSex"/>
+		<result column="AGE" property="age"/>
+		<result column="PHONE" property="phone"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="ID_CARD_NUM" property="idCardNum"/>
+		<result column="ID_CARD_PHOTO1" property="idCardPhoto1"/>
+		<result column="ID_CARD_PHOTO" property="idCardPhoto"/>
+		<result column="HEAD_PHOTO" property="headPhoto"/>
+		<result column="USER_STATE" property="userState"/>
+		<result column="DATA_STATE" property="dataState"/>
+		<result column="LOGIN_STATE" property="loginState"/>
+		<result column="LOGIN_TIME" property="loginTime"/>
+		<result column="DEFAULT_ROLE_ID" property="defaultRoleId"/>
+		<result column="DEFAULT_ROLE_NAME" property="defaultRoleName"/>
+		<result column="IS_UP_PWD" property="isUpPwd"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+	</resultMap>
+
+	<!--渠道代理字段-->
+	<resultMap id="BaseResultMapErpChannelAgent" type="com.edgedo.sys.entity.ErpChannelAgent" >
+		<id column="ID" property="id"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="CREATE_USER_ID" property="createUserId"/>
+		<result column="CREATE_USER_NAME" property="createUserName"/>
+		<result column="CHANNEL_AGENT_NAME" property="channelAgentName"/>
+		<result column="CONTACT_PHONE_NUM" property="contactPhoneNum"/>
+		<result column="SYS_USER_ID" property="sysUserId"/>
+		<result column="PROVINCE_ID" property="provinceId"/>
+		<result column="PROVINCE_NAME" property="provinceName"/>
+		<result column="CITY_ID" property="cityId"/>
+		<result column="CITY_NAME" property="cityName"/>
+		<result column="XIANQU_ID" property="xianquId"/>
+		<result column="XIANQU_NAME" property="xianquName"/>
+		<result column="DATA_STATE" property="dataState"/>
+	</resultMap>
+
+
+    <resultMap id="BaseResultViewMap" type="com.edgedo.sys.queryvo.ErpCarInfoView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, ROAD_TRANSPORT_NUM, BUSINESS_LICENSE_NUMBER, YEHU_NAME, OWNER_TEAM_ID, OWNER_TEAM_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, SUPPLIER_ID, SUPPLIER_NAME, TERMINAL_ID, TERMINAL_CHANGSHANG, TERMINAL_CODE, TERMINAL_INSTALL_TYPE, SIM_CODE, CHANNEL_AGENT_ID, CHANNEL_AGENT_NAME, YEWU_USER_ID, YEWU_USER_NAME, INSTALL_USER_ID, INSTALL_USER_NAME, INPUT_USER_ID, INPUT_USER_NAME, BEIDOU_OPERATOR,INSTALLATION_TIME ,
+	  PAY_STATE,GET_MONEY_NUM ,GET_MONEY_USER ,GET_MONEY_TYPE ,SERVICE_MONEY_DEDUCTION ,YEHU_PERSON,END_TIME, LAST_XUFEI_TIME, REMARK, DATA_STATE,PHONE_VERIFICATION_STATE,FIRST_ONLINE_TIME,SIM_ID,DELETE_REMARK,ADMISSION_TIME,SERVICE_MONEY_END_TIME,DELETE_TIME
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		DATA_STATE='1'
+				<if test="queryObj != null and  queryObj.carPlateNum != null and  queryObj.carPlateNum != ''">
+					AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+				</if>
+				<if test="queryObj != null and  queryObj.carFrameNum != null and  queryObj.carFrameNum != ''">
+					AND  CAR_FRAME_NUM like '%${queryObj.carFrameNum}%'
+				</if>
+				<if test="queryObj != null and  queryObj.yehuName != null and queryObj.yehuName != ''">
+					AND  YEHU_NAME like concat('%',#{queryObj.yehuName},'%')
+				</if>
+				<if test="queryObj != null and  queryObj.simCode != null and  queryObj.simCode != ''">
+					AND  SIM_CODE like '%${queryObj.simCode}%'
+				</if>
+				<if test="queryObj != null and  queryObj.xianquName != null and  queryObj.xianquName != ''">
+					AND  XIANQU_NAME like '%${queryObj.xianquName}%'
+				</if>
+				<if test="queryObj != null and  queryObj.beidouOperator != null and  queryObj.beidouOperator != ''">
+					AND  BEIDOU_OPERATOR like '%${queryObj.beidouOperator}%'
+				</if>
+				<if test="queryObj != null and  queryObj.selectTime != null and  queryObj.newEndTime != null">
+					AND END_TIME >= #{queryObj.selectTime}
+				</if>
+				<if test="queryObj != null and queryObj.newEndTime != null">
+					AND END_TIME &lt;= #{queryObj.newEndTime}
+				</if>
+				<if test="queryObj != null and  queryObj.admissionTimeStart != null">
+					AND FIRST_ONLINE_TIME >= #{queryObj.admissionTimeStart}
+				</if>
+				<if test="queryObj != null and queryObj.admissionTimeEnd != null">
+					AND FIRST_ONLINE_TIME &lt;= #{queryObj.admissionTimeEnd}
+				</if>
+                <if test="queryObj != null and  queryObj.lastXuFeiStartTime != null">
+                    AND LAST_XUFEI_TIME >= #{queryObj.lastXuFeiStartTime}
+                </if>
+				<if test="queryObj != null and queryObj.admissionTimeEnd != null">
+					AND FIRST_ONLINE_TIME &lt;= #{queryObj.admissionTimeEnd}
+				</if>
+
+  	</where>
+  	
+  </sql>
+
+	<sql id="where1">
+		<where>
+			DATA_STATE='0'
+			<if test="queryObj != null and  queryObj.carPlateNum != null and  queryObj.carPlateNum != ''">
+				AND  CAR_PLATE_NUM like '%${queryObj.carPlateNum}%'
+			</if>
+			<if test="queryObj != null and  queryObj.simCode != null and  queryObj.simCode != ''">
+				AND  SIM_CODE like '%${queryObj.simCode}%'
+			</if>
+			<if test="queryObj != null and  queryObj.carFrameNum != null and  queryObj.carFrameNum != ''">
+				AND  CAR_FRAME_NUM like '%${queryObj.carFrameNum}%'
+			</if>
+			<if test="queryObj != null and  queryObj.yehuName != null and  queryObj.yehuName != ''">
+				AND  YEHU_NAME like '%${queryObj.yehuName}%'
+			</if>
+			<if test="queryObj != null and  queryObj.xianquName != null and  queryObj.xianquName != ''">
+				AND  XIANQU_NAME like '%${queryObj.xianquName}%'
+			</if>
+			<if test="queryObj != null and  queryObj.beidouOperator != null and  queryObj.beidouOperator != ''">
+				AND  BEIDOU_OPERATOR like '%${queryObj.beidouOperator}%'
+			</if>
+			<if test="queryObj != null and  queryObj.selectTime != null and  queryObj.newEndTime != null">
+				AND END_TIME >= #{queryObj.selectTime}
+			</if>
+			<if test="queryObj != null and queryObj.newEndTime != null">
+				AND END_TIME &lt;= #{queryObj.newEndTime}
+			</if>
+			<if test="queryObj != null and  queryObj.admissionTimeStart != null">
+				AND FIRST_ONLINE_TIME >= #{queryObj.admissionTimeStart}
+			</if>
+			<if test="queryObj != null and queryObj.admissionTimeEnd != null">
+				AND FIRST_ONLINE_TIME &lt;= #{queryObj.admissionTimeEnd}
+			</if>
+			<if test="queryObj != null and  queryObj.lastXuFeiStartTime != null">
+				AND LAST_XUFEI_TIME >= #{queryObj.lastXuFeiStartTime}
+			</if>
+			<if test="queryObj != null and queryObj.admissionTimeEnd != null">
+				AND FIRST_ONLINE_TIME &lt;= #{queryObj.admissionTimeEnd}
+			</if>
+
+		</where>
+
+	</sql>
+
+
+	<sql id="where2">
+		<where>
+			DATA_STATE='1'
+			<if test="queryObj != null and queryObj.newEndTime != null">
+				AND END_TIME &lt;= #{queryObj.newEndTime}
+			</if>
+		</where>
+
+	</sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.sys.queryvo.ErpCarInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_info 
+  		<include refid="where"/>
+  </select>
+
+	<!-- 分页条件查询  -->
+	<select id="deletelistPage" parameterType="com.edgedo.sys.queryvo.ErpCarInfoQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_car_info
+		<include refid="where1"/>
+	</select>
+	<select id="endTimelistPage" parameterType="com.edgedo.sys.queryvo.ErpCarInfoQuery" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_car_info
+		<include refid="where2"/>
+	</select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.sys.queryvo.ErpCarInfoQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from erp_car_info 
+  		<include refid="where"/> order by DELETE_TIME desc
+  </select>
+
+	<select id="selectCarTeam" parameterType="java.lang.String" resultMap="BaseResultMapCarTeam">
+		select * from erp_car_team where DATA_STATE='1'
+	</select>
+
+	<select id="selectBySupplierName" resultMap="BaseResultMapSupplier">
+		select * from erp_supplier where DATA_STATE='1'
+	</select>
+
+	<!--业务人员  安装人员  外勤  -->
+	<select id="selectByYeWu" resultMap="BaseResultSysUserMap">
+		select * from sys_user where DEFAULT_ROLE_ID='FIELD' and DATA_STATE='1'
+	</select>
+
+	<!--录入人员  内勤-->
+	<select id="selectByInputUser" resultMap="BaseResultSysUserMap">
+		select * from sys_user where DEFAULT_ROLE_ID='内勤' and DATA_STATE='1'
+	</select>
+
+	<select id="selectChannelAgentName" resultMap="BaseResultMapErpChannelAgent">
+		select * from erp_channel_agent where DATA_STATE='1'
+	</select>
+
+	<select id="selectByErpSimByNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(1) from erp_sim
+		where SIM_NUM=#{simCode} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByErpSimNum" parameterType="java.lang.String" resultType="String">
+		select SIM_STATE simState from erp_sim
+		where SIM_NUM=#{simCode} and DATA_STATE='1'
+	</select>
+
+	<select id="selectByIdCarInfo" parameterType="java.lang.String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_car_info
+		where ID=#{ids} and DATA_STATE='1'
+	</select>
+
+	<insert id="insertByErpSimChangeRec" parameterType="com.edgedo.sys.entity.ErpCarSimChangeRec" >
+		insert into erp_car_sim_change_rec (ID,CREATE_TIME,OWNER_CAR_INFO_ID,CAR_PLATE_NUM,CAR_PLATE_COLOR,CAR_FRAME_NUM,ORG_SIM_NUM,ORG_SIM_OPERATOR,DATA_STATE)
+		values (#{id},
+				#{createTime},
+				#{ownerCarInfoId},
+				#{carPlateNum},
+				#{carPlateColor},
+				#{carFrameNum},
+				#{orgSimNum},
+				#{orgSimOperator},
+				#{dataState})
+	</insert>
+
+
+	<!-- 逻辑删除 -->
+	<update id="deleteByIdsOne">
+		update erp_car_info set DATA_STATE='0',DELETE_REMARK=#{deleteRemark},DELETE_TIME=#{deleteTime} where ID=#{ids} and DATA_STATE='1'
+	</update>
+
+	<!-- 批量删除 -->
+	<update id="deleteByIdsAll" parameterType="java.util.List">
+		update erp_car_info set DATA_STATE = '0' where ID in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<!-- 关联sim卡号注销-->
+	<update id="updateBySimCodeErpSim" parameterType="java.lang.String">
+		update erp_sim set SIM_STATE='3' where SIM_NUM=#{simCode} and DATA_STATE='1'
+	</update>
+
+	<!-- 多个关联sim卡号注销-->
+	<update id="updateBySimCodeList" parameterType="java.util.List">
+		update erp_sim set SIM_STATE='3' where SIM_NUM in
+		<foreach collection="list" item="simNum" open="(" separator="," close=")">
+			#{simNum}
+		</foreach> and DATA_STATE='1'
+	</update>
+
+	<select id="selectByErpSimBysimCode" parameterType="java.lang.String" resultType="com.edgedo.sys.entity.ErpSim">
+		select * from erp_sim
+		where SIM_NUM=#{simCode}
+	</select>
+
+	<update id="updateBySimCodeChange" parameterType="com.edgedo.sys.entity.ErpSim">
+		update erp_car_info set SIM_CODE=#{simNum} where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+	<select id="selectByCarPlateNumCarPlateColor" parameterType="String" resultMap="BaseResultViewMap">
+		select <include refid="Base_Column_List"/> from erp_car_info
+		where CAR_PLATE_NUM = #{carPlateNum}
+		and CAR_PLATE_COLOR = #{carPlateColor}
+		and DATA_STATE='1'
+	</select>
+
+	<update id="updtaByXuFeiTime">
+		update erp_car_info set LAST_XUFEI_TIME=#{date} where ID=#{carNumId} and DATA_STATE='1'
+	</update>
+
+	<select id="selectByCarNum" parameterType="String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_info where CAR_PLATE_NUM = #{carPlateNum} and DATA_STATE='1'
+	</select>
+
+	<!--根据车牌号查询-->
+	<select id="selectByCarPlateNum" parameterType="String" resultType="String">
+		SELECT CAR_PLATE_NUM carPlateNum FROM erp_car_info
+		WHERE CAR_PLATE_NUM=#{carPlateNum}
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> from erp_car_info
+	</select>
+
+	<update id="updateBySimNum" parameterType="map">
+		update erp_car_info
+		<set>
+			<if test="newSimNum != ''">
+				SIM_CODE = #{newSimNum},
+			</if>
+			<if test="newSimOperator != ''">
+				SUPPLIER_NAME = #{newSimOperator}
+			</if>
+		</set>
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+
+	<select id="selectAllCarInfo" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_info
+		<where>
+			DATA_STATE='1'
+			<if test="carPlateNum != ''">
+				AND  CAR_PLATE_NUM like '%${carPlateNum}%'
+			</if>
+			<if test="carFrameNum != ''">
+				AND  CAR_FRAME_NUM like '%${carFrameNum}%'
+			</if>
+			<if test="yehuName != ''">
+				AND  YEHU_NAME like '%${yehuName}%'
+			</if>
+			<if test="xianquName != ''">
+				AND  XIANQU_NAME like '%${xianquName}%'
+			</if>
+			<if test="beidouOperator != ''">
+				AND  BEIDOU_OPERATOR like '%${beidouOperator}%'
+			</if>
+			<if test="selectTime != null">
+				AND END_TIME >= #{selectTime}
+			</if>
+			<if test="newEndTime != null">
+				AND END_TIME &lt;= #{newEndTime}
+			</if>
+			<if test="admissionTimeStart != null">
+				AND FIRST_ONLINE_TIME >= #{admissionTimeStart}
+			</if>
+			<if test="admissionTimeEnd != null">
+				AND FIRST_ONLINE_TIME &lt;= #{admissionTimeEnd}
+			</if>
+			<if test="lastXuFeiStartTime != null">
+				AND LAST_XUFEI_TIME >= #{lastXuFeiStartTime}
+			</if>
+			<if test="admissionTimeEnd != null">
+				AND FIRST_ONLINE_TIME &lt;= #{admissionTimeEnd}
+			</if>
+
+		</where>
+	</select>
+
+
+	<select id="selectAllCarInfoNew" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_info
+		<where>
+			DATA_STATE='0'
+			<if test="carPlateNum != ''">
+				AND  CAR_PLATE_NUM like '%${carPlateNum}%'
+			</if>
+			<if test="carFrameNum != ''">
+				AND  CAR_FRAME_NUM like '%${carFrameNum}%'
+			</if>
+			<if test="yehuName != ''">
+				AND  YEHU_NAME like '%${yehuName}%'
+			</if>
+			<if test="simCode != ''">
+				AND  SIM_CODE like '%${simCode}%'
+			</if>
+			<if test="xianquName != ''">
+				AND  XIANQU_NAME like '%${xianquName}%'
+			</if>
+			<if test="beidouOperator != ''">
+				AND  BEIDOU_OPERATOR like '%${beidouOperator}%'
+			</if>
+			<if test="selectTime != null">
+				AND END_TIME >= #{selectTime}
+			</if>
+			<if test="newEndTime != null">
+				AND END_TIME &lt;= #{newEndTime}
+			</if>
+			<if test="admissionTimeStart != null">
+				AND FIRST_ONLINE_TIME >= #{admissionTimeStart}
+			</if>
+			<if test="admissionTimeEnd != null">
+				AND FIRST_ONLINE_TIME &lt;= #{admissionTimeEnd}
+			</if>
+			<if test="lastXuFeiStartTime != null">
+				AND LAST_XUFEI_TIME >= #{lastXuFeiStartTime}
+			</if>
+			<if test="admissionTimeEnd != null">
+				AND FIRST_ONLINE_TIME &lt;= #{admissionTimeEnd}
+			</if>
+
+		</where>
+	</select>
+	<!--根据车牌号查询-->
+	<select id="selectByCarPlateNumlist" parameterType="String" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM erp_car_info
+		WHERE CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE = '1' limit 1
+	</select>
+
+	<update id="updateByTerminal" parameterType="com.edgedo.sys.entity.ErpCarInfo">
+		update erp_car_info set TERMINAL_ID=#{terminalId} where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<select id="selectByCarNums" parameterType="String">
+		UPDATE erp_car_info set SUPPLIER_NAME=#{supplierName} where SIM_CODE=#{simNum}
+	</select>
+
+	<update id="updateByTerminalChangshang" parameterType="String">
+		update erp_car_info set TERMINAL_CHANGSHANG=#{terminalChangshang} where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+	<update id="updateBySimCodes" parameterType="map">
+		update erp_car_info
+		<set>
+			<if test='simCode != null and  simCode != ""'>
+				SIM_CODE = #{simCode},
+			</if>
+			<if test='supplierName != null and  supplierName != ""'>
+				SUPPLIER_NAME = #{supplierName}
+			</if>
+		</set>
+		where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+	<update id="updateBySimNumAndSupplierName" parameterType="map">
+		update erp_car_info
+		<set>
+			<if test="simCode != null and  simCode != ''">
+				SIM_CODE = #{simCode},
+			</if>
+			<if test="supplierName != null and  supplierName != ''">
+				SUPPLIER_NAME = #{supplierName}
+			</if>
+		</set>
+		where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+	<insert id="insertListErpCarInfo" parameterType="java.util.List">
+		insert into erp_car_info
+		(ID, CREATE_TIME, CREATE_USER_ID, CREATE_USER_NAME, CAR_PLATE_NUM, CAR_PLATE_COLOR, CAR_FRAME_NUM, ROAD_TRANSPORT_NUM,
+		BUSINESS_LICENSE_NUMBER, YEHU_NAME, OWNER_TEAM_ID, OWNER_TEAM_NAME, CONTACT_PERSON, CONTACT_PHONE_NUM, PROVINCE_ID, PROVINCE_NAME,
+		CITY_ID, CITY_NAME, XIANQU_ID, XIANQU_NAME, SUPPLIER_ID, SUPPLIER_NAME, TERMINAL_ID, TERMINAL_CHANGSHANG, TERMINAL_CODE, TERMINAL_INSTALL_TYPE,
+		SIM_ID,SIM_CODE, CHANNEL_AGENT_ID, CHANNEL_AGENT_NAME, YEWU_USER_ID, YEWU_USER_NAME, INSTALL_USER_ID, INSTALL_USER_NAME,
+		INPUT_USER_ID, INPUT_USER_NAME, BEIDOU_OPERATOR,INSTALLATION_TIME ,
+		PAY_STATE,GET_MONEY_NUM ,GET_MONEY_USER ,GET_MONEY_TYPE ,SERVICE_MONEY_DEDUCTION ,YEHU_PERSON,END_TIME, LAST_XUFEI_TIME, REMARK,
+		DATA_STATE,PHONE_VERIFICATION_STATE,FIRST_ONLINE_TIME,DELETE_REMARK,ADMISSION_TIME,SERVICE_MONEY_END_TIME,DELETE_TIME)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			#{item.id},#{item.createTime},#{item.createUserId},#{item.createUserName},#{item.carPlateNum},#{item.carPlateColor},#{item.carFrameNum},#{item.roadTransportNum},
+			#{item.businessLicenseNumber},#{item.yehuName},#{item.ownerTeamId},#{item.ownerTeamName},#{item.contactPerson},#{item.contactPhoneNum},#{item.provinceId},#{item.provinceName},
+			#{item.cityId},#{item.cityName},#{item.xianquId},#{item.xianquName},#{item.supplierId},#{item.supplierName},#{item.terminalId},#{item.terminalChangshang},#{item.terminalCode},#{item.terminalInstallType},
+			#{item.simId},#{item.simCode},#{item.channelAgentId},#{item.channelAgentName},#{item.yewuUserId},#{item.yewuUserName},#{item.installUserId},#{item.installUserName},
+			#{item.inputUserId},#{item.inputUserName},#{item.beidouOperator},#{item.installationTime},
+			#{item.payState},#{item.getMoneyNum},#{item.getMoneyUser},#{item.getMoneyType},#{item.serviceMoneyDeduction},#{item.yehuPerson},#{item.endTime},#{item.lastXufeiTime},#{item.remark},
+			#{item.dataState},#{item.phoneVerificationState},#{item.firstOnlineTime},#{item.deleteRemark},#{item.admissionTime},#{item.serviceMoneyEndTime},#{item.deleteTime}
+			)
+		</foreach>
+	</insert>
+
+	<update id="updateByBeidouOperator" parameterType="java.lang.String">
+		update erp_car_info set BEIDOU_OPERATOR=#{beidouOperator} where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+	<select id="selectAllById" parameterType="java.util.List" resultMap="BaseResultMap">
+		  SELECT <include refid="Base_Column_List"/> from erp_car_info WHERE ID IN
+			<foreach collection="list" item="id" open="(" separator="," close=")">
+				#{id}
+			</foreach> and DATA_STATE='1'
+	</select>
+	
+	<update id="updateByGetMoneyNum" parameterType="com.edgedo.sys.entity.ErpCarXufeiRec">
+		update erp_car_info set GET_MONEY_NUM=#{xufeiMoney},END_TIME=#{serviceEndTime} where CAR_PLATE_NUM=#{carPlateNum} and DATA_STATE='1'
+	</update>
+
+
+	<update id="updateByCarInfoId" parameterType="com.edgedo.sys.entity.ErpCarInfo">
+		update erp_car_info
+		<set>
+			<if test="carPlateNum != null and  carPlateNum != ''">
+				CAR_PLATE_NUM = #{carPlateNum},
+			</if>
+			<if test="carPlateColor != null and  carPlateColor != ''">
+				CAR_PLATE_COLOR = #{carPlateColor},
+			</if>
+			<if test="carFrameNum != null and  carFrameNum != ''">
+				CAR_FRAME_NUM = #{carFrameNum},
+			</if>
+			<if test="roadTransportNum != null and  roadTransportNum != ''">
+				ROAD_TRANSPORT_NUM = #{roadTransportNum},
+			</if>
+			<if test="businessLicenseNumber != null and  businessLicenseNumber != ''">
+				BUSINESS_LICENSE_NUMBER = #{businessLicenseNumber},
+			</if>
+			<if test="yehuName != null and  yehuName != ''">
+				YEHU_NAME = #{yehuName},
+			</if>
+			<if test="ownerTeamId != null and  ownerTeamId != ''">
+				OWNER_TEAM_ID = #{ownerTeamId},
+			</if>
+			<if test="ownerTeamName != null and  ownerTeamName != ''">
+				OWNER_TEAM_NAME = #{ownerTeamName},
+			</if>
+			<if test="contactPerson != null and  contactPerson != ''">
+				CONTACT_PERSON = #{contactPerson},
+			</if>
+			<if test="contactPhoneNum != null and  contactPhoneNum != ''">
+				CONTACT_PHONE_NUM = #{contactPhoneNum},
+			</if>
+			<if test="provinceId != null and  provinceId != ''">
+				PROVINCE_ID = #{provinceId},
+			</if>
+			<if test="provinceName != null and  provinceName != ''">
+				PROVINCE_NAME = #{provinceName},
+			</if>
+			<if test="cityId != null and  cityId != ''">
+				CITY_ID = #{cityId},
+			</if>
+			<if test="cityName != null and  cityName != ''">
+				CITY_NAME = #{cityName},
+			</if>
+			<if test="xianquId != null and  xianquId != ''">
+				XIANQU_ID = #{xianquId},
+			</if>
+			<if test="xianquName != null and  xianquName != ''">
+				XIANQU_NAME = #{xianquName},
+			</if>
+
+			<if test="supplierId != null and  supplierId != ''">
+				SUPPLIER_ID = #{supplierId},
+			</if>
+			<if test="supplierName != null and  supplierName != ''">
+				SUPPLIER_NAME = #{supplierName},
+			</if>
+			<if test="terminalId != null and  terminalId != ''">
+				TERMINAL_ID = #{terminalId},
+			</if>
+			<if test="terminalChangshang != null and  terminalChangshang != ''">
+				TERMINAL_CHANGSHANG = #{terminalChangshang},
+			</if>
+			<if test="terminalCode != null and  terminalCode != ''">
+				TERMINAL_CODE = #{terminalCode},
+			</if>
+			<if test="terminalInstallType != null and  terminalInstallType != ''">
+				TERMINAL_INSTALL_TYPE = #{terminalInstallType},
+			</if>
+			<if test="simCode != null and  simCode != ''">
+				SIM_CODE = #{simCode},
+			</if>
+			<if test="channelAgentId != null and  channelAgentId != ''">
+				CHANNEL_AGENT_ID = #{channelAgentId},
+			</if>
+			<if test="channelAgentName != null and  channelAgentName != ''">
+				CHANNEL_AGENT_NAME = #{channelAgentName},
+			</if>
+			<if test="yewuUserId != null and  yewuUserId != ''">
+				YEWU_USER_ID = #{yewuUserId},
+			</if>
+			<if test="yewuUserName != null and  yewuUserName != ''">
+				YEWU_USER_NAME = #{yewuUserName},
+			</if>
+			<if test="installUserId != null and  installUserId != ''">
+				INSTALL_USER_ID = #{installUserId},
+			</if>
+			<if test="installUserName != null and  installUserName != ''">
+				INSTALL_USER_NAME = #{installUserName},
+			</if>
+			<if test="inputUserId != null and  inputUserId != ''">
+				INPUT_USER_ID = #{inputUserId},
+			</if>
+			<if test="inputUserName != null and  inputUserName != ''">
+				INPUT_USER_NAME = #{inputUserName},
+			</if>
+			<if test="beidouOperator != null and  beidouOperator != ''">
+				BEIDOU_OPERATOR = #{beidouOperator},
+			</if>
+			<if test="installationTime != null">
+				INSTALLATION_TIME = #{installationTime},
+			</if>
+			<if test="payState != null and  payState != ''">
+				PAY_STATE = #{payState},
+			</if>
+			<if test="getMoneyNum != null and  getMoneyNum != ''">
+				GET_MONEY_NUM = #{getMoneyNum},
+			</if>
+			<if test="getMoneyUser != null and  getMoneyUser != ''">
+				GET_MONEY_USER = #{getMoneyUser},
+			</if>
+			<if test="getMoneyType != null and  getMoneyType != ''">
+				GET_MONEY_TYPE = #{getMoneyType},
+			</if>
+			<if test="serviceMoneyDeduction != null and  serviceMoneyDeduction != ''">
+				SERVICE_MONEY_DEDUCTION = #{serviceMoneyDeduction},
+			</if>
+			<if test="yehuPerson != null and  yehuPerson != ''">
+				YEHU_PERSON = #{yehuPerson},
+			</if>
+			<if test="endTime != null">
+				END_TIME = #{endTime},
+			</if>
+			<if test="lastXufeiTime != null">
+				LAST_XUFEI_TIME = #{lastXufeiTime},
+			</if>
+			<if test="remark != null and  remark != ''">
+				REMARK = #{remark},
+			</if>
+			<if test="phoneVerificationState != null and  phoneVerificationState != ''">
+				PHONE_VERIFICATION_STATE = #{phoneVerificationState},
+			</if>
+			<if test="firstOnlineTime != null">
+				FIRST_ONLINE_TIME = #{firstOnlineTime},
+			</if>
+			<if test="simId != null and  simId != ''">
+				SIM_ID = #{simId},
+			</if>
+			<if test="deleteRemark != null and  deleteRemark != ''">
+				DELETE_REMARK = #{deleteRemark},
+			</if>
+			<if test="serviceMoneyEndTime != null">
+				SERVICE_MONEY_END_TIME = #{serviceMoneyEndTime},
+			</if>
+			<if test="admissionTime != null">
+				ADMISSION_TIME = #{admissionTime},
+			</if>
+			<if test="deleteTime != null">
+				DELETE_TIME = #{deleteTime},
+			</if>
+		</set>
+		where ID=#{id} and DATA_STATE='1'
+	</update>
+
+	<!--统计车辆总数-->
+	<select id="countSumNum" resultType="int">
+		select count(1) from erp_car_info where DATA_STATE='1'
+	</select>
+	<!--查询车辆类表-->
+	<select id="selectOrderById" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from erp_car_info where DATA_STATE='1'
+		and CONTACT_PHONE_NUM is not null and  CONTACT_PHONE_NUM !=''
+		order by ID DESC limit #{start},#{end}
+	</select>
+
+	<!--批量插入到短信发送记录表-->
+	<insert id="sendRemindCheckGpsPhoneMsg" parameterType="map">
+		insert into erp_unlocation_remind_msg_rec (
+		ID, CREATE_TIME, CAR_PLATE_NUM, SEND_TYPE, MSG_TEXT, CONTACT_PERSON, CONTACT_PHONE_NUM, SEND_STATE,DATA_STATE
+		)
+		select uuid(),now(),group_concat(CAR_PLATE_NUM),#{sendType},#{content},CONTACT_PERSON,CONTACT_PHONE_NUM,'0','1' from erp_car_info where DATA_STATE='1'
+		and BEIDOU_OPERATOR like concat('%',#{beidouOperator},'%') and CONTACT_PHONE_NUM is not null and CONTACT_PHONE_NUM !=''
+		group by CONTACT_PHONE_NUM
+	</insert>
+
+
+</mapper>

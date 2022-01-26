@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>发送短信详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpNotnolineCarInfo-form" id="ErpNotnolineCarInfo-form" style="padding: 20px 30px 0 0;">
+    <div class="layui-form-item layui-hide">
+        <label class="layui-form-label">所属未定位提醒ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="ownerUnlocationRemindId" id="ownerUnlocationRemindId" lay-verify="required" placeholder="请输入所属未定位提醒ID" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-card-body">
+        <table id="ErpNotnolineCarInfo-list" lay-filter="ErpNotnolineCarInfo-list" ></table>
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../../../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+        common:'common'
+    }).use(['index', 'form','common','laydate','table'], function(){
+        var $ = layui.$
+            ,laydate = layui.laydate
+            ,common = layui.common
+            ,admin = layui.admin
+            ,form = layui.form
+            ,table = layui.table;
+
+
+        defineTable = function () {
+            debugger
+            var ownerUnlocationRemindId = $("#ownerUnlocationRemindId").val();
+            var headers = layui.admin.getTokenHeader();
+            table.render({
+                elem: '#ErpNotnolineCarInfo-list'
+                ,url:layui.setter.basePath + '/admin/erpNotnolineCarInfo/sendListInfo.jsn'
+                ,headers:headers
+                ,where: {'ids': ownerUnlocationRemindId}
+                ,method: 'post'
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.success, //解析接口状态
+                        "msg": res.errMsg, //解析提示文本
+                        "count": res.totalCount, //解析数据长度
+                        "data": res.list //解析数据列表
+                    };
+                }
+                ,response: {
+                    statusCode: true //规定成功的状态码，默认：0
+                }
+
+                ,cols: [[
+                    {field:'carPlateNum',align: 'center', width:100, title: '车牌号', sort: true}
+                    ,{field: 'contactPerson',align: 'center', width: 180, title: '联系人',sort: true,
+                        templet: function(d) {
+                            return d.contactPerson+"("+d.contactPhoneNum+")";
+                        }
+                    }
+                    , {field: 'sendTime', align: 'center', width: 207, title: '发送时间', sort: true,
+                        templet: function (d) {
+                            if (d.sendState == 0) {
+                                return common.DateFormat(d.sendTime, "yyyy-MM-dd") + "(未发送)";
+                            } else if (d.sendState == 1) {
+                                return common.DateFormat(d.sendTime, "yyyy-MM-dd") + "(已发送)";
+                            } else {
+                                return "";
+                            }
+                        }
+                    }
+                ]]
+                ,autoSort: false
+                ,text: {
+                    none: '暂无相关数据'
+                }
+            });
+
+            //为toolbar添加事件响应
+            table.on('tool(ErpNotnolineCarInfo-list)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                /*var data = obj.data;*///获得当前行数据
+                //区分事件
+                switch(obj.event){
+                    case 'del':
+                        deleteVo(obj);
+                        break;
+                    case 'edit':
+                        editVo(obj);
+                        break;
+                }
+            });
+
+            //监听排序事件
+            table.on('sort(ErpNotnolineCarInfo-list)', function(obj){ //注：sort是工具条事件名，LAY-app-province-list是table原始容器的属性 lay-filter="对应的值"
+                var sort = obj.field;
+                if(obj.type==null){
+                    return;
+                }
+                //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                table.reload('ErpNotnolineCarInfo-list', {
+                    initSort: obj//记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                    ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                        orderBy: sort+" "+obj.type //排序字段
+                    }
+                });
+            });
+        };
+        defineTable();
+
+
+
+        laydate.render({
+            elem: '#createTime', //指定元素
+            type:'datetime'
+        });
+        laydate.render({
+            elem: '#sendTime', //指定元素
+            type:'datetime'
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edgedo.cms.article.mapper.CmsArticleContentMapper" >
+   
+   
+    <resultMap id="BaseResultMap" type="com.edgedo.cms.article.entity.CmsArticleContent" >
+			<id column="ID" property="id"/>
+			<result column="CREATE_TIME" property="createTime"/>
+			<result column="TITLE" property="title"/>
+			<result column="PUBLISH_TIME" property="publishTime"/>
+			<result column="CONTENT" property="content"/>
+			<result column="SUMMARY" property="summary"/>
+			<result column="CLICK_NUM" property="clickNum"/>
+			<result column="CLS_ID" property="clsId"/>
+			<result column="KEY_WORDS" property="keyWords"/>
+			<result column="IS_RECOMOND" property="isRecomond"/>
+			<result column="RECOMOND_SORT" property="recomondSort"/>
+			<result column="ART_STATE" property="artState"/>
+			<result column="DATA_STATE" property="dataState"/>
+    </resultMap>
+   
+    <resultMap id="BaseResultViewMap" type="com.edgedo.cms.article.queryvo.CmsArticleContentView" extends="BaseResultMap">
+    
+    </resultMap>
+  
+  
+  <!-- ******* 新增字段请修改这里  ******  -->
+  <sql id="Base_Column_List">
+	 ID, TITLE, PUBLISH_TIME, CREATE_TIME, SUMMARY, CLICK_NUM, CLS_ID, KEY_WORDS, IS_RECOMOND, RECOMOND_SORT, ART_STATE, DATA_STATE
+  </sql>
+  
+  <!-- ******* 利用好这里的动态查询条件  ******  -->
+  <sql id="where">
+  	<where>
+		AND  DATA_STATE = '1'
+		<if test='queryObj != null and  queryObj.id != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.id)'>
+		AND  ID = #{queryObj.id}
+		</if>
+		<if test='queryObj != null and  queryObj.title != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.title)'>
+			AND  TITLE like concat('%', #{queryObj.title},'%')
+		</if>
+		<if test='queryObj != null and  queryObj.publishTime != null'>
+			AND  PUBLISH_TIME = #{queryObj.publishTime}
+		</if>
+		<if test='queryObj != null and  queryObj.content != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.content)'>
+		AND  CONTENT = #{queryObj.content}
+		</if>
+		<if test='queryObj != null and  queryObj.summary != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.summary)'>
+		AND  SUMMARY = #{queryObj.summary}
+		</if>
+		<if test='queryObj != null and  queryObj.clickNum != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.clickNum)'>
+			AND  CLICK_NUM = #{queryObj.clickNum}
+		</if>
+		<if test='queryObj != null and  queryObj.clsId != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.clsId)'>
+		AND  CLS_ID = #{queryObj.clsId}
+		</if>
+		<if test='queryObj != null and  queryObj.keyWords != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.keyWords)'>
+		AND  KEY_WORDS = #{queryObj.keyWords}
+		</if>
+		<if test='queryObj != null and  queryObj.isRecomond != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.isRecomond)'>
+		AND  IS_RECOMOND = #{queryObj.isRecomond}
+		</if>
+		<if test='queryObj != null and  queryObj.artState != null and @org.apache.commons.lang3.StringUtils@isNotEmpty(queryObj.artState)'>
+		AND  ART_STATE = #{queryObj.artState}
+		</if>
+
+  	</where>
+  	
+  </sql>
+  
+  <!-- ******* 排序判断  ******  
+  <sql id="orderBy">
+  	<if test="orderBy != null and orderBy!= '' ">
+  		order by  ${orderBy}
+  	</if>
+  </sql>-->
+  
+  
+  <!-- 分页条件查询  -->
+  <select id="listPage" parameterType="com.edgedo.cms.article.queryvo.CmsArticleContentQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from cms_article_content 
+  		<include refid="where"/>
+  </select>
+  
+   <!-- 不分页条件查询  -->
+  <select id="listByObj" parameterType="com.edgedo.cms.article.queryvo.CmsArticleContentQuery" resultMap="BaseResultViewMap">
+  		select <include refid="Base_Column_List"/> from cms_article_content 
+  		<include refid="where"/>
+  </select>
+
+	<delete id="deleteBatchIdsLogic" parameterType="list" >
+		update  cms_article_content set DATA_STATE='0'
+		where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+  
+  
+</mapper>

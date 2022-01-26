@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/app.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpIntoForm-form" id="ErpIntoForm-form" style="padding: 20px 30px 0 0;">
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <label class="layui-form-label">提交时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="submitTime" id="submitTime" placeholder="请输入提交时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原车牌号</label>
+            <div class="layui-input-block">
+                <input type="text" name="orgCarPlateNum" placeholder="请输入原车牌号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">现车牌号</label>
+            <div class="layui-input-block">
+                <input type="text" name="newCarPlateNum" placeholder="请输入现车牌号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="kehuName" placeholder="请输入客户名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原平台</label>
+            <div class="layui-input-block">
+                <input type="text" name="orgPlatform" placeholder="请输入原平台" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">现平台</label>
+            <div class="layui-input-block">
+                <input type="text" name="newPlatform" placeholder="请输入现平台" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">渠道</label>
+            <div class="layui-input-block">
+                <input type="text" name="channel" placeholder="请输入渠道" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">区县</label>
+            <div class="layui-input-block">
+                <input type="text" name="xianquName" placeholder="请输入区县" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">换卡</label>
+            <div class="layui-input-block">
+                <input type="text" name="changeCard"  placeholder="请输入换卡" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">转成功时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="changeSuccessTime" id="changeSuccessTime" placeholder="请输入转成功时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpIntoForm-form-submit" id="ErpIntoForm-form-submit" value="确认添加">
+    </div>
+</div>
+
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'form','laydate'], function(){
+            var $ = layui.$
+                ,laydate = layui.laydate
+                ,admin  = layui.admin
+                ,form = layui.form;
+
+            //监听提交
+            form.on('submit(ErpIntoForm-form-submit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                //提交 Ajax 成功后，关闭当前弹层并重载表格
+                admin.req({
+                    url:layui.setter.basePath +'/erp/erpintoform/erpIntoForm/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        if(data.success){
+                            parent.layui.table.reload('ErpIntoForm-list'); //重载表格
+                            parent.layer.close(index); //再执行关闭
+                            parent.layer.msg('添加成功', {
+                                icon: 1
+                            });
+                        }else{
+                            parent.layer.msg(data.errMsg, {
+                            });
+                        }
+
+                    },
+                });
+
+            });
+            laydate.render({
+                elem: '#createTime', //指定元素
+                trigger: 'click'
+            });
+            laydate.render({
+                elem: '#submitTime', //指定元素
+                trigger: 'click'
+            });
+            laydate.render({
+                elem: '#changeSuccessTime', //指定元素
+                trigger: 'click'
+            });
+        })
+</script>
+</body>
+</html>

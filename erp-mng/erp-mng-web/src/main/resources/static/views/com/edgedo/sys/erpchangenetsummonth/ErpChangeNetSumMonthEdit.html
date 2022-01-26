@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../../../layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="ErpChangeNetSumMonth-form" id="ErpChangeNetSumMonth-form" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" id="id" lay-verify="required" placeholder="请输入主键" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">现平台</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nowPt" lay-verify="required" placeholder="请输入现平台" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">海港区</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="haiGangQu" lay-verify="required" placeholder="请输入海港区" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">山海关区</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="shanHaiGuanQu" lay-verify="required" placeholder="请输入山海关区" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">北戴河区</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="beiDaiHeQu" lay-verify="required" placeholder="请输入北戴河区" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">抚宁区</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="fuNingQu" lay-verify="required" placeholder="请输入抚宁区" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">青龙县</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="qingLongXian" lay-verify="required" placeholder="请输入青龙县" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">昌黎县</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="changLiXian" lay-verify="required" placeholder="请输入昌黎县" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">卢龙县</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="luLongXian" lay-verify="required" placeholder="请输入卢龙县" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">开发区</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="kaiFaQu" lay-verify="required" placeholder="请输入开发区" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计月份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countMonth" lay-verify="required" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计月份</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countData" lay-verify="required" placeholder="请输入统计月份" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">统计类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="countType" lay-verify="required" placeholder="请输入统计类型" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">sumCount</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sumCount" lay-verify="required" placeholder="请输入sumCount" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="ErpChangeNetSumMonth-form-edit" id="ErpChangeNetSumMonth-form-edit" value="确认编辑">
+    </div>
+</div>
+
+<script src="../../../../../layuiadmin/layui/layui.js"></script>
+<script>
+        layui.config({
+            base: '../../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index', //主入口模块
+            $tool:'tool'
+        }).use(['index', 'form','$tool','laydate'], function(){
+
+            var $ = layui.$
+                ,$tool = layui.$tool
+                ,laydate = layui.laydate
+                ,admin = layui.admin
+                ,form = layui.form;
+
+            /*var queryArgs = $tool.getQueryParam();//获取查询参数
+            var id = queryArgs['id'];*/
+            //监听修改保存
+            form.on('submit(ErpChangeNetSumMonth-form-edit)', function(data){
+                var field = data.field; //获取提交的字段
+                var index = parent.layer.getFrameIndex(window.name);//先得到当前iframe层的索引
+                admin.req({
+                    url:layui.setter.basePath +'/admin/erpChangeNetSumMonth/saveOrUpdate.jsn',
+                    data:field,
+                    method:"post",
+                    success:function (data) {
+                        parent.layui.table.reload('ErpChangeNetSumMonth-list'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                        parent.layer.msg('修改成功', {
+                            icon: 1
+                        });
+                    }
+                });
+            });
+
+            laydate.render({
+                elem: '#createTime', //指定元素
+                type:'datetime'
+            });
+        })
+</script>
+</body>
+</html>
